@@ -7,7 +7,7 @@ exclude = '''
       \.git          
     | \.mypy_cache
     | \.venv
-    | \demencia
+    | \config
     | _build
     | buck-out
     | build
