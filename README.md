@@ -35,14 +35,10 @@
 	Windows:
 	```shell
     venv\Scripts\activate.bat
-    pip -r /requirements/dev.txt
+    pip -r \requirements\dev.txt
     ```
 3. Создать новую ветку и переключиться в нее для работы
 	```shell
     git checkout -b feature/название_ветки
     ```
-	Windows:
-	```shell
-    venv\Scripts\activate.bat
-    pip -r /requirements/dev.txt
-    ```
+
