@@ -19,7 +19,7 @@ class DateMixin(models.Model):
         ordering = ['-updated_at']
 
 
-class PublishMixin(DateMixin):
+class PublishMixin(models.Model):
     """Миксин публикаций.
 
     Attributes:
@@ -30,5 +30,5 @@ class PublishMixin(DateMixin):
 
     active_objects = PublishQuerySet.as_manager()
 
-    class Meta(DateMixin.Meta):
-        pass
+    class Meta:
+        abstract = True
