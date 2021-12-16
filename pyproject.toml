@@ -6,7 +6,7 @@ exclude = '''
   /(
       \.git          
     | \.mypy_cache
-    | \.venv
+    | \venv
     | \config
     | _build
     | buck-out
@@ -15,4 +15,3 @@ exclude = '''
   )/
 )
 '''
-

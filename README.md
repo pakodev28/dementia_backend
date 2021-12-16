@@ -30,15 +30,19 @@
     Linux:
 	```shell
     source venv/bin/activate
-    pip -r /requirements/dev.txt
+    pip install -r /requirements/dev.txt
     ```
 	Windows:
 	```shell
     venv\Scripts\activate.bat
-    pip -r \requirements\dev.txt
+    pip install -r ./requirements/dev.txt
     ```
-3. Создать новую ветку и переключиться в нее для работы
+4. Создать новую ветку и переключиться в нее для работы
 	```shell
     git checkout -b feature/название_ветки
     ```
+5. Перед выполнением push проверить код flake8, при необходимости откорректировать с помощью black
 
+## Built With
+
+* [Django](https://www.djangoproject.com/) -  web framework written in Python.
