@@ -16,10 +16,11 @@
 В Notion-тикете необходимо добавить ссылку на PR.
 
 ## Подготовка окружения для работы:
-1. Склонировать проект, перейти в папку demencia-backend
+1. Склонировать проект, перейти в папку demencia-backend, настроить .env файл(устанавливаются значения для DEBUG и SECRET KEY):
     ```shell
     git clone git@github.com:Studio-Yandex-Practicum/demencia-backend.git
     cd demencia-backend
+    copy .env.dist .env
     ```
 2. Создать виртуальное окружение(на примере venv).
     Linux:
@@ -30,12 +31,12 @@
     Linux:
 	```shell
     source venv/bin/activate
-    pip install -r /requirements/dev.txt
+    pip install -r ./requirements/dev.txt
     ```
 	Windows:
 	```shell
     venv\Scripts\activate.bat
-    pip install -r ./requirements/dev.txt
+    pip install -r .\requirements\dev.txt
     ```
 4. Создать новую ветку и переключиться в нее для работы
 	```shell
@@ -45,4 +46,13 @@
 
 ## Built With
 
-* [Django](https://www.djangoproject.com/) -  web framework written in Python.
+* [Django](https://www.djangoproject.com/) - web framework written in Python.
+* [Django-environ](https://django-environ.readthedocs.io/en/latest/) - package that allows you to use Twelve-factor methodology to configure Django application with environment variables.
+
+## Make команды
+
+[Описание установки make для windows](https://gist.github.com/evanwill/0207876c3243bbb6863e65ec5dc3f058)
+
+* **run** - запуск сервера разработки.
+* **migrate** - синхронизация состояние базы данных с текущим состоянием моделей и миграций.
+* **lint** - проверка правильности кода.
