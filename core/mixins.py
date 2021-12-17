@@ -11,12 +11,12 @@ class DateMixin(models.Model):
         updated_at: Дата обновления
     """
 
-    created_at = models.DateTimeField('Дата создания', auto_now_add=True)
-    updated_at = models.DateTimeField('Дата обновления', auto_now=True)
+    created_at = models.DateTimeField("Дата создания", auto_now_add=True)
+    updated_at = models.DateTimeField("Дата обновления", auto_now=True)
 
     class Meta:
         abstract = True
-        ordering = ['-updated_at']
+        ordering = ["-updated_at"]
 
 
 class PublishMixin(models.Model):
@@ -26,7 +26,7 @@ class PublishMixin(models.Model):
         is_active: Активность
     """
 
-    is_active = models.BooleanField('Активность', default=True)
+    is_active = models.BooleanField("Активность", default=True)
 
     active_objects = PublishQuerySet.as_manager()
 
