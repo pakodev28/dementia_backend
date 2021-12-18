@@ -15,7 +15,7 @@ class Partner(DateMixin, PublishMixin):
     def __str__(self):
         return self.name
 
-
+    
 class Slider(DateMixin, PublishMixin):
     title = models.CharField(max_length=250, verbose_name="Заголовок")
     image = models.ImageField(upload_to="slider/", verbose_name="Изображение")
@@ -28,3 +28,30 @@ class Slider(DateMixin, PublishMixin):
 
     def __str__(self):
         return self.title
+
+      
+class MainMenuElement(DateMixin, PublishMixin):
+    name = models.CharField(max_length=250, verbose_name="Название элемента")
+    url = models.URLField(max_length=250, verbose_name="Ссылка")
+
+    class Meta(DateMixin.Meta):
+        verbose_name = "Элемент главного меню"
+        verbose_name_plural = "Элементы главного меню"
+
+    def __str__(self):
+        return self.name
+
+
+class LeftMenuElement(DateMixin, PublishMixin):
+    name = models.CharField(max_length=250, verbose_name="Название элемента")
+    url = models.URLField(max_length=250, verbose_name="Ссылка")
+
+    class Meta(DateMixin.Meta):
+        verbose_name = "Элемент левого меню"
+        verbose_name_plural = "Элементы левого меню"
+
+    def __str__(self):
+        return self.name
+
+
+

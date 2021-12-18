@@ -1,0 +1,10 @@
+repos:
+-   repo: https://github.com/ambv/black
+    rev: 21.11b1
+    hooks:
+    - id: black
+      exclude: ^.*\b(migrations)\b.*$
+-   repo: https://gitlab.com/pycqa/flake8
+    rev: 4.0.1
+    hooks:
+    - id: flake8
