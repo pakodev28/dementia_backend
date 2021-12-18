@@ -9,14 +9,12 @@ class PartnerAdmin(admin.ModelAdmin):
     search_fields = ("name",)
 
 
-@admin.register(MainMenuElement)
 class MainMenuElementAdmin(admin.ModelAdmin):
     list_display = ("name", "url", "is_active")
     list_filter = ("name", "is_active")
     search_fields = ("name",)
 
 
-@admin.register(LeftMenuElement)
 class LeftMenuElementAdmin(admin.ModelAdmin):
     list_display = ("name", "url", "is_active")
     list_filter = ("name", "is_active")
@@ -24,3 +22,5 @@ class LeftMenuElementAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Partner, PartnerAdmin)
+admin.site.register(LeftMenuElement, LeftMenuElementAdmin)
+admin.site.register(MainMenuElement, MainMenuElementAdmin)

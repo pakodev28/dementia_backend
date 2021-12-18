@@ -8,28 +8,29 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = []
+    dependencies = [
+    ]
 
     operations = [
         migrations.CreateModel(
-            name="Partner",
+            name='Partner',
             fields=[
-                ("id", models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
-                ("created_at", models.DateTimeField(auto_now_add=True, verbose_name="Дата создания")),
-                ("updated_at", models.DateTimeField(auto_now=True, verbose_name="Дата обновления")),
-                ("is_active", models.BooleanField(default=True, verbose_name="Активность")),
-                ("image", models.ImageField(upload_to="partners/", verbose_name="Изображение")),
-                ("name", models.CharField(max_length=250, verbose_name="Название партнёра")),
-                ("url", models.URLField(max_length=250, verbose_name="Ссылка")),
+                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('created_at', models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')),
+                ('updated_at', models.DateTimeField(auto_now=True, verbose_name='Дата обновления')),
+                ('is_active', models.BooleanField(default=True, verbose_name='Активность')),
+                ('image', models.ImageField(upload_to='partners/', verbose_name='Изображение')),
+                ('name', models.CharField(max_length=250, verbose_name='Название партнёра')),
+                ('url', models.URLField(max_length=250, verbose_name='Ссылка')),
             ],
             options={
-                "verbose_name": "Партнёр",
-                "verbose_name_plural": "Партнёры",
-                "ordering": ["-updated_at"],
-                "abstract": False,
+                'verbose_name': 'Партнёр',
+                'verbose_name_plural': 'Партнёры',
+                'ordering': ['-updated_at'],
+                'abstract': False,
             },
             managers=[
-                ("active_objects", django.db.models.manager.Manager()),
+                ('active_objects', django.db.models.manager.Manager()),
             ],
         ),
     ]
