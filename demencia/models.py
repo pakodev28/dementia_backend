@@ -3,6 +3,19 @@ from django.db import models
 from core.mixins import DateMixin, PublishMixin
 
 
+class NewsArticle(DateMixin, PublishMixin):
+    image = models.ImageField(upload_to="news/", verbose_name="Изображение")
+    title = models.CharField(max_length=250, verbose_name="Заголовок")
+    text = models.TextField(verbose_name="Текст новости")
+
+    class Meta(DateMixin.Meta):
+        verbose_name = "Новость"
+        verbose_name_plural = "Новости"
+
+    def __str__(self):
+        return self.title
+
+
 class Partner(DateMixin, PublishMixin):
     image = models.ImageField(upload_to="partners/", verbose_name="Изображение")
     name = models.CharField(max_length=250, verbose_name="Название партнёра")
@@ -15,7 +28,7 @@ class Partner(DateMixin, PublishMixin):
     def __str__(self):
         return self.name
 
-    
+
 class Slider(DateMixin, PublishMixin):
     title = models.CharField(max_length=250, verbose_name="Заголовок")
     image = models.ImageField(upload_to="slider/", verbose_name="Изображение")
@@ -29,7 +42,7 @@ class Slider(DateMixin, PublishMixin):
     def __str__(self):
         return self.title
 
-      
+
 class MainMenuElement(DateMixin, PublishMixin):
     name = models.CharField(max_length=250, verbose_name="Название элемента")
     url = models.URLField(max_length=250, verbose_name="Ссылка")
@@ -52,6 +65,3 @@ class LeftMenuElement(DateMixin, PublishMixin):
 
     def __str__(self):
         return self.name
-
-
-
