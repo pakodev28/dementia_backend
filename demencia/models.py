@@ -3,6 +3,21 @@ from django.db import models
 from core.mixins import DateMixin, PublishMixin
 
 
+class NewsArticle(DateMixin, PublishMixin):
+    image = models.ImageField(upload_to="news/", verbose_name="Изображение")
+    title = models.CharField(max_length=250, verbose_name="Заголовок")
+    text = models.TextField(verbose_name="Текст новости")
+    url = models.URLField(max_length=250, verbose_name="Ссылка")
+    url_label = models.CharField(max_length=50, default="ПОДРОБНЕЕ", verbose_name="Название ссылки")
+
+    class Meta(DateMixin.Meta):
+        verbose_name = "Новость"
+        verbose_name_plural = "Новости"
+
+    def __str__(self):
+        return self.title
+
+      
 class MapPoint(DateMixin, PublishMixin):
     city = models.CharField(max_length=250, verbose_name="Город")
     address = models.CharField(max_length=250, verbose_name="Адрес в городе")

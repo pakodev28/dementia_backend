@@ -1,6 +1,12 @@
 from django.contrib import admin
 
-from .models import LeftMenuElement, MainMenuElement, MapPoint, Partner, Slider
+from .models import LeftMenuElement, MainMenuElement, NewsArticle, MapPoint, Partner, Slider
+
+
+class NewsArticleAdmin(admin.ModelAdmin):
+    list_display = ("title", "text", "url", "image", "is_active")
+    list_filter = ("title", "is_active")
+    search_fields = ("title", "text")
 
 
 class MapPointAdmin(admin.ModelAdmin):
@@ -16,9 +22,9 @@ class PartnerAdmin(admin.ModelAdmin):
 
 
 class SliderAdmin(admin.ModelAdmin):
-    list_display = ("title", "text", "image", "url", "is_active")
+    list_display = ("title", "image", "url", "is_active")
     list_filter = ("title", "is_active")
-    search_fields = ("title", "text")
+    search_fields = ("title",)
 
 
 class MainMenuElementAdmin(admin.ModelAdmin):
@@ -33,6 +39,7 @@ class LeftMenuElementAdmin(admin.ModelAdmin):
     search_fields = ("name",)
 
 
+admin.site.register(NewsArticle, NewsArticleAdmin)
 admin.site.register(MapPoint, MapPointAdmin)
 admin.site.register(Partner, PartnerAdmin)
 admin.site.register(Slider, SliderAdmin)
