@@ -22,9 +22,9 @@ class PartnerAdmin(admin.ModelAdmin):
 
 
 class SliderAdmin(admin.ModelAdmin):
-    list_display = ("title", "image", "url", "is_active")
+    list_display = ("title", "image", "url", "is_active", "url_label")
     list_filter = ("title", "is_active")
-    search_fields = ("title",)
+    search_fields = ("title", )
 
 
 class MainMenuElementAdmin(admin.ModelAdmin):
