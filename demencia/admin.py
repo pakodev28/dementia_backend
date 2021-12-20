@@ -4,7 +4,7 @@ from .models import LeftMenuElement, MainMenuElement, NewsArticle, Partner, Slid
 
 
 class NewsArticleAdmin(admin.ModelAdmin):
-    list_display = ("title", "text", "image", "is_active")
+    list_display = ("title", "text", "url", "image", "is_active")
     list_filter = ("title", "is_active")
     search_fields = ("title", "text")
 
