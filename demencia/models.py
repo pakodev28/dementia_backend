@@ -3,6 +3,19 @@ from django.db import models
 from core.mixins import DateMixin, PublishMixin
 
 
+class MapPoint(DateMixin, PublishMixin):
+    city = models.CharField(max_length=250, verbose_name="Город")
+    address = models.CharField(max_length=250, verbose_name="Адрес в городе")
+    phone_no = models.CharField(max_length=250, verbose_name="Номер телефона")
+
+    class Meta(DateMixin.Meta):
+        verbose_name = "Точка на карте"
+        verbose_name_plural = "Точки на карте"
+
+    def __str__(self):
+        return f"{self.city} ({self. address})"
+
+
 class Partner(DateMixin, PublishMixin):
     image = models.ImageField(upload_to="partners/", verbose_name="Изображение")
     name = models.CharField(max_length=250, verbose_name="Название партнёра")
@@ -15,7 +28,7 @@ class Partner(DateMixin, PublishMixin):
     def __str__(self):
         return self.name
 
-    
+
 class Slider(DateMixin, PublishMixin):
     title = models.CharField(max_length=250, verbose_name="Заголовок")
     image = models.ImageField(upload_to="slider/", verbose_name="Изображение")
@@ -29,7 +42,7 @@ class Slider(DateMixin, PublishMixin):
     def __str__(self):
         return self.title
 
-      
+
 class MainMenuElement(DateMixin, PublishMixin):
     name = models.CharField(max_length=250, verbose_name="Название элемента")
     url = models.URLField(max_length=250, verbose_name="Ссылка")
@@ -52,6 +65,3 @@ class LeftMenuElement(DateMixin, PublishMixin):
 
     def __str__(self):
         return self.name
-
-
-
