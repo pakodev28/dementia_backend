@@ -17,6 +17,19 @@ class NewsArticle(DateMixin, PublishMixin):
     def __str__(self):
         return self.title
 
+      
+class MapPoint(DateMixin, PublishMixin):
+    city = models.CharField(max_length=250, verbose_name="Город")
+    address = models.CharField(max_length=250, verbose_name="Адрес в городе")
+    phone_no = models.CharField(max_length=250, verbose_name="Номер телефона")
+
+    class Meta(DateMixin.Meta):
+        verbose_name = "Точка на карте"
+        verbose_name_plural = "Точки на карте"
+
+    def __str__(self):
+        return f"{self.city} ({self. address})"
+
 
 class Partner(DateMixin, PublishMixin):
     image = models.ImageField(upload_to="partners/", verbose_name="Изображение")
