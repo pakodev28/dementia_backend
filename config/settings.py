@@ -21,9 +21,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'solo',
-    'tinymce',
-
     'core',
     'demencia'
 ]
@@ -60,12 +57,8 @@ WSGI_APPLICATION = 'config.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': env.str('DB_ENGINE', 'django.db.backends.sqlite3'),
-        'NAME': env.str('DB_NAME', os.path.join(BASE_DIR, 'db.sqlite3')),
-        'USER': env.str('POSTGRES_USER', 'postgres'),
-        'PASSWORD': env.str('POSTGRES_PASSWORD', 'postgres'),
-        'HOST': env.str('DB_HOST', 'localhost'),
-        'PORT': env.int('DB_PORT', 5432)
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
 
