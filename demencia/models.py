@@ -4,11 +4,13 @@ from core.mixins import DateMixin, PublishMixin
 
 
 class NewsArticle(DateMixin, PublishMixin):
-    image = models.ImageField(upload_to="news/", verbose_name="Изображение")
-    title = models.CharField(max_length=250, verbose_name="Заголовок")
-    text = models.TextField(verbose_name="Текст новости")
-    url = models.URLField(max_length=250, verbose_name="Ссылка")
-    url_label = models.CharField(max_length=50, default="ПОДРОБНЕЕ", verbose_name="Название ссылки")
+    image = models.ImageField(upload_to="news/", verbose_name="Файл изображения")
+    title = models.CharField(max_length=250, verbose_name="Заголовок", help_text="Введите заголовок")
+    text = models.TextField(verbose_name="Текст новости", help_text="Введите текст")
+    url = models.URLField(max_length=250, verbose_name="Ссылка", help_text="Введите адрес ссылки")
+    url_label = models.CharField(
+        max_length=50, default="ПОДРОБНЕЕ", verbose_name="Название ссылки", help_text="Введите текст ссылки"
+    )
 
     class Meta(DateMixin.Meta):
         verbose_name = "Новость"
@@ -17,7 +19,7 @@ class NewsArticle(DateMixin, PublishMixin):
     def __str__(self):
         return self.title
 
-      
+
 class MapPoint(DateMixin, PublishMixin):
     city = models.CharField(max_length=250, verbose_name="Город")
     address = models.CharField(max_length=250, verbose_name="Адрес в городе")
@@ -32,9 +34,9 @@ class MapPoint(DateMixin, PublishMixin):
 
 
 class Partner(DateMixin, PublishMixin):
-    image = models.ImageField(upload_to="partners/", verbose_name="Изображение")
-    name = models.CharField(max_length=250, verbose_name="Название партнёра")
-    url = models.URLField(max_length=250, verbose_name="Ссылка")
+    image = models.ImageField(upload_to="partners/", verbose_name="Файл изображения")
+    name = models.CharField(max_length=250, verbose_name="Название партнёра", help_text="Введите название партнёра")
+    url = models.URLField(max_length=250, verbose_name="Ссылка", help_text="Введите адрес ссылки")
 
     class Meta(DateMixin.Meta):
         verbose_name = "Партнёр"
@@ -45,10 +47,12 @@ class Partner(DateMixin, PublishMixin):
 
 
 class Slider(DateMixin, PublishMixin):
-    title = models.CharField(max_length=250, verbose_name="Заголовок")
-    image = models.ImageField(upload_to="slider/", verbose_name="Изображение")
-    url = models.URLField(max_length=250, verbose_name="Ссылка")
-    url_label = models.CharField(max_length=50, default="ПОДРОБНЕЕ", verbose_name="Название ссылки")
+    title = models.CharField(max_length=250, verbose_name="Заголовок", help_text="Введите заголовок")
+    image = models.ImageField(upload_to="slider/", verbose_name="Файл изображения")
+    url = models.URLField(max_length=250, verbose_name="Ссылка", help_text="Введите адрес ссылки")
+    url_label = models.CharField(
+        max_length=50, default="ПОДРОБНЕЕ", verbose_name="Название ссылки", help_text="Введите текст ссылки"
+    )
 
     class Meta(DateMixin.Meta):
         verbose_name = "Слайд"
