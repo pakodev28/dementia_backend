@@ -1,7 +1,14 @@
+from solo.admin import SingletonModelAdmin
+
 from django.contrib import admin
 from django.utils.safestring import mark_safe
 
-from .models import LeftMenuElement, MainMenuElement, MapPoint, NewsArticle, Partner, Slider
+from demencia.models import LeftMenuElement, MainMenuElement, MapPoint, NewsArticle, Partner, Settings, Slider
+
+
+@admin.register(Settings)
+class SettingsAdmin(SingletonModelAdmin):
+    pass
 
 
 @admin.display(description="Изображение")
