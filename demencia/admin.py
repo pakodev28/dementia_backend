@@ -1,57 +1,44 @@
-from solo.admin import SingletonModelAdmin
-
 from django.contrib import admin
-from django.utils.safestring import mark_safe
 
-from demencia.models import LeftMenuElement, MainMenuElement, MapPoint, NewsArticle, Partner, Settings, Slider
-
-
-@admin.register(Settings)
-class SettingsAdmin(SingletonModelAdmin):
-    pass
+from .models import LeftMenuElement, MainMenuElement, NewsArticle, MapPoint, Partner, Slider
 
 
-@admin.display(description="Изображение")
-def preview(obj):
-    """Метод для отображения превью изображений"""
-    return mark_safe(f'<img src="{obj.image.url}" style="max-height: 100px;">')
+@admin.action(description="Отметить как активные")
+def toggle_active(modeladmin, request, queryset):
+    queryset.update(is_active=True)
+
+
+@admin.action(description="Отметить как неактивные")
+def toggle_inactive(modeladmin, request, queryset):
+    queryset.update(is_active=False)
 
 
 class NewsArticleAdmin(admin.ModelAdmin):
-    list_display = ("title", "url_label", "url", "text_area", "is_active", "created_at", "updated_at", preview)
-    list_filter = ("title", "is_active")
+    list_display = ("title", "text", "url", "image", "is_active")
+    list_filter = ("is_active",)
     search_fields = ("title", "text")
-
-    fields = ("title", "url_label", "url", "text", "is_active", ("created_at", "updated_at"), "image", preview)
-    readonly_fields = ("created_at", "updated_at", preview)
-
-    @admin.display(description="Текст новости")
-    def text_area(self, obj):
-        return mark_safe(f'<div style="overflow: auto; width:400px; height:100px;">{obj.text}</div>')
+    empty_value_display = '-пусто-'
+    actions = [toggle_active, toggle_inactive]
 
 
 class MapPointAdmin(admin.ModelAdmin):
-    list_display = ("city", "address", "phone_no")
+    list_display = ("city", "address", "phone_no", "is_active")
     list_filter = ("city", "is_active")
     search_fields = ("city", "address", "phone_no")
+    empty_value_display = '-пусто-'
+    actions = [toggle_active, toggle_inactive]
 
 
 class PartnerAdmin(admin.ModelAdmin):
-    list_display = ("name", "url", "is_active", "created_at", "updated_at", preview)
+    list_display = ("name", "url", "image", "is_active")
     list_filter = ("name", "is_active")
     search_fields = ("name",)
 
-    fields = ("name", "url", "is_active", ("created_at", "updated_at"), "image", preview)
-    readonly_fields = ("created_at", "updated_at", preview)
-
 
 class SliderAdmin(admin.ModelAdmin):
-    list_display = ("title", "url_label", "url", "is_active", "created_at", "updated_at", preview)
+    list_display = ("title", "image", "url", "is_active", "url_label")
     list_filter = ("title", "is_active")
-    search_fields = ("title",)
-
-    fields = ("title", "url_label", "url", "is_active", ("created_at", "updated_at"), "image", preview)
-    readonly_fields = ("created_at", "updated_at", preview)
+    search_fields = ("title", )
 
 
 class MainMenuElementAdmin(admin.ModelAdmin):
