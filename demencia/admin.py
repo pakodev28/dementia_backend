@@ -2,7 +2,7 @@ from solo.admin import SingletonModelAdmin
 
 from django.contrib import admin
 
-from demencia.models import LeftMenuElement, MainMenuElement, NewsArticle, MapPoint, Partner, Settings, Slider
+from demencia.models import LeftMenuElement, MainMenuElement, MapPoint, NewsArticle, Partner, Settings, Slider
 
 
 @admin.register(Settings)
@@ -31,7 +31,7 @@ class PartnerAdmin(admin.ModelAdmin):
 class SliderAdmin(admin.ModelAdmin):
     list_display = ("title", "image", "url", "is_active", "url_label")
     list_filter = ("title", "is_active")
-    search_fields = ("title", )
+    search_fields = ("title",)
 
 
 class MainMenuElementAdmin(admin.ModelAdmin):
