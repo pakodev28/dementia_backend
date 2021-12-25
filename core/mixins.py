@@ -11,8 +11,8 @@ class DateMixin(models.Model):
         updated_at: Дата обновления
     """
 
-    created_at = models.DateTimeField("Дата создания", auto_now_add=True)
-    updated_at = models.DateTimeField("Дата обновления", auto_now=True)
+    created_at = models.DateTimeField("Дата создания", auto_now_add=True, help_text="Заполняется автоматически")
+    updated_at = models.DateTimeField("Дата обновления", auto_now=True, help_text="Заполняется автоматически")
 
     class Meta:
         abstract = True
@@ -26,7 +26,7 @@ class PublishMixin(models.Model):
         is_active: Активность
     """
 
-    is_active = models.BooleanField("Активность", default=True)
+    is_active = models.BooleanField("Активность", default=True, help_text="Включить/отключить показ на сайте")
 
     active_objects = PublishQuerySet.as_manager()
 

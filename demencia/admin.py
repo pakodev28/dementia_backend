@@ -1,6 +1,7 @@
 from solo.admin import SingletonModelAdmin
 
 from django.contrib import admin
+from django.utils.safestring import mark_safe
 
 from demencia.models import LeftMenuElement, MainMenuElement, MapPoint, NewsArticle, Partner, Settings, Slider
 
@@ -10,10 +11,23 @@ class SettingsAdmin(SingletonModelAdmin):
     pass
 
 
+@admin.display(description="Изображение")
+def preview(obj):
+    """Метод для отображения превью изображений"""
+    return mark_safe(f'<img src="{obj.image.url}" style="max-height: 100px;">')
+
+
 class NewsArticleAdmin(admin.ModelAdmin):
-    list_display = ("title", "text", "url", "image", "is_active")
+    list_display = ("title", "url_label", "url", "text_area", "is_active", "created_at", "updated_at", preview)
     list_filter = ("title", "is_active")
     search_fields = ("title", "text")
+
+    fields = ("title", "url_label", "url", "text", "is_active", ("created_at", "updated_at"), "image", preview)
+    readonly_fields = ("created_at", "updated_at", preview)
+
+    @admin.display(description="Текст новости")
+    def text_area(self, obj):
+        return mark_safe(f'<div style="overflow: auto; width:400px; height:100px;">{obj.text}</div>')
 
 
 class MapPointAdmin(admin.ModelAdmin):
@@ -23,15 +37,21 @@ class MapPointAdmin(admin.ModelAdmin):
 
 
 class PartnerAdmin(admin.ModelAdmin):
-    list_display = ("name", "url", "image", "is_active")
+    list_display = ("name", "url", "is_active", "created_at", "updated_at", preview)
     list_filter = ("name", "is_active")
     search_fields = ("name",)
 
+    fields = ("name", "url", "is_active", ("created_at", "updated_at"), "image", preview)
+    readonly_fields = ("created_at", "updated_at", preview)
+
 
 class SliderAdmin(admin.ModelAdmin):
-    list_display = ("title", "image", "url", "is_active", "url_label")
+    list_display = ("title", "url_label", "url", "is_active", "created_at", "updated_at", preview)
     list_filter = ("title", "is_active")
     search_fields = ("title",)
+
+    fields = ("title", "url_label", "url", "is_active", ("created_at", "updated_at"), "image", preview)
+    readonly_fields = ("created_at", "updated_at", preview)
 
 
 class MainMenuElementAdmin(admin.ModelAdmin):
