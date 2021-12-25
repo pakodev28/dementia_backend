@@ -6,12 +6,13 @@ exclude = '''
   /(
       \.git          
     | \.mypy_cache
-    | \venv
-    | \config
+    | venv
+    | config
     | _build
     | buck-out
     | build
     | dist
+    | migrations
   )/
 )
 '''

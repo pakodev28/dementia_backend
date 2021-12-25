@@ -43,6 +43,13 @@
     git checkout -b feature/название_ветки
     ```
 5. Перед выполнением push проверить код flake8, при необходимости откорректировать с помощью black
+#### Настройка pre-commit хуков
+```
+pip install pre-commit
+```
+```
+pre-commit install
+```
 
 ## Built With
 
