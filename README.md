@@ -48,6 +48,9 @@
 
 * [Django](https://www.djangoproject.com/) - web framework written in Python.
 * [Django-environ](https://django-environ.readthedocs.io/en/latest/) - package that allows you to use Twelve-factor methodology to configure Django application with environment variables.
+* [Django-solo](https://pypi.org/project/django-solo/) - Django Solo helps working with singletons.
+* [Django-tinymce](https://pypi.org/project/django-tinymce/) - A Django application that contains a widget to render a form field as a TinyMCE editor.
+* [Psycopg2](https://pypi.org/project/psycopg2-binary/) - PostgreSQL database adapter for the Python programming language.
 
 ## Make команды
 
@@ -56,3 +59,4 @@
 * **run** - запуск сервера разработки.
 * **migrate** - синхронизация состояние базы данных с текущим состоянием моделей и миграций.
 * **lint** - проверка правильности кода.
+* **packages** - установка dev-зависимостей.
