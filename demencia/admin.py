@@ -8,7 +8,83 @@ from demencia.models import LeftMenuElement, MainMenuElement, MapPoint, NewsArti
 
 @admin.register(Settings)
 class SettingsAdmin(SingletonModelAdmin):
-    pass
+
+    fieldsets = (
+        (
+            "Общая информация",
+            {
+                "fields": (
+                    "site_name",
+                    "copyright",
+                    "meta_description",
+                )
+            },
+        ),
+        (
+            "Основная секция",
+            {
+                "fields": (
+                    "main_section_link",
+                    "main_section_additional",
+                    "main_section_additional_link",
+                    "main_section_additional_url",
+                )
+            },
+        ),
+        (
+            "О деменции",
+            {
+                "fields": (
+                    "about_section",
+                    "about_section_term",
+                    "about_section_term_link",
+                    "about_section_action_title",
+                    "about_section_action_subtitle",
+                    "about_section_info",
+                    "about_section_link",
+                )
+            },
+        ),
+        (
+            "Новости",
+            {
+                "fields": (
+                    "news_section",
+                    "news_section_link",
+                )
+            },
+        ),
+        (
+            "Партнеры",
+            {
+                "fields": (
+                    "partners_section",
+                    "partners_section_subtitle",
+                )
+            },
+        ),
+        (
+            "Карта",
+            {
+                "fields": (
+                    "map_section",
+                    "map_section_subtitle",
+                    "map_section_info",
+                )
+            },
+        ),
+        (
+            "О фонде",
+            {
+                "fields": (
+                    "fund_section",
+                    "fund_section_info",
+                    "fund_section_link",
+                    "fund_section_url",
+                )
+            },
+        ),
+    )
 
 
 @admin.display(description="Изображение")
