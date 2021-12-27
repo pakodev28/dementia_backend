@@ -1,7 +1,6 @@
+from phonenumber_field.modelfields import PhoneNumberField
 from solo.models import SingletonModel
 from tinymce.models import HTMLField
-from phonenumber_field.modelfields import PhoneNumberField
-
 
 from django.db import models
 
