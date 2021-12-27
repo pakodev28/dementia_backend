@@ -1,5 +1,7 @@
 from solo.models import SingletonModel
 from tinymce.models import HTMLField
+from phonenumber_field.modelfields import PhoneNumberField
+
 
 from django.db import models
 
@@ -25,8 +27,8 @@ class NewsArticle(DateMixin, PublishMixin):
 
 class MapPoint(DateMixin, PublishMixin):
     city = models.CharField(max_length=250, verbose_name="Город")
-    address = models.CharField(max_length=250, verbose_name="Адрес в городе")
-    phone_no = models.CharField(max_length=250, verbose_name="Номер телефона")
+    address = models.CharField(max_length=250, verbose_name="Адрес в городе", help_text="Улица, дом, офис")
+    phone_no = PhoneNumberField(verbose_name="Номер телефона", help_text="Номер телефона с указанием кода")
 
     class Meta(DateMixin.Meta):
         verbose_name = "Точка на карте"
