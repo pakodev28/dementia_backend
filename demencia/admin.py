@@ -6,6 +6,16 @@ from django.utils.safestring import mark_safe
 from demencia.models import LeftMenuElement, MainMenuElement, MapPoint, NewsArticle, Partner, Settings, Slider
 
 
+@admin.action(description="Отметить как активные")
+def toggle_active(queryset):
+    queryset.update(is_active=True)
+
+
+@admin.action(description="Отметить как неактивные")
+def toggle_inactive(queryset):
+    queryset.update(is_active=False)
+
+
 @admin.register(Settings)
 class SettingsAdmin(SingletonModelAdmin):
     pass
@@ -18,11 +28,12 @@ def image_preview(obj):
 
 
 class NewsArticleAdmin(admin.ModelAdmin):
+    actions = [toggle_active, toggle_inactive]
     list_display = ("title", "url_label", "url", "text_area", "is_active", "created_at", "updated_at", image_preview)
     list_filter = ("title", "is_active")
     search_fields = ("title", "text")
 
-    fields = ("title", "url_label", "url", "text", "is_active", "image", image_preview, ("created_at", "updated_at"))
+    fields = ("is_active", "title", "url_label", "url", "text", "image", image_preview, ("created_at", "updated_at"))
     readonly_fields = ("created_at", "updated_at", image_preview)
 
     @admin.display(description="Текст новости")
@@ -31,12 +42,17 @@ class NewsArticleAdmin(admin.ModelAdmin):
 
 
 class MapPointAdmin(admin.ModelAdmin):
-    list_display = ("city", "address", "phone_no")
+    actions = [toggle_active, toggle_inactive]
+    list_display = ("city", "address", "phone_no", "is_active")
     list_filter = ("city", "is_active")
     search_fields = ("city", "address", "phone_no")
 
+    fields = ("is_active", "city", "address", "phone_no", ("created_at", "updated_at"))
+    readonly_fields = ("created_at", "updated_at")
+
 
 class PartnerAdmin(admin.ModelAdmin):
+    actions = [toggle_active, toggle_inactive]
     list_display = ("name", "url", "is_active", "created_at", "updated_at", image_preview)
     list_filter = ("name", "is_active")
     search_fields = ("name",)
@@ -46,6 +62,7 @@ class PartnerAdmin(admin.ModelAdmin):
 
 
 class SliderAdmin(admin.ModelAdmin):
+    actions = [toggle_active, toggle_inactive]
     list_display = ("title", "url_label", "url", "is_active", "created_at", "updated_at", image_preview)
     list_filter = ("title", "is_active")
     search_fields = ("title",)
@@ -55,12 +72,14 @@ class SliderAdmin(admin.ModelAdmin):
 
 
 class MainMenuElementAdmin(admin.ModelAdmin):
+    actions = [toggle_active, toggle_inactive]
     list_display = ("name", "url", "is_active")
     list_filter = ("name", "is_active")
     search_fields = ("name",)
 
 
 class LeftMenuElementAdmin(admin.ModelAdmin):
+    actions = [toggle_active, toggle_inactive]
     list_display = ("name", "url", "is_active")
     list_filter = ("name", "is_active")
     search_fields = ("name",)
