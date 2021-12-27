@@ -1,53 +1,85 @@
-from django.contrib import admin
+from solo.admin import SingletonModelAdmin
 
-from .models import LeftMenuElement, MainMenuElement, NewsArticle, MapPoint, Partner, Slider
+from django.contrib import admin
+from django.utils.safestring import mark_safe
+
+from demencia.models import LeftMenuElement, MainMenuElement, MapPoint, NewsArticle, Partner, Settings, Slider
 
 
 @admin.action(description="Отметить как активные")
-def toggle_active(modeladmin, request, queryset):
+def toggle_active(queryset):
     queryset.update(is_active=True)
 
 
 @admin.action(description="Отметить как неактивные")
-def toggle_inactive(modeladmin, request, queryset):
+def toggle_inactive(queryset):
     queryset.update(is_active=False)
 
 
+@admin.register(Settings)
+class SettingsAdmin(SingletonModelAdmin):
+    pass
+
+
+@admin.display(description="Изображение")
+def image_preview(obj):
+    """Метод для отображения превью изображений"""
+    return mark_safe(f'<img src="{obj.image.url}" style="max-height: 100px;">')
+
+
 class NewsArticleAdmin(admin.ModelAdmin):
-    list_display = ("title", "text", "url", "image", "is_active")
-    list_filter = ("is_active",)
-    search_fields = ("title", "text")
-    empty_value_display = '-пусто-'
     actions = [toggle_active, toggle_inactive]
+    list_display = ("title", "url_label", "url", "text_area", "is_active", "created_at", "updated_at", image_preview)
+    list_filter = ("title", "is_active")
+    search_fields = ("title", "text")
+
+    fields = ("is_active", "title", "url_label", "url", "text", "image", image_preview, ("created_at", "updated_at"))
+    readonly_fields = ("created_at", "updated_at", image_preview)
+
+    @admin.display(description="Текст новости")
+    def text_area(self, obj):
+        return mark_safe(f'<div style="overflow: auto; width:400px; height:100px;">{obj.text}</div>')
 
 
 class MapPointAdmin(admin.ModelAdmin):
+    actions = [toggle_active, toggle_inactive]
     list_display = ("city", "address", "phone_no", "is_active")
     list_filter = ("city", "is_active")
     search_fields = ("city", "address", "phone_no")
-    empty_value_display = '-пусто-'
-    actions = [toggle_active, toggle_inactive]
+
+    fields = ("is_active", "city", "address", "phone_no", ("created_at", "updated_at"))
+    readonly_fields = ("created_at", "updated_at")
 
 
 class PartnerAdmin(admin.ModelAdmin):
-    list_display = ("name", "url", "image", "is_active")
+    actions = [toggle_active, toggle_inactive]
+    list_display = ("name", "url", "is_active", "created_at", "updated_at", image_preview)
     list_filter = ("name", "is_active")
     search_fields = ("name",)
 
+    fields = ("name", "url", "is_active", "image", image_preview, ("created_at", "updated_at"))
+    readonly_fields = ("created_at", "updated_at", image_preview)
+
 
 class SliderAdmin(admin.ModelAdmin):
-    list_display = ("title", "image", "url", "is_active", "url_label")
+    actions = [toggle_active, toggle_inactive]
+    list_display = ("title", "url_label", "url", "is_active", "created_at", "updated_at", image_preview)
     list_filter = ("title", "is_active")
-    search_fields = ("title", )
+    search_fields = ("title",)
+
+    fields = ("title", "url_label", "url", "is_active", "image", image_preview, ("created_at", "updated_at"))
+    readonly_fields = ("created_at", "updated_at", image_preview)
 
 
 class MainMenuElementAdmin(admin.ModelAdmin):
+    actions = [toggle_active, toggle_inactive]
     list_display = ("name", "url", "is_active")
     list_filter = ("name", "is_active")
     search_fields = ("name",)
 
 
 class LeftMenuElementAdmin(admin.ModelAdmin):
+    actions = [toggle_active, toggle_inactive]
     list_display = ("name", "url", "is_active")
     list_filter = ("name", "is_active")
     search_fields = ("name",)
