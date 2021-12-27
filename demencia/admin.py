@@ -12,18 +12,18 @@ class SettingsAdmin(SingletonModelAdmin):
 
 
 @admin.display(description="Изображение")
-def preview(obj):
+def image_preview(obj):
     """Метод для отображения превью изображений"""
     return mark_safe(f'<img src="{obj.image.url}" style="max-height: 100px;">')
 
 
 class NewsArticleAdmin(admin.ModelAdmin):
-    list_display = ("title", "url_label", "url", "text_area", "is_active", "created_at", "updated_at", preview)
+    list_display = ("title", "url_label", "url", "text_area", "is_active", "created_at", "updated_at", image_preview)
     list_filter = ("title", "is_active")
     search_fields = ("title", "text")
 
-    fields = ("title", "url_label", "url", "text", "is_active", ("created_at", "updated_at"), "image", preview)
-    readonly_fields = ("created_at", "updated_at", preview)
+    fields = ("title", "url_label", "url", "text", "is_active", "image", image_preview, ("created_at", "updated_at"))
+    readonly_fields = ("created_at", "updated_at", image_preview)
 
     @admin.display(description="Текст новости")
     def text_area(self, obj):
@@ -37,21 +37,21 @@ class MapPointAdmin(admin.ModelAdmin):
 
 
 class PartnerAdmin(admin.ModelAdmin):
-    list_display = ("name", "url", "is_active", "created_at", "updated_at", preview)
+    list_display = ("name", "url", "is_active", "created_at", "updated_at", image_preview)
     list_filter = ("name", "is_active")
     search_fields = ("name",)
 
-    fields = ("name", "url", "is_active", ("created_at", "updated_at"), "image", preview)
-    readonly_fields = ("created_at", "updated_at", preview)
+    fields = ("name", "url", "is_active", "image", image_preview, ("created_at", "updated_at"))
+    readonly_fields = ("created_at", "updated_at", image_preview)
 
 
 class SliderAdmin(admin.ModelAdmin):
-    list_display = ("title", "url_label", "url", "is_active", "created_at", "updated_at", preview)
+    list_display = ("title", "url_label", "url", "is_active", "created_at", "updated_at", image_preview)
     list_filter = ("title", "is_active")
     search_fields = ("title",)
 
-    fields = ("title", "url_label", "url", "is_active", ("created_at", "updated_at"), "image", preview)
-    readonly_fields = ("created_at", "updated_at", preview)
+    fields = ("title", "url_label", "url", "is_active", "image", image_preview, ("created_at", "updated_at"))
+    readonly_fields = ("created_at", "updated_at", image_preview)
 
 
 class MainMenuElementAdmin(admin.ModelAdmin):
