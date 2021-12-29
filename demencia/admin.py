@@ -18,7 +18,7 @@ def preview(obj):
 
 
 class NewsArticleAdmin(admin.ModelAdmin):
-    list_display = ("title", "url_label", "url", "text_area", "is_active", "created_at", "updated_at", preview)
+    list_display = ("pk", "title", "url_label", "url", "text_area", "is_active", "created_at", "updated_at", preview)
     list_filter = ("title", "is_active")
     search_fields = ("title", "text")
 
