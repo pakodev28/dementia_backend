@@ -7,12 +7,12 @@ from demencia.models import LeftMenuElement, MainMenuElement, MapPoint, NewsArti
 
 
 @admin.action(description="Отметить как активные")
-def toggle_active(queryset):
+def toggle_active(modeladmin, request, queryset):
     queryset.update(is_active=True)
 
 
 @admin.action(description="Отметить как неактивные")
-def toggle_inactive(queryset):
+def toggle_inactive(modeladmin, request, queryset):
     queryset.update(is_active=False)
 
 
