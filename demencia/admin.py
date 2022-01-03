@@ -6,12 +6,12 @@ from django.utils.safestring import mark_safe
 from demencia.models import LeftMenuElement, MainMenuElement, MapPoint, NewsArticle, Partner, Settings, Slider
 
 
-@admin.action(description="Отметить как активные")
+@admin.action(description="Сделать активными")
 def toggle_active(modeladmin, request, queryset):
     queryset.update(is_active=True)
 
 
-@admin.action(description="Отметить как неактивные")
+@admin.action(description="Сделать неактивными")
 def toggle_inactive(modeladmin, request, queryset):
     queryset.update(is_active=False)
 
