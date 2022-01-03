@@ -6,9 +6,9 @@ from graphene_django.views import GraphQLView
 
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('tinymce/', include('tinymce.urls')),
-    path('graphql/', GraphQLView.as_view(graphiql=True)),
+    path("admin/", admin.site.urls),
+    path("tinymce/", include("tinymce.urls")),
+    path("graphql/", GraphQLView.as_view(graphiql=True)),
 ]
 
 if settings.DEBUG:
