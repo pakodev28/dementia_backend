@@ -16,7 +16,7 @@
 В Notion-тикете необходимо добавить ссылку на PR.
 
 ## Подготовка окружения для работы:
-1. Склонировать проект, перейти в папку demencia-backend, настроить .env файл(устанавливаются значения для DEBUG и SECRET KEY):
+1. Склонировать проект, перейти в папку demencia-backend, при необходимости настроить .env файл:
     ```shell
     git clone git@github.com:Studio-Yandex-Practicum/demencia-backend.git
     cd demencia-backend
@@ -38,18 +38,31 @@
     venv\Scripts\activate.bat
     pip install -r .\requirements\dev.txt
     ```
-4. Создать новую ветку и переключиться в нее для работы
+4. Запустить базу данных
+5. Создать новую ветку и переключиться в нее для работы
 	```shell
     git checkout -b feature/название_ветки
     ```
-5. Перед выполнением push проверить код flake8, при необходимости откорректировать с помощью black
-#### Настройка pre-commit хуков
+6. Перед выполнением push проверить код flake8, при необходимости откорректировать с помощью black
+
+#### Настройка pre-commit хуков для автоматической проверки кода black и flake8 перед коммитом
 ```
 pip install pre-commit
 ```
 ```
 pre-commit install
 ```
+
+## Запуск базы данных
+Для запуска базы данных удобно пользоваться docker-compose
+	```shell
+	cd ./infrastructure
+    docker-compose -f postgres-local.yaml up -d
+    ```
+Для остановки контейнера с БД: 
+	```shell
+    docker-compose -f postgres-local.yaml down
+    ```
 
 ## Built With
 
