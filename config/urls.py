@@ -2,11 +2,13 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path
+from graphene_django.views import GraphQLView
 
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('tinymce/', include('tinymce.urls')),
+    path("admin/", admin.site.urls),
+    path("tinymce/", include("tinymce.urls")),
+    path("graphql/", GraphQLView.as_view(graphiql=True)),
 ]
 
 if settings.DEBUG:

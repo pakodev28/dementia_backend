@@ -28,7 +28,7 @@ class PublishMixin(models.Model):
 
     is_active = models.BooleanField("Активность", default=True, help_text="Включить/отключить показ на сайте")
 
-    active_objects = PublishQuerySet.as_manager()
+    objects = PublishQuerySet.as_manager()
 
     class Meta:
         abstract = True
