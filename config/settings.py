@@ -8,7 +8,7 @@ env = environ.Env()
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 environ.Env.read_env(os.path.join(BASE_DIR, ".env"))
 
-SECRET_KEY = env.str("SECRET_KEY")
+SECRET_KEY = env.str("secret")
 DEBUG = env.bool("DEBUG", False)
 ALLOWED_HOSTS = env.str("ALLOWED_HOSTS", default="").split(" ")
 
@@ -20,14 +20,11 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-
-    'phonenumber_field',
-    'solo',
-    'tinymce',
-
-    'core',
-    'demencia'
-  
+    "phonenumber_field",
+    "solo",
+    "tinymce",
+    "core",
+    "demencia",
     "graphene_django",
 ]
 
@@ -99,7 +96,7 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 STATIC_URL = "/static/"
-STATIC_ROOT = os.path.join(BASE_DIR, "static/")
+STATIC_ROOT = os.path.join(BASE_DIR, "static")
 
 MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
