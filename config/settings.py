@@ -20,11 +20,12 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "graphene_django",
+    "phonenumber_field",
     "solo",
     "tinymce",
     "core",
     "demencia",
+    "graphene_django",
 ]
 
 MIDDLEWARE = [
@@ -95,11 +96,13 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 STATIC_URL = "/static/"
-STATIC_ROOT = os.path.join(BASE_DIR, "static/")
+STATIC_ROOT = os.path.join(BASE_DIR, "static")
 
 MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
-
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 GRAPHENE = {"SCHEMA": "config.schema.schema"}
+
+PHONENUMBER_DB_FORMAT = "NATIONAL"
+PHONENUMBER_DEFAULT_REGION = "RU"
