@@ -66,8 +66,10 @@ pre-commit install
     ```
 
 ## Загрузка тестовых данных в БД
-1. Переместить каталог **fixtures** в директорию **media**
-2. Выполнить команду ```python manage.py loaddata fixtures_data.json```
+1. Выполнить команду ```python manage.py loaddata demencia/fixtures/data.json```
+2. Если необходимо привязать картинку для объекта в БД:
+  * в директории **media** создайте директорию **fixtures**
+  * скопируйте **test.png** из **demencia/fixtures** в **media/fixtures**
 
 ## Built With
 
