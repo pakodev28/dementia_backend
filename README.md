@@ -60,9 +60,16 @@ pre-commit install
     docker-compose -f postgres-local.yaml up -d
     ```
 Для остановки контейнера с БД: 
-	```shell
+	```
+    shell
     docker-compose -f postgres-local.yaml down
     ```
+
+## Загрузка тестовых данных в БД
+1. Выполнить команду ```python manage.py loaddata demencia/fixtures/data.json```
+2. Если необходимо привязать картинку для объекта в БД:
+  * в директории **media** создайте директорию **fixtures**
+  * скопируйте **test.png** из **demencia/fixtures** в **media/fixtures**
 
 ## Built With
 
