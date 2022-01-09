@@ -105,7 +105,7 @@ def image_preview(obj):
 
 class NewsArticleAdmin(admin.ModelAdmin):
     actions = [toggle_active, toggle_inactive]
-    list_display = ("title", "url_label", "url", "text_area", "is_active", "created_at", "updated_at", image_preview)
+    list_display = ("title",  "is_active", "text_area", image_preview, "url", "url_label", "created_at", "updated_at")
     list_filter = ("title", "is_active")
     search_fields = ("title", "text")
 
@@ -119,7 +119,7 @@ class NewsArticleAdmin(admin.ModelAdmin):
 
 class MapPointAdmin(admin.ModelAdmin):
     actions = [toggle_active, toggle_inactive]
-    list_display = ("city", "address", "phone_no", "is_active")
+    list_display = ("city", "is_active", "address", "phone_no")
     list_filter = ("city", "is_active")
     search_fields = ("city", "address", "phone_no")
 
@@ -129,7 +129,7 @@ class MapPointAdmin(admin.ModelAdmin):
 
 class PartnerAdmin(admin.ModelAdmin):
     actions = [toggle_active, toggle_inactive]
-    list_display = ("name", "url", "is_active", "created_at", "updated_at", image_preview)
+    list_display = ("name", "is_active", image_preview, "url", "created_at", "updated_at")
     list_filter = ("name", "is_active")
     search_fields = ("name",)
 
@@ -139,7 +139,7 @@ class PartnerAdmin(admin.ModelAdmin):
 
 class SliderAdmin(admin.ModelAdmin):
     actions = [toggle_active, toggle_inactive]
-    list_display = ("title", "url_label", "url", "is_active", "created_at", "updated_at", image_preview)
+    list_display = ("title", "is_active", image_preview, "url", "url_label", "created_at", "updated_at")
     list_filter = ("title", "is_active")
     search_fields = ("title",)
 
@@ -149,14 +149,14 @@ class SliderAdmin(admin.ModelAdmin):
 
 class MainMenuElementAdmin(admin.ModelAdmin):
     actions = [toggle_active, toggle_inactive]
-    list_display = ("name", "url", "is_active")
+    list_display = ("name", "is_active", "url")
     list_filter = ("name", "is_active")
     search_fields = ("name",)
 
 
 class LeftMenuElementAdmin(admin.ModelAdmin):
     actions = [toggle_active, toggle_inactive]
-    list_display = ("name", "url", "is_active")
+    list_display = ("name", "is_active", "url")
     list_filter = ("name", "is_active")
     search_fields = ("name",)
 
