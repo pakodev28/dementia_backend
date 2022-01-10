@@ -148,5 +148,8 @@ class Settings(SingletonModel):
     )
 
     class Meta:
-        verbose_name = "Системные настройки"
-        verbose_name_plural = "Системные настройки"
+        verbose_name = "Настройки главной страницы"
+        verbose_name_plural = "Настройки главной страницы"
+    
+    def __str__(self):
+        return "Настройки"
