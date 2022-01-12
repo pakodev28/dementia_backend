@@ -105,7 +105,7 @@ def image_preview(obj):
 
 class NewsArticleAdmin(admin.ModelAdmin):
     actions = [toggle_active, toggle_inactive]
-    list_display = ("title",  "is_active", "text_area", image_preview, "url", "url_label", "created_at", "updated_at")
+    list_display = ("title", "is_active", "text_area", image_preview, "url", "url_label", "created_at", "updated_at")
     list_filter = ("title", "is_active")
     search_fields = ("title", "text")
 
