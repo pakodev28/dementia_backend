@@ -68,27 +68,27 @@ class LeftMenuElementType(BaseType, DjangoObjectType):
 
 
 class Query(ObjectType):
-    newsarticles = graphene.List(
+    news_articles = graphene.List(
         NewsArticleType, description="Активные объекты класса NewsArticle(Новости) (is_active=True)"
     )
-    mappoints = graphene.List(
+    map_points = graphene.List(
         MapPointType, description="Активные объекты класса MapPoint(Точка на карте) (is_active=True)"
     )
     partners = graphene.List(PartnerType, description="Активные объекты класса Partner(Партнер) (is_active=True)")
     sliders = graphene.List(SliderType, description="Активные объекты класса Slider(Слайдер) (is_active=True)")
-    mainmenuelements = graphene.List(
+    main_menu_elements = graphene.List(
         MainMenuElementType,
         description="Активные объекты класса MainMenuElement(Элемент главного меню) (is_active=True)",
     )
-    leftmenuelements = graphene.List(
+    left_menu_elements = graphene.List(
         LeftMenuElementType,
         description="Активные объекты класса LeftMenuElement(Элемент левого меню) (is_active=True)",
     )
 
-    def resolve_newsarticles(self, info, **kwargs):
+    def resolve_news_articles(self, info, **kwargs):
         return NewsArticle.objects.active()
 
-    def resolve_mappoints(self, info, **kwargs):
+    def resolve_map_points(self, info, **kwargs):
         return MapPoint.objects.active()
 
     def resolve_partners(self, info, **kwargs):
@@ -97,10 +97,10 @@ class Query(ObjectType):
     def resolve_sliders(self, info, **kwargs):
         return Slider.objects.active()
 
-    def resolve_mainmenuelements(self, info, **kwargs):
+    def resolve_main_menu_elements(self, info, **kwargs):
         return MainMenuElement.objects.active()
 
-    def resolve_leftmenuelements(self, info, **kwargs):
+    def resolve_left_menu_elements(self, info, **kwargs):
         return LeftMenuElement.objects.active()
 
 
