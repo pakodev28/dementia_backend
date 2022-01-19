@@ -1,7 +1,7 @@
 import graphene
 from graphene_django.types import DjangoObjectType, ObjectType
 
-from .models import LeftMenuElement, MainMenuElement, MapPoint, NewsArticle, Partner, Slider
+from .models import LeftMenuElement, MainMenuElement, MapPoint, NewsArticle, Partner, Settings, Slider
 
 
 class BaseType(ObjectType):
@@ -66,6 +66,41 @@ class LeftMenuElementType(BaseType, DjangoObjectType):
         model = LeftMenuElement
 
 
+class SettingsType(DjangoObjectType):
+    site_name = graphene.String(description="Название сайта", required=True)
+    copyright = graphene.String(description="Авторское право", required=True)
+    meta_description = graphene.String(description="Meta описание", required=True)
+    main_section_link = graphene.String(description="Название ссылки основной секции", required=True)
+    main_section_additional = graphene.String(description="Доп. информация в основной секции", required=True)
+    main_section_additional_link = graphene.String(
+        description="Название ссылки для доп. информации в основной секции", required=True
+    )
+    main_section_additional_url = graphene.String(
+        description="Ссылка на ресурс доп. информации в основной секции", required=True
+    )
+    about_section = graphene.String(description="Название секции о заболевании", required=True)
+    about_section_term = graphene.String(description="Определение термина", required=True)
+    about_section_term_link = graphene.String(description="Название ссылки для раскрытия термина", required=True)
+    about_section_action_title = graphene.String(description="Заголовок действия", required=True)
+    about_section_action_subtitle = graphene.String(description="Подзаголовок действия", required=True)
+    about_section_info = graphene.String(description="Информация о статистике", required=True)
+    about_section_link = graphene.String(description="Название ссылки для прохождения теста", required=True)
+    news_section = graphene.String(description="Название секции новостей", required=True)
+    news_section_link = graphene.String(description="Название ссылки новостей", required=True)
+    partners_section = graphene.String(description="Название секции партнеров", required=True)
+    partners_section_subtitle = graphene.String(description="Название ссылки партнеров", required=True)
+    map_section = graphene.String(description="Название секции карты", required=True)
+    map_section_subtitle = graphene.String(description="Название ссылки карты", required=True)
+    map_section_info = graphene.String(description="Предупреждение", required=True)
+    fund_section = graphene.String(description="Название секции фонда", required=True)
+    fund_section_info = graphene.String(description="Описание фонда", required=True)
+    fund_section_link = graphene.String(description="Название ссылки фонда", required=True)
+    fund_section_url = graphene.String(description="Ссылка на сайт фонда", required=True)
+
+    class Meta:
+        model = Settings
+
+
 class Query(ObjectType):
     news_articles = graphene.List(
         NewsArticleType, description="Активные объекты класса NewsArticle(Новости) (is_active=True)"
@@ -83,6 +118,7 @@ class Query(ObjectType):
         LeftMenuElementType,
         description="Активные объекты класса LeftMenuElement(Элемент левого меню) (is_active=True)",
     )
+    settings = graphene.Field(SettingsType, description="Настройки главной страницы")
 
     def resolve_news_articles(self, info, **kwargs):
         return NewsArticle.objects.active()
@@ -101,6 +137,9 @@ class Query(ObjectType):
 
     def resolve_left_menu_elements(self, info, **kwargs):
         return LeftMenuElement.objects.active()
+
+    def resolve_settings(self, info, **kwargs):
+        return Settings.objects.get()
 
 
 schema = graphene.Schema(query=Query)
