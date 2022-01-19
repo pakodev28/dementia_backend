@@ -1,8 +1,9 @@
+from graphene_django.views import GraphQLView
+
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path
-from graphene_django.views import GraphQLView
 
 
 urlpatterns = [

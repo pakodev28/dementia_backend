@@ -1,7 +1,7 @@
 import graphene
 from graphene_django.types import DjangoObjectType, ObjectType
 
-from .models import LeftMenuElement, MainMenuElement, MapPoint, NewsArticle, Partner, Slider, Settings
+from .models import LeftMenuElement, MainMenuElement, MapPoint, NewsArticle, Partner, Settings, Slider
 
 
 class BaseType(ObjectType):
