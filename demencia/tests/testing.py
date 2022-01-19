@@ -8,7 +8,7 @@ class APITestCase(GraphQLTestCase):
 
     NUMBER_OF_ACTIVE_ELEMENTS = 3
 
-    def assertResponseHasExpectedFields(self, response, model_query_name, expected):
+    def assertResponseHasExpectedFields(self, response, model_query_name, expected):  # noqa: N802
         """
         Метод проверки соответствия полей объекта в ответе API
         """
@@ -19,7 +19,7 @@ class APITestCase(GraphQLTestCase):
             with self.subTest(field=field):
                 self.assertIn(field, first_element.keys())
 
-    def assertShowOnlyActiveElements(self, response, model_query_name):
+    def assertShowOnlyActiveElements(self, response, model_query_name):  # noqa: N802
         """
         Метод проверки выдачи активных элементов
         """

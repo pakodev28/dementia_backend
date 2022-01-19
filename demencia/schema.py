@@ -1,5 +1,4 @@
 import graphene
-
 from graphene_django.types import DjangoObjectType, ObjectType
 
 from .models import LeftMenuElement, MainMenuElement, MapPoint, NewsArticle, Partner, Slider, Settings
@@ -140,7 +139,7 @@ class Query(ObjectType):
         return LeftMenuElement.objects.active()
 
     def resolve_settings(self, info, **kwargs):
-        return Settings.objects.get(id=1)
+        return Settings.objects.get()
 
 
 schema = graphene.Schema(query=Query)
