@@ -39,7 +39,6 @@ jobs:
           username: ${{ secrets.USER }}
           key: ${{ secrets.SSH_KEY }}
           passphrase: ${{ secrets.PASSPHRASE }}
-          stack_file_name: docker-compose.yaml
           script: |
             cd /code
             sudo rm -f .env
@@ -56,5 +55,5 @@ jobs:
             cd ./infrastructure/
             sudo docker pull ${{ secrets.DOCKER_USERNAME }}/demencia_backend:latest
             sudo docker-compose stop
-            sudo docker-compose rm backend
+            sudo docker-compose rm backend -f
             sudo docker-compose up -d
