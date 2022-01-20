@@ -11,6 +11,7 @@ class NewsArticleTestCase(APITestCase):
                 newsArticles {
                     id
                     title
+                    subTitle
                     text
                     image
                     url
@@ -23,7 +24,18 @@ class NewsArticleTestCase(APITestCase):
             """
         )
 
-        expected_fields = ["id", "title", "text", "image", "url", "urlLabel", "isActive", "createdAt", "updatedAt"]
+        expected_fields = [
+            "id",
+            "title",
+            "subTitle",
+            "text",
+            "image",
+            "url",
+            "urlLabel",
+            "isActive",
+            "createdAt",
+            "updatedAt",
+        ]
 
         self.assertResponseNoErrors(response)
         self.assertResponseHasExpectedFields(response, "newsArticles", expected_fields)

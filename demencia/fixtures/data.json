@@ -8,6 +8,7 @@
         "is_active":true,
         "image":"fixtures/test.png",
         "title":"Невероятное открытие",
+        "sub_title":"Просто невероятно",
         "text":"Невероятное открытие совершили британские ученые",
         "url":"https://www.example.com/1/",
         "url_label":"ПОДРОБНЕЕ"
@@ -22,6 +23,7 @@
         "is_active":false,
         "image":"fixtures/test.png",
         "title":"Новое лекарство",
+        "sub_title":"Лекарство",
         "text":"Новое лекарство изобрели британские ученые :)",
         "url":"https://www.example.com/2/",
         "url_label":"ПОДРОБНЕЕ"
@@ -36,6 +38,7 @@
         "is_active":true,
         "image":"fixtures/test.png",
         "title":"Тест IQ",
+        "sub_title":"IQ",
         "text":"Британские ученые усовершенствовали тест на IQ :)",
         "url":"https://www.example.com/3/",
         "url_label":"ПОДРОБНЕЕ"
@@ -50,6 +53,7 @@
         "is_active":true,
         "image":"fixtures/test.png",
         "title":"Новость ради новости",
+        "sub_title":"Из-за новости",
         "text":"После многих лет разработки, британские ученые таки создали новость ради новости!",
         "url":"https://www.example.com/4/",
         "url_label":"ПОДРОБНЕЕ"
@@ -64,6 +68,7 @@
         "is_active":false,
         "image":"fixtures/test.png",
         "title":"Британские ученые",
+        "sub_title":"Не такие как руские",
         "text":"Британские ученые - спасибо, что вы есть!",
         "url":"https://www.example.com/5/",
         "url_label":"ПОДРОБНЕЕ"

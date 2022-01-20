@@ -10,6 +10,7 @@ from core.mixins import DateMixin, PublishMixin
 class NewsArticle(DateMixin, PublishMixin):
     image = models.ImageField(upload_to="news/", verbose_name="Файл изображения")
     title = models.CharField(max_length=250, verbose_name="Заголовок", help_text="Введите заголовок")
+    sub_title = models.CharField(max_length=250, verbose_name="Подзаголовок", help_text="Введите подзаголовок")
     text = models.TextField(verbose_name="Текст новости", help_text="Введите текст")
     url = models.URLField(max_length=250, verbose_name="Ссылка", help_text="Введите адрес ссылки")
     url_label = models.CharField(
