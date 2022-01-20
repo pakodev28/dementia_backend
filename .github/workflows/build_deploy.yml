@@ -42,6 +42,7 @@ jobs:
           passphrase: ${{ secrets.PASSPHRASE }}
           stack_file_name: docker-compose.yaml
           script: |
+            cd /code
             sudo rm -f .env
             touch .env
             echo DB_ENGINE=${{ secrets.DB_ENGINE }} >> .env
@@ -53,7 +54,7 @@ jobs:
             echo DEBUG=${{ secrets.DEBUG }} >> .env
             echo SECRET_KEY=${{ secrets.SECRET_KEY }} >> .env
             echo ALLOWED_HOSTS=${{ secrets.ALLOWED_HOSTS }} >> .env
-            cd infrastructure/
+            cd ./infrastructure/
             sudo docker pull ${{ secrets.DOCKER_USERNAME }}/demencia_backend:latest
             sudo docker-compose stop
             sudo docker-compose rm backend
