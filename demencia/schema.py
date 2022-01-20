@@ -14,6 +14,7 @@ class BaseType(ObjectType):
 class NewsArticleType(BaseType, DjangoObjectType):
     image = graphene.String(description="Изображение", required=True)
     title = graphene.String(description="Заголовок новости", required=True)
+    sub_title = graphene.String(description="Подзаголовок новости", required=True)
     text = graphene.String(description="Текст новости", required=True)
     url = graphene.String(description="Ссылка", required=True)
     url_label = graphene.String(description="Название ссылки", required=True)

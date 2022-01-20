@@ -105,11 +105,31 @@ def image_preview(obj):
 
 class NewsArticleAdmin(admin.ModelAdmin):
     actions = [toggle_active, toggle_inactive]
-    list_display = ("title", "is_active", "text_area", image_preview, "url", "url_label", "created_at", "updated_at")
+    list_display = (
+        "title",
+        "is_active",
+        "sub_title",
+        "text_area",
+        image_preview,
+        "url",
+        "url_label",
+        "created_at",
+        "updated_at",
+    )
     list_filter = ("title", "is_active")
     search_fields = ("title", "text")
 
-    fields = ("is_active", "title", "url_label", "url", "text", "image", image_preview, ("created_at", "updated_at"))
+    fields = (
+        "is_active",
+        "title",
+        "sub_title",
+        "url_label",
+        "url",
+        "text",
+        "image",
+        image_preview,
+        ("created_at", "updated_at"),
+    )
     readonly_fields = ("created_at", "updated_at", image_preview)
 
     @admin.display(description="Текст новости")
