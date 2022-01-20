@@ -106,6 +106,9 @@ class Query(ObjectType):
     news_articles = graphene.List(
         NewsArticleType, description="Активные объекты класса NewsArticle(Новости) (is_active=True)"
     )
+    news_article = graphene.Field(
+        NewsArticleType, id=graphene.ID(required=True), description="Объект класса NewsArticle(Новости) по id"
+    )
     map_points = graphene.List(
         MapPointType, description="Активные объекты класса MapPoint(Точка на карте) (is_active=True)"
     )
@@ -123,6 +126,9 @@ class Query(ObjectType):
 
     def resolve_news_articles(self, info, **kwargs):
         return NewsArticle.objects.active()
+
+    def resolve_news_article(self, info, id):
+        return NewsArticle.objects.get(pk=id)
 
     def resolve_map_points(self, info, **kwargs):
         return MapPoint.objects.active()
