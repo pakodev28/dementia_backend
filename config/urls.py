@@ -7,6 +7,9 @@ from django.urls import include, path
 from django.views.decorators.csrf import csrf_exempt
 
 
+admin.site.site_header = "Администрирование Деменция.net"
+admin.site.site_title = "Администрирование Деменция.net"
+
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("tinymce/", include("tinymce.urls")),
