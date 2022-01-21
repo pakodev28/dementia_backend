@@ -1,6 +1,7 @@
 from phonenumber_field.modelfields import PhoneNumberField
 from solo.models import SingletonModel
 from tinymce.models import HTMLField
+from url_or_relative_url_field.fields import URLOrRelativeURLField
 
 from django.db import models
 
@@ -69,7 +70,7 @@ class Slider(DateMixin, PublishMixin):
 
 class MainMenuElement(DateMixin, PublishMixin):
     name = models.CharField(max_length=250, verbose_name="Название элемента")
-    url = models.URLField(max_length=250, verbose_name="Ссылка")
+    url = URLOrRelativeURLField(max_length=250, verbose_name="Ссылка")
 
     class Meta(DateMixin.Meta):
         verbose_name = "Элемент главного меню"
@@ -81,7 +82,7 @@ class MainMenuElement(DateMixin, PublishMixin):
 
 class LeftMenuElement(DateMixin, PublishMixin):
     name = models.CharField(max_length=250, verbose_name="Название элемента")
-    url = models.URLField(max_length=250, verbose_name="Ссылка")
+    url = URLOrRelativeURLField(max_length=250, verbose_name="Ссылка")
 
     class Meta(DateMixin.Meta):
         verbose_name = "Элемент левого меню"
