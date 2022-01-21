@@ -23,6 +23,7 @@ INSTALLED_APPS = [
     "phonenumber_field",
     "solo",
     "tinymce",
+    "url_or_relative_url_field",
     "core",
     "demencia",
     "graphene_django",
