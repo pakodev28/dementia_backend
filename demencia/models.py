@@ -13,7 +13,7 @@ class NewsArticle(DateMixin, PublishMixin):
     title = models.CharField(max_length=250, verbose_name="Заголовок", help_text="Введите заголовок")
     sub_title = models.CharField(max_length=250, verbose_name="Подзаголовок", help_text="Введите подзаголовок")
     text = models.TextField(verbose_name="Текст новости", help_text="Введите текст")
-    url = models.URLField(max_length=250, verbose_name="Ссылка", help_text="Введите адрес ссылки")
+    url = URLOrRelativeURLField(max_length=250, verbose_name="Ссылка", help_text="Введите адрес ссылки")
     url_label = models.CharField(
         max_length=50, default="ПОДРОБНЕЕ", verbose_name="Название ссылки", help_text="Введите текст ссылки"
     )
@@ -55,7 +55,7 @@ class Partner(DateMixin, PublishMixin):
 class Slider(DateMixin, PublishMixin):
     title = models.CharField(max_length=250, verbose_name="Заголовок", help_text="Введите заголовок")
     image = models.ImageField(upload_to="slider/", verbose_name="Файл изображения")
-    url = models.URLField(max_length=250, verbose_name="Ссылка", help_text="Введите адрес ссылки")
+    url = URLOrRelativeURLField(max_length=250, verbose_name="Ссылка", help_text="Введите адрес ссылки")
     url_label = models.CharField(
         max_length=50, default="ПОДРОБНЕЕ", verbose_name="Название ссылки", help_text="Введите текст ссылки"
     )
@@ -99,21 +99,15 @@ class Settings(SingletonModel):
     )
     meta_description = models.TextField("Meta описание")
 
-    main_section_link = models.CharField("Название ссылки", max_length=255, default="Пройти тест")
-    main_section_additional = models.TextField("Доп. информация")
-    main_section_additional_link = models.CharField(
-        verbose_name="Название ссылки для доп. информации", max_length=255, default="Подробнее"
-    )
-    main_section_additional_url = models.URLField(
-        verbose_name="Ссылка на ресурс доп. информации",
-        max_length=255,
-        default="https://душевная.москва/ru-RU/moscow_nko/all_news/card/12871.html",
-    )
+    main_section_button_label = models.CharField("Название кнопки", max_length=255, default="Пройти тест")
 
     about_section = models.CharField("Название секции", max_length=255, default="О деменции")
     about_section_term = HTMLField("Определение термина")
-    about_section_term_link = models.CharField(
-        verbose_name="Название ссылки для раскрытия термина", max_length=255, default="Подробнее"
+    about_section_term_open_label = models.CharField(
+        verbose_name="Название кнопки для раскрытия термина", max_length=255, default="Подробнее"
+    )
+    about_section_term_close_label = models.CharField(
+        verbose_name="Название кнопки для скрытия термина", max_length=255, default="Скрыть"
     )
     about_section_action_title = models.CharField(
         verbose_name="Заголовок действия", max_length=255, default="Помоги близким"
@@ -122,27 +116,27 @@ class Settings(SingletonModel):
         verbose_name="Подзаголовок действия", max_length=255, default="Пройди тест с тем кому нужна помощь"
     )
     about_section_info = HTMLField("Информация о статистике")
-    about_section_link = models.CharField(
-        verbose_name="Название ссылки для прохождения теста", max_length=255, default="Пройти тест"
+    about_section_button_label = models.CharField(
+        verbose_name="Название кнопки для прохождения теста", max_length=255, default="Пройти тест"
     )
 
     news_section = models.CharField("Название секции", max_length=255, default="Что нового?")
-    news_section_link = models.CharField(
+    news_section_url_label = models.CharField(
         verbose_name="Название ссылки", max_length=255, default="Перейти к ленте новостей"
     )
 
     partners_section = models.CharField("Название секции", max_length=255, default="Кто с нами?")
-    partners_section_subtitle = models.CharField("Название ссылки", max_length=255, default="Партнеры")
+    partners_section_subtitle = models.CharField("Подзаголовок секции", max_length=255, default="Партнеры")
 
     map_section = models.CharField("Название секции", max_length=255, default="Куда идти?")
     map_section_subtitle = models.CharField(
-        verbose_name="Название ссылки", max_length=255, default="Карта центров профилактики"
+        verbose_name="Подзаголовок секции", max_length=255, default="Карта центров профилактики"
     )
     map_section_info = HTMLField("Предупреждение")
 
     fund_section = models.CharField("Название секции", max_length=255, default="О фонде")
     fund_section_info = HTMLField("Описание")
-    fund_section_link = models.CharField(
+    fund_section_url_label = models.CharField(
         verbose_name="Название ссылки", max_length=255, default="Перейти на сайт фонда"
     )
     fund_section_url = models.URLField(

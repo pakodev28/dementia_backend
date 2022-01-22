@@ -32,14 +32,7 @@ class SettingsAdmin(SingletonModelAdmin):
         ),
         (
             "Основная секция",
-            {
-                "fields": (
-                    "main_section_link",
-                    "main_section_additional",
-                    "main_section_additional_link",
-                    "main_section_additional_url",
-                )
-            },
+            {"fields": ("main_section_button_label",)},
         ),
         (
             "О деменции",
@@ -47,11 +40,12 @@ class SettingsAdmin(SingletonModelAdmin):
                 "fields": (
                     "about_section",
                     "about_section_term",
-                    "about_section_term_link",
+                    "about_section_term_open_label",
+                    "about_section_term_close_label",
                     "about_section_action_title",
                     "about_section_action_subtitle",
                     "about_section_info",
-                    "about_section_link",
+                    "about_section_button_label",
                 )
             },
         ),
@@ -60,7 +54,7 @@ class SettingsAdmin(SingletonModelAdmin):
             {
                 "fields": (
                     "news_section",
-                    "news_section_link",
+                    "news_section_url_label",
                 )
             },
         ),
@@ -89,7 +83,7 @@ class SettingsAdmin(SingletonModelAdmin):
                 "fields": (
                     "fund_section",
                     "fund_section_info",
-                    "fund_section_link",
+                    "fund_section_url_label",
                     "fund_section_url",
                 )
             },
