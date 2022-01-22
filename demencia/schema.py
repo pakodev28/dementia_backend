@@ -71,14 +71,7 @@ class SettingsType(DjangoObjectType):
     site_name = graphene.String(description="Название сайта", required=True)
     copyright = graphene.String(description="Авторское право", required=True)
     meta_description = graphene.String(description="Meta описание", required=True)
-    main_section_link = graphene.String(description="Название ссылки основной секции", required=True)
-    main_section_additional = graphene.String(description="Доп. информация в основной секции", required=True)
-    main_section_additional_link = graphene.String(
-        description="Название ссылки для доп. информации в основной секции", required=True
-    )
-    main_section_additional_url = graphene.String(
-        description="Ссылка на ресурс доп. информации в основной секции", required=True
-    )
+    main_section_label = graphene.String(description="Название кнопки основной секции", required=True)
     about_section = graphene.String(description="Название секции о заболевании", required=True)
     about_section_term = graphene.String(description="Определение термина", required=True)
     about_section_term_link = graphene.String(description="Название ссылки для раскрытия термина", required=True)

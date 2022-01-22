@@ -34,10 +34,7 @@ class SettingsAdmin(SingletonModelAdmin):
             "Основная секция",
             {
                 "fields": (
-                    "main_section_link",
-                    "main_section_additional",
-                    "main_section_additional_link",
-                    "main_section_additional_url",
+                    "main_section_label",
                 )
             },
         ),
