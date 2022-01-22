@@ -32,11 +32,7 @@ class SettingsAdmin(SingletonModelAdmin):
         ),
         (
             "Основная секция",
-            {
-                "fields": (
-                    "main_section_label",
-                )
-            },
+            {"fields": ("main_section_label",)},
         ),
         (
             "О деменции",
