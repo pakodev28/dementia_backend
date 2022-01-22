@@ -1,3 +1,4 @@
+from django.conf import settings
 import graphene
 from graphene_django.types import DjangoObjectType, ObjectType
 
@@ -11,8 +12,14 @@ class BaseType(ObjectType):
     is_active = graphene.Boolean(description="Активность", required=True)
 
 
-class NewsArticleType(BaseType, DjangoObjectType):
+class BaseTypeImageField(BaseType):
     image = graphene.String(description="Изображение", required=True)
+
+    def resolve_image(self, info):
+        return f"{settings.CURRENTLY_HOST}{self.image.url}"
+
+
+class NewsArticleType(BaseTypeImageField, DjangoObjectType):
     title = graphene.String(description="Заголовок новости", required=True)
     sub_title = graphene.String(description="Подзаголовок новости", required=True)
     text = graphene.String(description="Текст новости", required=True)
@@ -32,8 +39,7 @@ class MapPointType(BaseType, DjangoObjectType):
         model = MapPoint
 
 
-class PartnerType(BaseType, DjangoObjectType):
-    image = graphene.String(description="Изображение", required=True)
+class PartnerType(BaseTypeImageField, DjangoObjectType):
     name = graphene.String(description="Название партнера", required=True)
     url = graphene.String(description="Ссылка", required=True)
 
@@ -41,9 +47,8 @@ class PartnerType(BaseType, DjangoObjectType):
         model = Partner
 
 
-class SliderType(BaseType, DjangoObjectType):
+class SliderType(BaseTypeImageField, DjangoObjectType):
     title = graphene.String(description="Заголовок", required=True)
-    image = graphene.String(description="Изображение", required=True)
     url = graphene.String(description="Ссылка", required=True)
     url_label = graphene.String(description="Название ссылки", required=True)
 
