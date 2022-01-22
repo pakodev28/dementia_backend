@@ -1,10 +1,8 @@
+from django.conf import settings
 import graphene
 from graphene_django.types import DjangoObjectType, ObjectType
 
 from .models import LeftMenuElement, MainMenuElement, MapPoint, NewsArticle, Partner, Settings, Slider
-
-
-CURRENTLY_HOST = "http://dev-demencia.tk"
 
 
 class BaseType(ObjectType):
@@ -18,7 +16,7 @@ class BaseTypeImageField(BaseType):
     image = graphene.String(description="Изображение", required=True)
 
     def resolve_image(self, info):
-        return f"{CURRENTLY_HOST}{self.image.url}"
+        return f"{settings.CURRENTLY_HOST}{self.image.url}"
 
 
 class NewsArticleType(BaseTypeImageField, DjangoObjectType):
@@ -78,31 +76,25 @@ class SettingsType(DjangoObjectType):
     site_name = graphene.String(description="Название сайта", required=True)
     copyright = graphene.String(description="Авторское право", required=True)
     meta_description = graphene.String(description="Meta описание", required=True)
-    main_section_link = graphene.String(description="Название ссылки основной секции", required=True)
-    main_section_additional = graphene.String(description="Доп. информация в основной секции", required=True)
-    main_section_additional_link = graphene.String(
-        description="Название ссылки для доп. информации в основной секции", required=True
-    )
-    main_section_additional_url = graphene.String(
-        description="Ссылка на ресурс доп. информации в основной секции", required=True
-    )
+    main_section_button_label = graphene.String(description="Название кнопки основной секции", required=True)
     about_section = graphene.String(description="Название секции о заболевании", required=True)
     about_section_term = graphene.String(description="Определение термина", required=True)
-    about_section_term_link = graphene.String(description="Название ссылки для раскрытия термина", required=True)
+    about_section_term_open_label = graphene.String(description="Название кнопки для раскрытия термина", required=True)
+    about_section_term_close_label = graphene.String(description="Название кнопки для скрытия термина", required=True)
     about_section_action_title = graphene.String(description="Заголовок действия", required=True)
     about_section_action_subtitle = graphene.String(description="Подзаголовок действия", required=True)
     about_section_info = graphene.String(description="Информация о статистике", required=True)
-    about_section_link = graphene.String(description="Название ссылки для прохождения теста", required=True)
+    about_section_button_label = graphene.String(description="Название кнопки для прохождения теста", required=True)
     news_section = graphene.String(description="Название секции новостей", required=True)
-    news_section_link = graphene.String(description="Название ссылки новостей", required=True)
+    news_section_url_label = graphene.String(description="Название ссылки новостей", required=True)
     partners_section = graphene.String(description="Название секции партнеров", required=True)
-    partners_section_subtitle = graphene.String(description="Название ссылки партнеров", required=True)
+    partners_section_subtitle = graphene.String(description="Подзаголовок секции партнеров", required=True)
     map_section = graphene.String(description="Название секции карты", required=True)
-    map_section_subtitle = graphene.String(description="Название ссылки карты", required=True)
+    map_section_subtitle = graphene.String(description="Подзаголовок секции карты", required=True)
     map_section_info = graphene.String(description="Предупреждение", required=True)
     fund_section = graphene.String(description="Название секции фонда", required=True)
     fund_section_info = graphene.String(description="Описание фонда", required=True)
-    fund_section_link = graphene.String(description="Название ссылки фонда", required=True)
+    fund_section_url_label = graphene.String(description="Название ссылки фонда", required=True)
     fund_section_url = graphene.String(description="Ссылка на сайт фонда", required=True)
 
     class Meta:
