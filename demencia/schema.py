@@ -19,6 +19,10 @@ class BaseTypeImageField(BaseType):
         return f"{settings.CURRENTLY_HOST}{self.image.url}"
 
 
+class OrderingType(ObjectType):
+    position = graphene.Int(description="Позиция", required=True)
+
+
 class NewsArticleType(BaseTypeImageField, DjangoObjectType):
     title = graphene.String(description="Заголовок новости", required=True)
     sub_title = graphene.String(description="Подзаголовок новости", required=True)
@@ -30,7 +34,7 @@ class NewsArticleType(BaseTypeImageField, DjangoObjectType):
         model = NewsArticle
 
 
-class MapPointType(BaseType, DjangoObjectType):
+class MapPointType(BaseType, DjangoObjectType, OrderingType):
     city = graphene.String(description="Город", required=True)
     address = graphene.String(description="Адрес в городе", required=True)
     phone_no = graphene.String(description="Номер телефона", required=True)
@@ -39,7 +43,7 @@ class MapPointType(BaseType, DjangoObjectType):
         model = MapPoint
 
 
-class PartnerType(BaseTypeImageField, DjangoObjectType):
+class PartnerType(BaseTypeImageField, DjangoObjectType, OrderingType):
     name = graphene.String(description="Название партнера", required=True)
     url = graphene.String(description="Ссылка", required=True)
 
@@ -47,7 +51,7 @@ class PartnerType(BaseTypeImageField, DjangoObjectType):
         model = Partner
 
 
-class SliderType(BaseTypeImageField, DjangoObjectType):
+class SliderType(BaseTypeImageField, DjangoObjectType, OrderingType):
     title = graphene.String(description="Заголовок", required=True)
     url = graphene.String(description="Ссылка", required=True)
     url_label = graphene.String(description="Название ссылки", required=True)
@@ -56,7 +60,7 @@ class SliderType(BaseTypeImageField, DjangoObjectType):
         model = Slider
 
 
-class MainMenuElementType(BaseType, DjangoObjectType):
+class MainMenuElementType(BaseType, DjangoObjectType, OrderingType):
     name = graphene.String(description="Название элемента", required=True)
     url = graphene.String(description="Ссылка", required=True)
 
@@ -64,7 +68,7 @@ class MainMenuElementType(BaseType, DjangoObjectType):
         model = MainMenuElement
 
 
-class LeftMenuElementType(BaseType, DjangoObjectType):
+class LeftMenuElementType(BaseType, DjangoObjectType, OrderingType):
     name = graphene.String(description="Название элемента", required=True)
     url = graphene.String(description="Ссылка", required=True)
 

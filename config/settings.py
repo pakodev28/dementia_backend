@@ -25,6 +25,7 @@ INSTALLED_APPS = [
     "solo",
     "tinymce",
     "url_or_relative_url_field",
+    "adminsortable2",
     "core",
     "demencia",
     "graphene_django",

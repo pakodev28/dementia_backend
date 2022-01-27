@@ -16,12 +16,13 @@ class PartnerTestCase(APITestCase):
                     isActive
                     createdAt
                     updatedAt
+                    position
                   }
                 }
             """
         )
 
-        expected_fields = ["id", "image", "name", "url", "isActive", "createdAt", "updatedAt"]
+        expected_fields = ["id", "image", "name", "url", "isActive", "createdAt", "updatedAt", "position"]
 
         self.assertResponseNoErrors(response)
         self.assertResponseHasExpectedFields(response, "partners", expected_fields)

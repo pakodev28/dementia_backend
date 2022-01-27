@@ -17,12 +17,13 @@ class SliderTestCase(APITestCase):
                     isActive
                     createdAt
                     updatedAt
+                    position
                   }
                 }
             """
         )
 
-        expected_fields = ["id", "title", "image", "url", "urlLabel", "isActive", "createdAt", "updatedAt"]
+        expected_fields = ["id", "title", "image", "url", "urlLabel", "isActive", "createdAt", "updatedAt", "position"]
 
         self.assertResponseNoErrors(response)
         self.assertResponseHasExpectedFields(response, "sliders", expected_fields)

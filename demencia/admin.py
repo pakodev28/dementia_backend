@@ -1,4 +1,5 @@
 from solo.admin import SingletonModelAdmin
+from adminsortable2.admin import SortableAdminMixin
 
 from django.contrib import admin
 from django.utils.safestring import mark_safe
@@ -131,48 +132,61 @@ class NewsArticleAdmin(admin.ModelAdmin):
         return mark_safe(f'<div style="overflow: auto; width:400px; height:100px;">{obj.text}</div>')
 
 
-class MapPointAdmin(admin.ModelAdmin):
+class MapPointAdmin(SortableAdminMixin, admin.ModelAdmin):
     actions = [toggle_active, toggle_inactive]
     list_display = ("city", "is_active", "address", "phone_no")
     list_filter = ("city", "is_active")
     search_fields = ("city", "address", "phone_no")
 
-    fields = ("is_active", "city", "address", "phone_no", ("created_at", "updated_at"))
-    readonly_fields = ("created_at", "updated_at")
+    fields = ("is_active", "city", "address", "phone_no", ("created_at", "updated_at"), "position")
+    readonly_fields = ("created_at", "updated_at", "position")
 
 
-class PartnerAdmin(admin.ModelAdmin):
+class PartnerAdmin(SortableAdminMixin, admin.ModelAdmin):
     actions = [toggle_active, toggle_inactive]
     list_display = ("name", "is_active", image_preview, "url", "created_at", "updated_at")
     list_filter = ("name", "is_active")
     search_fields = ("name",)
 
-    fields = ("name", "url", "is_active", "image", image_preview, ("created_at", "updated_at"))
-    readonly_fields = ("created_at", "updated_at", image_preview)
+    fields = ("name", "url", "is_active", "image", image_preview, ("created_at", "updated_at"), "position")
+    readonly_fields = ("created_at", "updated_at", image_preview, "position")
 
 
-class SliderAdmin(admin.ModelAdmin):
+class SliderAdmin(SortableAdminMixin, admin.ModelAdmin):
     actions = [toggle_active, toggle_inactive]
     list_display = ("title", "is_active", image_preview, "url", "url_label", "created_at", "updated_at")
     list_filter = ("title", "is_active")
     search_fields = ("title",)
 
-    fields = ("title", "url_label", "url", "is_active", "image", image_preview, ("created_at", "updated_at"))
-    readonly_fields = ("created_at", "updated_at", image_preview)
+    fields = (
+        "title",
+        "url_label",
+        "url",
+        "is_active",
+        "image",
+        image_preview,
+        ("created_at", "updated_at"),
+        "position",
+    )
+    readonly_fields = ("created_at", "updated_at", image_preview, "position")
 
 
-class MainMenuElementAdmin(admin.ModelAdmin):
+class MainMenuElementAdmin(SortableAdminMixin, admin.ModelAdmin):
     actions = [toggle_active, toggle_inactive]
     list_display = ("name", "is_active", "url")
     list_filter = ("name", "is_active")
     search_fields = ("name",)
 
+    readonly_fields = ("position",)
 
-class LeftMenuElementAdmin(admin.ModelAdmin):
+
+class LeftMenuElementAdmin(SortableAdminMixin, admin.ModelAdmin):
     actions = [toggle_active, toggle_inactive]
     list_display = ("name", "is_active", "url")
     list_filter = ("name", "is_active")
     search_fields = ("name",)
+
+    readonly_fields = ("position",)
 
 
 admin.site.register(NewsArticle, NewsArticleAdmin)
