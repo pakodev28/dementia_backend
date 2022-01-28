@@ -15,13 +15,12 @@ class LeftMenuTestCase(APITestCase):
                     isActive
                     createdAt
                     updatedAt
-                    position
                   }
                 }
             """
         )
 
-        expected_fields = ["id", "name", "url", "isActive", "createdAt", "updatedAt", "position"]
+        expected_fields = ["id", "name", "url", "isActive", "createdAt", "updatedAt"]
 
         self.assertResponseNoErrors(response)
         self.assertResponseHasExpectedFields(response, "leftMenuElements", expected_fields)

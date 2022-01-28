@@ -138,8 +138,8 @@ class MapPointAdmin(SortableAdminMixin, admin.ModelAdmin):
     list_filter = ("city", "is_active")
     search_fields = ("city", "address", "phone_no")
 
-    fields = ("is_active", "city", "address", "phone_no", ("created_at", "updated_at"), "position")
-    readonly_fields = ("created_at", "updated_at", "position")
+    fields = ("is_active", "city", "address", "phone_no", ("created_at", "updated_at"))
+    readonly_fields = ("created_at", "updated_at")
 
 
 class PartnerAdmin(SortableAdminMixin, admin.ModelAdmin):
@@ -148,8 +148,8 @@ class PartnerAdmin(SortableAdminMixin, admin.ModelAdmin):
     list_filter = ("name", "is_active")
     search_fields = ("name",)
 
-    fields = ("name", "url", "is_active", "image", image_preview, ("created_at", "updated_at"), "position")
-    readonly_fields = ("created_at", "updated_at", image_preview, "position")
+    fields = ("name", "url", "is_active", "image", image_preview, ("created_at", "updated_at"))
+    readonly_fields = ("created_at", "updated_at", image_preview)
 
 
 class SliderAdmin(SortableAdminMixin, admin.ModelAdmin):
@@ -158,17 +158,8 @@ class SliderAdmin(SortableAdminMixin, admin.ModelAdmin):
     list_filter = ("title", "is_active")
     search_fields = ("title",)
 
-    fields = (
-        "title",
-        "url_label",
-        "url",
-        "is_active",
-        "image",
-        image_preview,
-        ("created_at", "updated_at"),
-        "position",
-    )
-    readonly_fields = ("created_at", "updated_at", image_preview, "position")
+    fields = ("title", "url_label", "url", "is_active", "image", image_preview, ("created_at", "updated_at"))
+    readonly_fields = ("created_at", "updated_at", image_preview)
 
 
 class MainMenuElementAdmin(SortableAdminMixin, admin.ModelAdmin):
@@ -177,16 +168,12 @@ class MainMenuElementAdmin(SortableAdminMixin, admin.ModelAdmin):
     list_filter = ("name", "is_active")
     search_fields = ("name",)
 
-    readonly_fields = ("position",)
-
 
 class LeftMenuElementAdmin(SortableAdminMixin, admin.ModelAdmin):
     actions = [toggle_active, toggle_inactive]
     list_display = ("name", "is_active", "url")
     list_filter = ("name", "is_active")
     search_fields = ("name",)
-
-    readonly_fields = ("position",)
 
 
 admin.site.register(NewsArticle, NewsArticleAdmin)

@@ -19,10 +19,6 @@ class BaseTypeImageField(BaseType):
         return f"{settings.CURRENTLY_HOST}{self.image.url}"
 
 
-class OrderingType(ObjectType):
-    position = graphene.Int(description="Позиция", required=True)
-
-
 class NewsArticleType(BaseTypeImageField, DjangoObjectType):
     title = graphene.String(description="Заголовок новости", required=True)
     sub_title = graphene.String(description="Подзаголовок новости", required=True)
@@ -34,46 +30,51 @@ class NewsArticleType(BaseTypeImageField, DjangoObjectType):
         model = NewsArticle
 
 
-class MapPointType(BaseType, DjangoObjectType, OrderingType):
+class MapPointType(BaseType, DjangoObjectType):
     city = graphene.String(description="Город", required=True)
     address = graphene.String(description="Адрес в городе", required=True)
     phone_no = graphene.String(description="Номер телефона", required=True)
 
     class Meta:
         model = MapPoint
+        exclude = ("position",)
 
 
-class PartnerType(BaseTypeImageField, DjangoObjectType, OrderingType):
+class PartnerType(BaseTypeImageField, DjangoObjectType):
     name = graphene.String(description="Название партнера", required=True)
     url = graphene.String(description="Ссылка", required=True)
 
     class Meta:
         model = Partner
+        exclude = ("position",)
 
 
-class SliderType(BaseTypeImageField, DjangoObjectType, OrderingType):
+class SliderType(BaseTypeImageField, DjangoObjectType):
     title = graphene.String(description="Заголовок", required=True)
     url = graphene.String(description="Ссылка", required=True)
     url_label = graphene.String(description="Название ссылки", required=True)
 
     class Meta:
         model = Slider
+        exclude = ("position",)
 
 
-class MainMenuElementType(BaseType, DjangoObjectType, OrderingType):
+class MainMenuElementType(BaseType, DjangoObjectType):
     name = graphene.String(description="Название элемента", required=True)
     url = graphene.String(description="Ссылка", required=True)
 
     class Meta:
         model = MainMenuElement
+        exclude = ("position",)
 
 
-class LeftMenuElementType(BaseType, DjangoObjectType, OrderingType):
+class LeftMenuElementType(BaseType, DjangoObjectType):
     name = graphene.String(description="Название элемента", required=True)
     url = graphene.String(description="Ссылка", required=True)
 
     class Meta:
         model = LeftMenuElement
+        exclude = ("position",)
 
 
 class SettingsType(DjangoObjectType):

@@ -16,13 +16,12 @@ class MapPointTestCase(APITestCase):
                     isActive
                     createdAt
                     updatedAt
-                    position
                   }
                 }
             """
         )
 
-        expected_fields = ["id", "city", "address", "phoneNo", "isActive", "createdAt", "updatedAt", "position"]
+        expected_fields = ["id", "city", "address", "phoneNo", "isActive", "createdAt", "updatedAt"]
 
         self.assertResponseNoErrors(response)
         self.assertResponseHasExpectedFields(response, "mapPoints", expected_fields)
