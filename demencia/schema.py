@@ -9,7 +9,6 @@ class BaseType(ObjectType):
     id = graphene.ID(description="ID объекта", required=True)
     created_at = graphene.DateTime(description="Дата создания", required=True)
     updated_at = graphene.DateTime(description="Дата обновления", required=True)
-    is_active = graphene.Boolean(description="Активность", required=True)
 
 
 class NewsArticleType(BaseType, DjangoObjectType):
@@ -21,6 +20,7 @@ class NewsArticleType(BaseType, DjangoObjectType):
 
     class Meta:
         model = NewsArticle
+        exclude = ("is_active",)
 
 
 class MapPointType(BaseType, DjangoObjectType):
@@ -30,6 +30,7 @@ class MapPointType(BaseType, DjangoObjectType):
 
     class Meta:
         model = MapPoint
+        exclude = ("is_active",)
 
 
 class PartnerType(BaseType, DjangoObjectType):
@@ -39,6 +40,7 @@ class PartnerType(BaseType, DjangoObjectType):
 
     class Meta:
         model = Partner
+        exclude = ("is_active",)
 
 
 class SliderType(BaseType, DjangoObjectType):
@@ -49,6 +51,7 @@ class SliderType(BaseType, DjangoObjectType):
 
     class Meta:
         model = Slider
+        exclude = ("is_active",)
 
 
 class MainMenuElementType(BaseType, DjangoObjectType):
@@ -57,6 +60,7 @@ class MainMenuElementType(BaseType, DjangoObjectType):
 
     class Meta:
         model = MainMenuElement
+        exclude = ("is_active",)
 
 
 class LeftMenuElementType(BaseType, DjangoObjectType):
@@ -65,24 +69,25 @@ class LeftMenuElementType(BaseType, DjangoObjectType):
 
     class Meta:
         model = LeftMenuElement
+        exclude = ("is_active",)
 
 
 class Query(ObjectType):
     news_articles = graphene.List(
-        NewsArticleType, description="Активные объекты класса NewsArticle(Новости) (is_active=True)"
+        NewsArticleType, description="Активные объекты класса NewsArticle(Новости)"
     )
     map_points = graphene.List(
-        MapPointType, description="Активные объекты класса MapPoint(Точка на карте) (is_active=True)"
+        MapPointType, description="Активные объекты класса MapPoint(Точка на карте)"
     )
-    partners = graphene.List(PartnerType, description="Активные объекты класса Partner(Партнер) (is_active=True)")
-    sliders = graphene.List(SliderType, description="Активные объекты класса Slider(Слайдер) (is_active=True)")
+    partners = graphene.List(PartnerType, description="Активные объекты класса Partner(Партнер)")
+    sliders = graphene.List(SliderType, description="Активные объекты класса Slider(Слайдер)")
     main_menu_elements = graphene.List(
         MainMenuElementType,
-        description="Активные объекты класса MainMenuElement(Элемент главного меню) (is_active=True)",
+        description="Активные объекты класса MainMenuElement(Элемент главного меню)",
     )
     left_menu_elements = graphene.List(
         LeftMenuElementType,
-        description="Активные объекты класса LeftMenuElement(Элемент левого меню) (is_active=True)",
+        description="Активные объекты класса LeftMenuElement(Элемент левого меню)",
     )
 
     def resolve_news_articles(self, info, **kwargs):
