@@ -1,4 +1,5 @@
 from solo.admin import SingletonModelAdmin
+from adminsortable2.admin import SortableAdminMixin
 
 from django.contrib import admin
 from django.utils.safestring import mark_safe
@@ -131,7 +132,7 @@ class NewsArticleAdmin(admin.ModelAdmin):
         return mark_safe(f'<div style="overflow: auto; width:400px; height:100px;">{obj.text}</div>')
 
 
-class MapPointAdmin(admin.ModelAdmin):
+class MapPointAdmin(SortableAdminMixin, admin.ModelAdmin):
     actions = [toggle_active, toggle_inactive]
     list_display = ("city", "is_active", "address", "phone_no")
     list_filter = ("city", "is_active")
@@ -141,7 +142,7 @@ class MapPointAdmin(admin.ModelAdmin):
     readonly_fields = ("created_at", "updated_at")
 
 
-class PartnerAdmin(admin.ModelAdmin):
+class PartnerAdmin(SortableAdminMixin, admin.ModelAdmin):
     actions = [toggle_active, toggle_inactive]
     list_display = ("name", "is_active", image_preview, "url", "created_at", "updated_at")
     list_filter = ("name", "is_active")
@@ -151,7 +152,7 @@ class PartnerAdmin(admin.ModelAdmin):
     readonly_fields = ("created_at", "updated_at", image_preview)
 
 
-class SliderAdmin(admin.ModelAdmin):
+class SliderAdmin(SortableAdminMixin, admin.ModelAdmin):
     actions = [toggle_active, toggle_inactive]
     list_display = ("title", "is_active", image_preview, "url", "url_label", "created_at", "updated_at")
     list_filter = ("title", "is_active")
@@ -161,14 +162,14 @@ class SliderAdmin(admin.ModelAdmin):
     readonly_fields = ("created_at", "updated_at", image_preview)
 
 
-class MainMenuElementAdmin(admin.ModelAdmin):
+class MainMenuElementAdmin(SortableAdminMixin, admin.ModelAdmin):
     actions = [toggle_active, toggle_inactive]
     list_display = ("name", "is_active", "url")
     list_filter = ("name", "is_active")
     search_fields = ("name",)
 
 
-class LeftMenuElementAdmin(admin.ModelAdmin):
+class LeftMenuElementAdmin(SortableAdminMixin, admin.ModelAdmin):
     actions = [toggle_active, toggle_inactive]
     list_display = ("name", "is_active", "url")
     list_filter = ("name", "is_active")

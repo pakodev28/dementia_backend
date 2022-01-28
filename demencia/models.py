@@ -5,7 +5,7 @@ from url_or_relative_url_field.fields import URLOrRelativeURLField
 
 from django.db import models
 
-from core.mixins import DateMixin, PublishMixin
+from core.mixins import DateMixin, PublishMixin, OrderingMixin
 
 
 class NewsArticle(DateMixin, PublishMixin):
@@ -26,12 +26,12 @@ class NewsArticle(DateMixin, PublishMixin):
         return self.title
 
 
-class MapPoint(DateMixin, PublishMixin):
+class MapPoint(DateMixin, PublishMixin, OrderingMixin):
     city = models.CharField(max_length=250, verbose_name="Город")
     address = models.CharField(max_length=250, verbose_name="Адрес в городе", help_text="Улица, дом, офис")
     phone_no = PhoneNumberField(verbose_name="Номер телефона", help_text="Номер телефона с указанием кода")
 
-    class Meta(DateMixin.Meta):
+    class Meta(OrderingMixin.Meta):
         verbose_name = "Точка на карте"
         verbose_name_plural = "Точки на карте"
 
@@ -39,12 +39,12 @@ class MapPoint(DateMixin, PublishMixin):
         return f"{self.city} ({self. address})"
 
 
-class Partner(DateMixin, PublishMixin):
+class Partner(DateMixin, PublishMixin, OrderingMixin):
     image = models.ImageField(upload_to="partners/", verbose_name="Файл изображения")
     name = models.CharField(max_length=250, verbose_name="Название партнёра", help_text="Введите название партнёра")
     url = models.URLField(max_length=250, verbose_name="Ссылка", help_text="Введите адрес ссылки")
 
-    class Meta(DateMixin.Meta):
+    class Meta(OrderingMixin.Meta):
         verbose_name = "Партнёр"
         verbose_name_plural = "Партнёры"
 
@@ -52,7 +52,7 @@ class Partner(DateMixin, PublishMixin):
         return self.name
 
 
-class Slider(DateMixin, PublishMixin):
+class Slider(DateMixin, PublishMixin, OrderingMixin):
     title = models.CharField(max_length=250, verbose_name="Заголовок", help_text="Введите заголовок")
     image = models.ImageField(upload_to="slider/", verbose_name="Файл изображения")
     url = URLOrRelativeURLField(max_length=250, verbose_name="Ссылка", help_text="Введите адрес ссылки")
@@ -60,7 +60,7 @@ class Slider(DateMixin, PublishMixin):
         max_length=50, default="ПОДРОБНЕЕ", verbose_name="Название ссылки", help_text="Введите текст ссылки"
     )
 
-    class Meta(DateMixin.Meta):
+    class Meta(OrderingMixin.Meta):
         verbose_name = "Слайд"
         verbose_name_plural = "Слайды"
 
@@ -68,11 +68,11 @@ class Slider(DateMixin, PublishMixin):
         return self.title
 
 
-class MainMenuElement(DateMixin, PublishMixin):
+class MainMenuElement(DateMixin, PublishMixin, OrderingMixin):
     name = models.CharField(max_length=250, verbose_name="Название элемента")
     url = URLOrRelativeURLField(max_length=250, verbose_name="Ссылка")
 
-    class Meta(DateMixin.Meta):
+    class Meta(OrderingMixin.Meta):
         verbose_name = "Элемент главного меню"
         verbose_name_plural = "Элементы главного меню"
 
@@ -80,11 +80,11 @@ class MainMenuElement(DateMixin, PublishMixin):
         return self.name
 
 
-class LeftMenuElement(DateMixin, PublishMixin):
+class LeftMenuElement(DateMixin, PublishMixin, OrderingMixin):
     name = models.CharField(max_length=250, verbose_name="Название элемента")
     url = URLOrRelativeURLField(max_length=250, verbose_name="Ссылка")
 
-    class Meta(DateMixin.Meta):
+    class Meta(OrderingMixin.Meta):
         verbose_name = "Элемент левого меню"
         verbose_name_plural = "Элементы левого меню"
 

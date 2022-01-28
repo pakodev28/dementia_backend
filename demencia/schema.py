@@ -37,6 +37,7 @@ class MapPointType(BaseType, DjangoObjectType):
 
     class Meta:
         model = MapPoint
+        exclude = ("position",)
 
 
 class PartnerType(BaseTypeImageField, DjangoObjectType):
@@ -45,6 +46,7 @@ class PartnerType(BaseTypeImageField, DjangoObjectType):
 
     class Meta:
         model = Partner
+        exclude = ("position",)
 
 
 class SliderType(BaseTypeImageField, DjangoObjectType):
@@ -54,6 +56,7 @@ class SliderType(BaseTypeImageField, DjangoObjectType):
 
     class Meta:
         model = Slider
+        exclude = ("position",)
 
 
 class MainMenuElementType(BaseType, DjangoObjectType):
@@ -62,6 +65,7 @@ class MainMenuElementType(BaseType, DjangoObjectType):
 
     class Meta:
         model = MainMenuElement
+        exclude = ("position",)
 
 
 class LeftMenuElementType(BaseType, DjangoObjectType):
@@ -70,6 +74,7 @@ class LeftMenuElementType(BaseType, DjangoObjectType):
 
     class Meta:
         model = LeftMenuElement
+        exclude = ("position",)
 
 
 class SettingsType(DjangoObjectType):
