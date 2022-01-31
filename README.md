@@ -55,15 +55,13 @@ pre-commit install
 
 ## Запуск базы данных
 Для запуска базы данных удобно пользоваться docker-compose
-	```shell
-	cd ./infrastructure
-    docker-compose -f postgres-local.yaml up -d
-    ```
+```shell
+    docker-compose -f ./infrastructure/postgres-local.yaml up -d
+```
 Для остановки контейнера с БД: 
-	```
-    shell
-    docker-compose -f postgres-local.yaml down
-    ```
+```shell
+    docker-compose -f ./infrastructure/postgres-local.yaml down
+```
 
 ## Загрузка тестовых данных в БД
 1. Выполнить команду ```python manage.py loaddata demencia/fixtures/data.json```
