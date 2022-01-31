@@ -11,6 +11,7 @@ environ.Env.read_env(os.path.join(BASE_DIR, ".env"))
 SECRET_KEY = env.str("SECRET_KEY")
 DEBUG = env.bool("DEBUG", False)
 ALLOWED_HOSTS = env.str("ALLOWED_HOSTS", default="").split(" ")
+CURRENTLY_HOST = env.str("CURRENTLY_HOST")
 
 # Application definition
 INSTALLED_APPS = [
@@ -23,6 +24,8 @@ INSTALLED_APPS = [
     "phonenumber_field",
     "solo",
     "tinymce",
+    "url_or_relative_url_field",
+    "adminsortable2",
     "core",
     "demencia",
     "graphene_django",

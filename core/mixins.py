@@ -32,3 +32,21 @@ class PublishMixin(models.Model):
 
     class Meta:
         abstract = True
+
+
+class OrderingMixin(models.Model):
+    """Миксин сортировки элементов
+
+    Attributes:
+        position: Позиция в списке
+    """
+
+    position = models.PositiveIntegerField(
+        default=0,
+        verbose_name="Позиция в списке",
+        help_text="Можно поменять перетаскиванием на странице списка объектов",
+    )
+
+    class Meta:
+        abstract = True
+        ordering = ["position"]

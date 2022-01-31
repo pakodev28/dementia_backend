@@ -1,4 +1,5 @@
 from solo.admin import SingletonModelAdmin
+from adminsortable2.admin import SortableAdminMixin
 
 from django.contrib import admin
 from django.utils.safestring import mark_safe
@@ -32,14 +33,7 @@ class SettingsAdmin(SingletonModelAdmin):
         ),
         (
             "Основная секция",
-            {
-                "fields": (
-                    "main_section_link",
-                    "main_section_additional",
-                    "main_section_additional_link",
-                    "main_section_additional_url",
-                )
-            },
+            {"fields": ("main_section_button_label",)},
         ),
         (
             "О деменции",
@@ -47,11 +41,12 @@ class SettingsAdmin(SingletonModelAdmin):
                 "fields": (
                     "about_section",
                     "about_section_term",
-                    "about_section_term_link",
+                    "about_section_term_open_label",
+                    "about_section_term_close_label",
                     "about_section_action_title",
                     "about_section_action_subtitle",
                     "about_section_info",
-                    "about_section_link",
+                    "about_section_button_label",
                 )
             },
         ),
@@ -60,7 +55,7 @@ class SettingsAdmin(SingletonModelAdmin):
             {
                 "fields": (
                     "news_section",
-                    "news_section_link",
+                    "news_section_url_label",
                 )
             },
         ),
@@ -89,7 +84,7 @@ class SettingsAdmin(SingletonModelAdmin):
                 "fields": (
                     "fund_section",
                     "fund_section_info",
-                    "fund_section_link",
+                    "fund_section_url_label",
                     "fund_section_url",
                 )
             },
@@ -105,11 +100,31 @@ def image_preview(obj):
 
 class NewsArticleAdmin(admin.ModelAdmin):
     actions = [toggle_active, toggle_inactive]
-    list_display = ("title", "is_active", "text_area", image_preview, "url", "url_label", "created_at", "updated_at")
+    list_display = (
+        "title",
+        "is_active",
+        "sub_title",
+        "text_area",
+        image_preview,
+        "url",
+        "url_label",
+        "created_at",
+        "updated_at",
+    )
     list_filter = ("title", "is_active")
     search_fields = ("title", "text")
 
-    fields = ("is_active", "title", "url_label", "url", "text", "image", image_preview, ("created_at", "updated_at"))
+    fields = (
+        "is_active",
+        "title",
+        "sub_title",
+        "url_label",
+        "url",
+        "text",
+        "image",
+        image_preview,
+        ("created_at", "updated_at"),
+    )
     readonly_fields = ("created_at", "updated_at", image_preview)
 
     @admin.display(description="Текст новости")
@@ -117,7 +132,7 @@ class NewsArticleAdmin(admin.ModelAdmin):
         return mark_safe(f'<div style="overflow: auto; width:400px; height:100px;">{obj.text}</div>')
 
 
-class MapPointAdmin(admin.ModelAdmin):
+class MapPointAdmin(SortableAdminMixin, admin.ModelAdmin):
     actions = [toggle_active, toggle_inactive]
     list_display = ("city", "is_active", "address", "phone_no")
     list_filter = ("city", "is_active")
@@ -127,7 +142,7 @@ class MapPointAdmin(admin.ModelAdmin):
     readonly_fields = ("created_at", "updated_at")
 
 
-class PartnerAdmin(admin.ModelAdmin):
+class PartnerAdmin(SortableAdminMixin, admin.ModelAdmin):
     actions = [toggle_active, toggle_inactive]
     list_display = ("name", "is_active", image_preview, "url", "created_at", "updated_at")
     list_filter = ("name", "is_active")
@@ -137,7 +152,7 @@ class PartnerAdmin(admin.ModelAdmin):
     readonly_fields = ("created_at", "updated_at", image_preview)
 
 
-class SliderAdmin(admin.ModelAdmin):
+class SliderAdmin(SortableAdminMixin, admin.ModelAdmin):
     actions = [toggle_active, toggle_inactive]
     list_display = ("title", "is_active", image_preview, "url", "url_label", "created_at", "updated_at")
     list_filter = ("title", "is_active")
@@ -147,14 +162,14 @@ class SliderAdmin(admin.ModelAdmin):
     readonly_fields = ("created_at", "updated_at", image_preview)
 
 
-class MainMenuElementAdmin(admin.ModelAdmin):
+class MainMenuElementAdmin(SortableAdminMixin, admin.ModelAdmin):
     actions = [toggle_active, toggle_inactive]
     list_display = ("name", "is_active", "url")
     list_filter = ("name", "is_active")
     search_fields = ("name",)
 
 
-class LeftMenuElementAdmin(admin.ModelAdmin):
+class LeftMenuElementAdmin(SortableAdminMixin, admin.ModelAdmin):
     actions = [toggle_active, toggle_inactive]
     list_display = ("name", "is_active", "url")
     list_filter = ("name", "is_active")
