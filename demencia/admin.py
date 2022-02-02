@@ -1,5 +1,5 @@
-from solo.admin import SingletonModelAdmin
 from adminsortable2.admin import SortableAdminMixin
+from solo.admin import SingletonModelAdmin
 
 from django.contrib import admin
 from django.utils.safestring import mark_safe
@@ -134,11 +134,11 @@ class NewsArticleAdmin(admin.ModelAdmin):
 
 class MapPointAdmin(SortableAdminMixin, admin.ModelAdmin):
     actions = [toggle_active, toggle_inactive]
-    list_display = ("city", "is_active", "address", "phone_no")
+    list_display = ("city", "region", "is_active", "address", "phone_no")
     list_filter = ("city", "is_active")
     search_fields = ("city", "address", "phone_no")
 
-    fields = ("is_active", "city", "address", "phone_no", ("created_at", "updated_at"))
+    fields = ("is_active", "city", "region", "address", "phone_no", ("created_at", "updated_at"))
     readonly_fields = ("created_at", "updated_at")
 
 
