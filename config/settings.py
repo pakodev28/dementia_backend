@@ -28,6 +28,7 @@ INSTALLED_APPS = [
     "adminsortable2",
     "core",
     "demencia",
+    "dementia_test",
     "graphene_django",
 ]
 
