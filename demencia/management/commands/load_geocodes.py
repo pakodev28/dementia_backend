@@ -1,7 +1,6 @@
 from csv import reader
 
 from django.core.management.base import BaseCommand
-from django.db.utils import IntegrityError
 
 from demencia.models import Region
 
@@ -11,10 +10,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         with open("geocodes.csv", encoding="utf-8") as f:
-            my_reader = reader(f)
-            for row in my_reader:
+            geocodes_reader = reader(f)
+            for row in geocodes_reader:
                 geocode, name = row
-                try:
-                    Region.objects.create(geocode=geocode, name=name)
-                except IntegrityError:
-                    print(f"{geocode}::{name} уже есть в БД!")
+                Region.objects.get_or_create(geocode=geocode, name=name)
