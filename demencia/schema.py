@@ -46,6 +46,9 @@ class RegionType(DjangoObjectType):
     id = graphene.ID(description="ID объекта", required=True)
     geocode = graphene.String(description="Геокод", required=True)
 
+    # def resolve_centers(self, info):
+    #     return MapPoint.objects.prefetch_related("region").active()
+
     class Meta:
         model = Region
         fields = ("id", "geocode", "centers")
@@ -123,7 +126,7 @@ class Query(ObjectType):
         NewsArticleType, id=graphene.ID(required=True), description="Объект класса NewsArticle(Новости) по id"
     )
     regions = graphene.List(
-        RegionType,
+        graphene.NonNull(RegionType),
         description="Объекты класса Region с геокодами и связанные с ними объкты класса MapPoint",
         required=True,
     )
@@ -146,7 +149,7 @@ class Query(ObjectType):
         return NewsArticle.objects.get(pk=id)
 
     def resolve_regions(self, info, **kwargs):
-        return Region.objects.filter(centers__isnull=False)
+        return Region.objects.filter(centers__isnull=False, centers__is_active=True)
 
     def resolve_partners(self, info, **kwargs):
         return Partner.objects.active()
