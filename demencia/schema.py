@@ -46,9 +46,6 @@ class RegionType(DjangoObjectType):
     id = graphene.ID(description="ID объекта", required=True)
     geocode = graphene.String(description="Геокод", required=True)
 
-    # def resolve_centers(self, info):
-    #     return MapPoint.objects.prefetch_related("region").active()
-
     class Meta:
         model = Region
         fields = ("id", "geocode", "centers")
