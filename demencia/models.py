@@ -5,7 +5,7 @@ from url_or_relative_url_field.fields import URLOrRelativeURLField
 
 from django.db import models
 
-from core.mixins import DateMixin, PublishMixin, OrderingMixin
+from core.mixins import DateMixin, OrderingMixin, PublishMixin
 
 
 class NewsArticle(DateMixin, PublishMixin):
@@ -26,10 +26,27 @@ class NewsArticle(DateMixin, PublishMixin):
         return self.title
 
 
+class Region(models.Model):
+    name = models.CharField(max_length=50, verbose_name="Название субъекта")
+    geocode = models.CharField(max_length=20, verbose_name="Геокод")
+
+    class Meta:
+        ordering = ["name"]
+        verbose_name = "Регион"
+        verbose_name_plural = "Регионы"
+
+    def __str__(self):
+        return self.name
+
+
 class MapPoint(DateMixin, PublishMixin, OrderingMixin):
     city = models.CharField(max_length=250, verbose_name="Город")
     address = models.CharField(max_length=250, verbose_name="Адрес в городе", help_text="Улица, дом, офис")
     phone_no = PhoneNumberField(verbose_name="Номер телефона", help_text="Номер телефона с указанием кода")
+    region = models.ForeignKey(
+        Region, verbose_name="Регион", on_delete=models.PROTECT, related_name="centers", null=True
+    )
+    # TODO: Убрать null=True в будущих миграциях
 
     class Meta(OrderingMixin.Meta):
         verbose_name = "Точка на карте"
