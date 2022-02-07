@@ -17,8 +17,8 @@ services:
       dockerfile: ./Dockerfile
     restart: always
     volumes:
-      - static_data:/backend/static/
-      - media_data:/backend/media/
+      - static_data:/demencia-backend/static/
+      - media_data:/demencia-backend/media/
     depends_on:
       - db
     env_file:

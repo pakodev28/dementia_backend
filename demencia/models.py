@@ -12,7 +12,7 @@ class NewsArticle(DateMixin, PublishMixin):
     image = models.ImageField(upload_to="news/", verbose_name="Файл изображения")
     title = models.CharField(max_length=250, verbose_name="Заголовок", help_text="Введите заголовок")
     sub_title = models.CharField(max_length=250, verbose_name="Подзаголовок", help_text="Введите подзаголовок")
-    text = models.TextField(verbose_name="Текст новости", help_text="Введите текст")
+    text = HTMLField(verbose_name="Текст новости", help_text="Введите текст")
     url = URLOrRelativeURLField(max_length=250, verbose_name="Ссылка", help_text="Введите адрес ссылки")
     url_label = models.CharField(
         max_length=50, default="ПОДРОБНЕЕ", verbose_name="Название ссылки", help_text="Введите текст ссылки"
@@ -70,7 +70,7 @@ class Partner(DateMixin, PublishMixin, OrderingMixin):
 
 
 class Slider(DateMixin, PublishMixin, OrderingMixin):
-    title = models.CharField(max_length=250, verbose_name="Заголовок", help_text="Введите заголовок")
+    title = HTMLField(max_length=250, verbose_name="Заголовок", help_text="Введите заголовок")
     image = models.ImageField(upload_to="slider/", verbose_name="Файл изображения")
     url = URLOrRelativeURLField(max_length=250, verbose_name="Ссылка", help_text="Введите адрес ссылки")
     url_label = models.CharField(
@@ -149,7 +149,7 @@ class Settings(SingletonModel):
     map_section_subtitle = models.CharField(
         verbose_name="Подзаголовок секции", max_length=255, default="Карта центров профилактики"
     )
-    map_section_info = HTMLField("Предупреждение")
+    map_section_info = models.TextField("Предупреждение")
 
     fund_section = models.CharField("Название секции", max_length=255, default="О фонде")
     fund_section_info = HTMLField("Описание")
