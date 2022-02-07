@@ -26,7 +26,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='mappoint',
             name='region',
-            field=models.ForeignKey(default=1, on_delete=django.db.models.deletion.PROTECT, related_name='centers', to='demencia.region', verbose_name='Регион'),
+            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.PROTECT, related_name='centers', to='demencia.region', verbose_name='Регион'),
             preserve_default=False,
         ),
     ]
