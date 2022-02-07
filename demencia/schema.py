@@ -1,8 +1,9 @@
-from django.conf import settings
 import graphene
 from graphene_django.types import DjangoObjectType, ObjectType
 
-from .models import LeftMenuElement, MainMenuElement, MapPoint, NewsArticle, Partner, Settings, Slider
+from django.conf import settings
+
+from .models import LeftMenuElement, MainMenuElement, MapPoint, NewsArticle, Partner, Region, Settings, Slider
 
 
 class BaseType(ObjectType):
@@ -30,14 +31,24 @@ class NewsArticleType(BaseTypeImageField, DjangoObjectType):
         exclude = ("is_active",)
 
 
-class MapPointType(BaseType, DjangoObjectType):
+class MapPointType(DjangoObjectType):
     city = graphene.String(description="Город", required=True)
     address = graphene.String(description="Адрес в городе", required=True)
     phone_no = graphene.String(description="Номер телефона", required=True)
 
     class Meta:
         model = MapPoint
-        exclude = ("is_active", "position")
+        fields = ("city", "address", "phone_no")
+        description = "Объекты класса MapPoint"
+
+
+class RegionType(DjangoObjectType):
+    id = graphene.ID(description="ID объекта", required=True)
+    geocode = graphene.String(description="Геокод", required=True)
+
+    class Meta:
+        model = Region
+        fields = ("id", "geocode", "centers")
 
 
 class PartnerType(BaseTypeImageField, DjangoObjectType):
@@ -107,14 +118,14 @@ class SettingsType(DjangoObjectType):
 
 
 class Query(ObjectType):
-    news_articles = graphene.List(
-        NewsArticleType, description="Активные объекты класса NewsArticle(Новости)"
-    )
+    news_articles = graphene.List(NewsArticleType, description="Активные объекты класса NewsArticle(Новости)")
     news_article = graphene.Field(
         NewsArticleType, id=graphene.ID(required=True), description="Объект класса NewsArticle(Новости) по id"
     )
-    map_points = graphene.List(
-        MapPointType, description="Активные объекты класса MapPoint(Точка на карте)"
+    regions = graphene.List(
+        graphene.NonNull(RegionType),
+        description="Объекты класса Region с геокодами и связанные с ними объкты класса MapPoint",
+        required=True,
     )
     partners = graphene.List(PartnerType, description="Активные объекты класса Partner(Партнер)")
     sliders = graphene.List(SliderType, description="Активные объекты класса Slider(Слайдер)")
@@ -134,8 +145,8 @@ class Query(ObjectType):
     def resolve_news_article(self, info, id):
         return NewsArticle.objects.get(pk=id)
 
-    def resolve_map_points(self, info, **kwargs):
-        return MapPoint.objects.active()
+    def resolve_regions(self, info, **kwargs):
+        return Region.objects.filter(centers__isnull=False, centers__is_active=True)
 
     def resolve_partners(self, info, **kwargs):
         return Partner.objects.active()

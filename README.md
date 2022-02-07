@@ -69,6 +69,9 @@ pre-commit install
   * в директории **media** создайте директорию **fixtures**
   * скопируйте **test.png** из **demencia/fixtures** в **media/fixtures**
 
+## Загрузка Геокодов в БД
+Выполнить команду ```python manage.py load_geocodes```
+
 ## Built With
 
 * [Django](https://www.djangoproject.com/) - web framework written in Python.
