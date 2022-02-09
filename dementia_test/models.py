@@ -1,3 +1,4 @@
+from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 
 from core.mixins import DateMixin
@@ -19,9 +20,13 @@ class Answer(DateMixin):
     updated_at = None
     answer_value = models.CharField("Значение ответа", max_length=255)
     test_case = models.ForeignKey(DementiaTestCase, on_delete=models.CASCADE, verbose_name="Прохождение теста")
-    question = models.PositiveSmallIntegerField("Номер вопроса")
+    question = models.PositiveSmallIntegerField(
+        "Номер вопроса", validators=[MinValueValidator(1), MaxValueValidator(25)]
+    )
+    image = models.ImageField(upload_to="answer/", verbose_name="Изображение", null=True)
 
     class Meta:
+        unique_together = ("test_case", "question")
         ordering = ["-created_at"]
         verbose_name = "Ответ на вопрос"
         verbose_name_plural = "Ответы на вопросы"
