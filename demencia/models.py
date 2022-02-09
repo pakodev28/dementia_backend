@@ -1,11 +1,27 @@
 from phonenumber_field.modelfields import PhoneNumberField
 from solo.models import SingletonModel
 from tinymce.models import HTMLField
+from tinymce.widgets import AdminTinyMCE, TinyMCE
 from url_or_relative_url_field.fields import URLOrRelativeURLField
 
+from django.contrib.admin.widgets import AdminTextareaWidget
 from django.db import models
 
 from core.mixins import DateMixin, OrderingMixin, PublishMixin
+
+
+class SmallHTMLField(models.TextField):
+    """ Клон HTMLField с уменьшенным полем ввода в админке. """
+
+    def formfield(self, **kwargs):
+        defaults = {"widget": TinyMCE}
+        defaults.update(kwargs)
+
+        # As an ugly hack, we override the admin widget
+        if defaults["widget"] == AdminTextareaWidget:
+            defaults["widget"] = AdminTinyMCE(mce_attrs={"height": 125})
+
+        return super().formfield(**defaults)
 
 
 class NewsArticle(DateMixin, PublishMixin):
@@ -70,7 +86,7 @@ class Partner(DateMixin, PublishMixin, OrderingMixin):
 
 
 class Slider(DateMixin, PublishMixin, OrderingMixin):
-    title = HTMLField(max_length=250, verbose_name="Заголовок", help_text="Введите заголовок")
+    title = SmallHTMLField(max_length=250, verbose_name="Заголовок", help_text="Введите заголовок")
     image = models.ImageField(upload_to="slider/", verbose_name="Файл изображения")
     url = URLOrRelativeURLField(max_length=250, verbose_name="Ссылка", help_text="Введите адрес ссылки")
     url_label = models.CharField(
