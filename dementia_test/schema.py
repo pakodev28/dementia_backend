@@ -45,7 +45,7 @@ class CreateAnswer(graphene.Mutation):
     class Arguments:
         input = AnswerInput(required=True)
 
-    def mutate(root, info, input=None):
+    def mutate(self, info, input=None):
         answer_value = input.answer_value
         test_case = DementiaTestCase.objects.get(id=input.test_case.id)
         question = input.question
