@@ -19,7 +19,9 @@ class DementiaTestCase(DateMixin):
 class Answer(DateMixin):
     updated_at = None
     answer_value = models.CharField("Значение ответа", max_length=255)
-    test_case = models.ForeignKey(DementiaTestCase, on_delete=models.CASCADE, verbose_name="Прохождение теста")
+    test_case = models.ForeignKey(
+        DementiaTestCase, on_delete=models.CASCADE, verbose_name="Прохождение теста", related_name="answers"
+    )
     question = models.PositiveSmallIntegerField("Номер вопроса")
 
     class Meta:
