@@ -3,6 +3,7 @@ from graphene_django.types import DjangoObjectType, ObjectType
 
 from django.conf import settings
 
+from dementia_test.models import DementiaTestCase
 from .models import LeftMenuElement, MainMenuElement, MapPoint, NewsArticle, Partner, Region, Settings, Slider
 
 
@@ -122,6 +123,7 @@ class Query(ObjectType):
     news_article = graphene.Field(
         NewsArticleType, id=graphene.ID(required=True), description="Объект класса NewsArticle(Новости) по id"
     )
+    new_test = graphene.ID(description="Создаёт новый объект класса DementiaTestCase")
     regions = graphene.List(
         graphene.NonNull(RegionType),
         description="Объекты класса Region с геокодами и связанные с ними объкты класса MapPoint",
@@ -162,6 +164,9 @@ class Query(ObjectType):
 
     def resolve_settings(self, info, **kwargs):
         return Settings.objects.get()
+
+    def resolve_new_test(self, info, **kwargs):
+        return DementiaTestCase.objects.create().id
 
 
 schema = graphene.Schema(query=Query)
