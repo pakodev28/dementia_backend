@@ -1,3 +1,4 @@
+from django.utils import timezone
 from django.db import models
 
 from core.mixins import DateMixin
@@ -12,13 +13,15 @@ class DementiaTestCase(DateMixin):
         verbose_name_plural = "Прохождения тестов"
 
     def __str__(self):
-        return f"Тест №{self.pk}, {self.created_at}"
+        return f"Тест №{self.pk}, {timezone.localtime(self.created_at).strftime('%d.%m.%Y %H:%M')}"
 
 
 class Answer(DateMixin):
     updated_at = None
     answer_value = models.CharField("Значение ответа", max_length=255)
-    test_case = models.ForeignKey(DementiaTestCase, on_delete=models.CASCADE, verbose_name="Прохождение теста")
+    test_case = models.ForeignKey(
+        DementiaTestCase, on_delete=models.CASCADE, verbose_name="Прохождение теста", related_name="answers"
+    )
     question = models.PositiveSmallIntegerField("Номер вопроса")
 
     class Meta:
