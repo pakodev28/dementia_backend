@@ -1,4 +1,5 @@
 from django.core.validators import MaxValueValidator, MinValueValidator
+from django.utils import timezone
 from django.db import models
 
 from core.mixins import DateMixin
@@ -13,7 +14,7 @@ class DementiaTestCase(DateMixin):
         verbose_name_plural = "Прохождения тестов"
 
     def __str__(self):
-        return f"Тест №{self.pk}, {self.created_at}"
+        return f"Тест №{self.pk}, {timezone.localtime(self.created_at).strftime('%d.%m.%Y %H:%M')}"
 
 
 class Answer(DateMixin):
