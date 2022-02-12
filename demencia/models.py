@@ -11,7 +11,7 @@ from core.mixins import DateMixin, OrderingMixin, PublishMixin
 
 
 class SmallHTMLField(models.TextField):
-    """ Клон HTMLField с уменьшенным полем ввода в админке. """
+    """Клон HTMLField с уменьшенным полем ввода в админке."""
 
     def formfield(self, **kwargs):
         defaults = {"widget": TinyMCE}
