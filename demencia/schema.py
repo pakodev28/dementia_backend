@@ -126,7 +126,9 @@ class Query(ObjectType):
     new_test = graphene.ID(description="Создаёт новый объект класса DementiaTestCase")
     regions = graphene.List(
         graphene.NonNull(RegionType),
-        description="Объекты класса Region с геокодами и связанные с ними объкты класса MapPoint",
+        city=graphene.String(required=False),
+        description="""Объекты класса Region с геокодами и связанные с ними объкты класса MapPoint
+                       (city: фильтр по значению город""",
         required=True,
     )
     partners = graphene.List(PartnerType, description="Активные объекты класса Partner(Партнер)")
@@ -148,6 +150,12 @@ class Query(ObjectType):
         return NewsArticle.objects.get(pk=id)
 
     def resolve_regions(self, info, **kwargs):
+        city = kwargs.get("city")
+        if city:
+            return Region.objects.filter(
+                centers__isnull=False,
+                centers__is_active=True,
+                centers__city__icontains=city)
         return Region.objects.filter(centers__isnull=False, centers__is_active=True)
 
     def resolve_partners(self, info, **kwargs):
