@@ -159,7 +159,8 @@ class Query(ObjectType):
     def resolve_centers(self, info, city, **kwargs):
         return MapPoint.objects.filter(
                 is_active=True,
-                city__icontains=city)
+                city__icontains=city,
+        )
 
     def resolve_partners(self, info, **kwargs):
         return Partner.objects.active()
