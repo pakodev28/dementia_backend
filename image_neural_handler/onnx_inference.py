@@ -1,9 +1,12 @@
-import torch.onnx
-import onnxruntime
 import cv2
-
-from albumentations import Compose, Resize, Normalize
+import numpy as np
+import onnxruntime
+import torch.onnx
+from albumentations import Compose, Normalize, Resize
 from albumentations.pytorch import ToTensorV2
+
+
+NEURAL_NET_NAMES = {"clock": "clock.onnx", "figure": "figure.onnx"}
 
 
 def get_val_augmentations(image_size):
@@ -23,18 +26,16 @@ def to_numpy(tensor):
     return tensor.detach().cpu().numpy() if tensor.requires_grad else tensor.cpu().numpy()
 
 
-def get_image_score(neural_net_name, neural_net_names, image_from_test):
+def get_image_score(neural_net_name, image_from_test):
     # Этот параметр обозначает сколько картинок за раз запихиваем в модель
-    """neural_net_name = clock или figure
-    neural_net_names - словарь с ключами(названия нейронок) и значеними(файл нейронки)
+    """neural_net_name = clock или figure(для получения файла нейронки из словаря NEURAL_NET_NAMES)
     image_from_test - кртинка из теста на деменцию, загружаемая для оценки"""
     # batch_size = 1
     image_size = 256
 
-    ort_session = onnxruntime.InferenceSession(neural_net_names[neural_net_name])
-
-    image = cv2.imread(image_from_test)
-    image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+    ort_session = onnxruntime.InferenceSession(NEURAL_NET_NAMES[neural_net_name])
+    image = np.frombuffer(image_from_test, dtype=np.uint8)
+    image = cv2.imdecode(image, cv2.IMREAD_COLOR)
 
     # ниже вызывается модель
     transform = get_val_augmentations(image_size)
@@ -46,9 +47,8 @@ def get_image_score(neural_net_name, neural_net_names, image_from_test):
     ort_inputs = {ort_session.get_inputs()[0].name: to_numpy(image)}
     ort_outs = ort_session.run(None, ort_inputs)
     result = ort_outs[0]
-    print(result)
     # [[ 0.5828074  0.8418093 -1.40597  ]]
     # получить класс
     class_id = torch.argmax(torch.softmax(torch.tensor(result), 1), 1)
-    return class_id
+    return class_id.item()
     # tensor([1])
