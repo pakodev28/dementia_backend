@@ -1,11 +1,15 @@
 import datetime
-
+from django.shortcuts import get_object_or_404, get_list_or_404
 from dementia_test.models import Answer, DementiaTestCase
 from dementia_test.services.image_neural_handler.onnx_inference import get_image_score
 
 
-class _TestProcessor:
-
+class TestService:
+    CORRECT_ANSWER_15 = ('носорог', 'арфа')
+    CORRECT_ANSWER_16 = ('цветы', 'цветок', 'растения', 'растение', 'природа', 'флора')
+    CORRECT_ANSWER_17 = ('6', 'шесть')
+    CORRECT_ANSWER_18 = ('1 рубль 95 копеек', '1,95', '1.95')
+    
     def question_14(answer: str, *args) -> int:
         result = 0
         date_obj = datetime.datetime.strptime(answer, '%d-%m-%Y').date()
@@ -24,32 +28,29 @@ class _TestProcessor:
     def question_15(answer: str, *args) -> int:
         result = 0
         treated_answer = [x.lower().strip() for x in answer.split(',')]
-        if treated_answer[0] == 'носорог':
+        if treated_answer[0] == TestService.CORRECT_ANSWER_15[0]:
             result += 1
-        if treated_answer[1] == 'арфа':
+        if treated_answer[1] == TestService.CORRECT_ANSWER_15[1]:
             result += 1
         return result
 
     def question_16(answer: str, *args) -> int:
-        correct_answers = ['цветы', 'цветок', 'растения', 'растение', 'природа', 'флора']
         treated_answer = answer.lower().strip()
-        if treated_answer in correct_answers:
+        if treated_answer in TestService.CORRECT_ANSWER_16:
             return 2
         else:
             return 0
 
     def question_17(answer: str, *args) -> int:
-        correct_answers = ['6', 'шесть']
         treated_answer = answer.lower().strip()
-        if treated_answer in correct_answers:
+        if treated_answer in TestService.CORRECT_ANSWER_17:
             return 1
         else:
             return 0
 
     def question_18(answer: str, *args) -> int:
-        correct_answers = ['1 рубль 95 копеек', '1,95', '1.95']
         treated_answer = answer.lower().strip()
-        if treated_answer in correct_answers:
+        if treated_answer in TestService.CORRECT_ANSWER_18:
             return 1
         else:
             return 0
@@ -76,10 +77,10 @@ class _TestProcessor:
         return 0
 
 
-def _get_result(answer_data: list[Answer]) -> int:
+def get_result(answer_data: list[Answer]) -> int:
     result = 0
     for answer in answer_data:
-        f = getattr(_TestProcessor, "question_" + str(answer.question))
+        f = getattr(TestService, "question_" + str(answer.question))
         try:
             score = f(answer.answer_value, answer.image)
         except Exception:
@@ -88,19 +89,19 @@ def _get_result(answer_data: list[Answer]) -> int:
     return result
 
 
-def _send_email(test_id: int, result: int) -> None:
+def send_email(test_id: int, result: int) -> None:
     pass
 
 
-def _save_test_score(test_id: int, result: int) -> None:
-    test_case = DementiaTestCase.objects.get(id=test_id)
+def save_test_score(test_id: int, result: int) -> None:
+    test_case = get_object_or_404(DementiaTestCase, id=test_id)
     Answer.objects.create(
         answer_value=result, test_case=test_case, question=26,
     )
 
 
 def send_answer(test_id: int) -> None:
-    answer_data = Answer.objects.get(test_case=test_id).filter(question__gte=14, question__lte=25)
-    result = _get_result(answer_data)
-    _save_test_score(test_id, result)
-    _send_email(test_id, result)
+    answer_data = get_list_or_404(Answer, test_case=test_id, question__gte=14, question__lte=25)
+    result = get_result(answer_data)
+    save_test_score(test_id, result)
+    send_email(test_id, result)
