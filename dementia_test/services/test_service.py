@@ -5,14 +5,14 @@ from dementia_test.services.image_neural_handler.onnx_inference import get_image
 
 
 class TestService:
-    CORRECT_ANSWER_15 = ('носорог', 'арфа')
-    CORRECT_ANSWER_16 = ('цветы', 'цветок', 'растения', 'растение', 'природа', 'флора')
-    CORRECT_ANSWER_17 = ('6', 'шесть')
-    CORRECT_ANSWER_18 = ('1 рубль 95 копеек', '1,95', '1.95')
-    
+    CORRECT_ANSWER_15 = ("носорог", "арфа")
+    CORRECT_ANSWER_16 = ("цветы", "цветок", "растения", "растение", "природа", "флора")
+    CORRECT_ANSWER_17 = ("6", "шесть")
+    CORRECT_ANSWER_18 = ("1 рубль 95 копеек", "1,95", "1.95")
+
     def question_14(answer: str, *args) -> int:
         result = 0
-        date_obj = datetime.datetime.strptime(answer, '%d-%m-%Y').date()
+        date_obj = datetime.datetime.strptime(answer, "%d-%m-%Y").date()
         today = datetime.date.today()
         three_days = datetime.timedelta(3)
         if date_obj == today:
@@ -27,7 +27,7 @@ class TestService:
 
     def question_15(answer: str, *args) -> int:
         result = 0
-        treated_answer = [x.lower().strip() for x in answer.split(',')]
+        treated_answer = [x.lower().strip() for x in answer.split(",")]
         if treated_answer[0] == TestService.CORRECT_ANSWER_15[0]:
             result += 1
         if treated_answer[1] == TestService.CORRECT_ANSWER_15[1]:
@@ -59,10 +59,10 @@ class TestService:
         return 0
 
     def question_20(answer: str, *args) -> int:
-        return get_image_score('figure', args[0])
+        return get_image_score("figure", args[0])
 
     def question_21(answer: str, *args) -> int:
-        return get_image_score('clock', args[0])
+        return get_image_score("clock", args[0])
 
     def question_22(answer: str, *args) -> int:
         return 0
@@ -96,7 +96,9 @@ def send_email(test_id: int, result: int) -> None:
 def save_test_score(test_id: int, result: int) -> None:
     test_case = get_object_or_404(DementiaTestCase, id=test_id)
     Answer.objects.create(
-        answer_value=result, test_case=test_case, question=26,
+        answer_value=result,
+        test_case=test_case,
+        question=26,
     )
 
 
