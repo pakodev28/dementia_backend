@@ -47,7 +47,7 @@ ROOT_URLCONF = "config.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        "DIRS": [os.path.join(BASE_DIR, "templates")],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -110,3 +110,12 @@ GRAPHENE = {"SCHEMA": "config.schema.schema"}
 
 PHONENUMBER_DB_FORMAT = "NATIONAL"
 PHONENUMBER_DEFAULT_REGION = "RU"
+
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = "smtp.jino.ru"
+EMAIL_HOST_PASSWORD = "nbaqvguiuzqiolpo"
+EMAIL_HOST_USER = "info@pamyatpokoleniy.ru"
+DEFAULT_FROM_EMAIL = "info@pamyatpokoleniy.ru"
+EMAIL_NAME = "Память Поколений"
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True

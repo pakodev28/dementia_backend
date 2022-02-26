@@ -1,7 +1,23 @@
 import datetime
-from django.shortcuts import get_object_or_404, get_list_or_404
+import logging
+from logging.handlers import RotatingFileHandler
+
+from django.conf import settings
+from django.core.mail import send_mail
+from django.shortcuts import get_list_or_404, get_object_or_404
+from django.template.loader import render_to_string
+
 from dementia_test.models import Answer, DementiaTestCase
 from dementia_test.services.image_neural_handler.onnx_inference import get_image_score
+
+
+logging.basicConfig(
+    level=logging.DEBUG, filename="email.log", format="%(asctime)s, %(levelname)s, %(message)s, %(name)s"
+)
+logger = logging.getLogger("email_logger")
+logger.setLevel(logging.DEBUG)
+handler = RotatingFileHandler("email.log", maxBytes=50000000, backupCount=1)
+logger.addHandler(handler)
 
 
 class TestService:
@@ -9,6 +25,7 @@ class TestService:
     CORRECT_ANSWER_16 = ("цветы", "цветок", "растения", "растение", "природа", "флора")
     CORRECT_ANSWER_17 = ("6", "шесть")
     CORRECT_ANSWER_18 = ("1 рубль 95 копеек", "1,95", "1.95")
+    EMAIL_FROM_ANSWER = 4
 
     def question_14(answer: str, *args) -> int:
         result = 0
@@ -77,7 +94,7 @@ class TestService:
         return 0
 
 
-def get_result(answer_data: list[Answer]) -> int:
+def get_result(answer_data: "list[Answer]") -> int:
     result = 0
     for answer in answer_data:
         f = getattr(TestService, "question_" + str(answer.question))
@@ -90,7 +107,19 @@ def get_result(answer_data: list[Answer]) -> int:
 
 
 def send_email(test_id: int, result: int) -> None:
-    pass
+    result_name = "БАЛЛОВ"
+    if result in (1, 21):
+        result_name = "БАЛЛ"
+    elif result in (2, 3, 4, 22):
+        result_name = "БАЛЛА"
+
+    answer_instance = get_object_or_404(Answer, test_case=test_id, question=TestService.EMAIL_FROM_ANSWER)
+    user_email = answer_instance.answer_value
+    html_message = render_to_string("email.html", {"result": result, "result_name": result_name})
+    try:
+        send_mail(settings.EMAIL_NAME, None, None, [user_email], fail_silently=False, html_message=html_message)
+    except Exception as error:
+        logger.exception(f"Ошибка в отправке емейла: {error}")
 
 
 def save_test_score(test_id: int, result: int) -> None:
