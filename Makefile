@@ -11,3 +11,6 @@ superuser:
 	python manage.py createsuperuser
 files:
 	python manage.py collectstatic --no-input
+fixtures:
+	python manage.py load_geocodes
+	python manage.py loaddata demencia/fixtures/data.json
