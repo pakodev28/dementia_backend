@@ -9,6 +9,7 @@ from django.template.loader import render_to_string
 
 from dementia_test.models import Answer, DementiaTestCase
 from dementia_test.services.image_neural_handler.onnx_inference import get_image_score
+from dementia_test.services.countries_list.ru_set import COUNTRIES_NAMES
 
 
 logging.basicConfig(
@@ -25,9 +26,13 @@ class TestService:
     CORRECT_ANSWER_16 = ("цветы", "цветок", "растения", "растение", "природа", "флора")
     CORRECT_ANSWER_17 = ("6", "шесть")
     CORRECT_ANSWER_18 = ("1 рубль 95 копеек", "1,95", "1.95")
+    CORRECT_ANSWER_23 = "1А2Б3В4Г5Д6Е"
+    CORRECT_ANSWER_24 = ("3,4,5,6,7,8", "1,2,3,4,5,6")
+    CORRECT_ANSWER_25 = ("я закончила", "я закончил")
     EMAIL_FROM_ANSWER = 4
 
     def question_14(answer: str, *args) -> int:
+        """Назовите сегодняшнюю дату, месяц, год."""
         result = 0
         date_obj = datetime.datetime.strptime(answer, "%d-%m-%Y").date()
         today = datetime.date.today()
@@ -43,6 +48,7 @@ class TestService:
         return result
 
     def question_15(answer: str, *args) -> int:
+        """Назовите объекты, изображённые на рисунках."""
         result = 0
         treated_answer = [x.lower().strip() for x in answer.split(",")]
         if treated_answer[0] == TestService.CORRECT_ANSWER_15[0]:
@@ -52,6 +58,7 @@ class TestService:
         return result
 
     def question_16(answer: str, *args) -> int:
+        """Что общего между розой и тюльпаном?"""
         treated_answer = answer.lower().strip()
         if treated_answer in TestService.CORRECT_ANSWER_16:
             return 2
@@ -59,6 +66,7 @@ class TestService:
             return 0
 
     def question_17(answer: str, *args) -> int:
+        """Сколько полтинников в 3 рублях?"""
         treated_answer = answer.lower().strip()
         if treated_answer in TestService.CORRECT_ANSWER_17:
             return 1
@@ -66,6 +74,10 @@ class TestService:
             return 0
 
     def question_18(answer: str, *args) -> int:
+        """
+        Вы оплачиваете в кассу 3 рубля 05 копеек?
+        Сколько сдачи вы получите, если дадите кассиру 5 рублей?
+        """
         treated_answer = answer.lower().strip()
         if treated_answer in TestService.CORRECT_ANSWER_18:
             return 1
@@ -76,21 +88,47 @@ class TestService:
         return 0
 
     def question_20(answer: str, *args) -> int:
+        """Скопируйте рисунок."""
         return get_image_score("figure", args[0])
 
     def question_21(answer: str, *args) -> int:
+        """Нарисуйте циферблат и разместите на нем цифры."""
         return get_image_score("clock", args[0])
 
     def question_22(answer: str, *args) -> int:
+        """Напишите названия 12 разных стран."""
+        countries = {item.lower().strip() for item in answer.split(",")}
+        result = len(countries.intersection(COUNTRIES_NAMES))
+        if result == 12:
+            return 2
+        if result in (10, 11):
+            return 1
         return 0
 
     def question_23(answer: str, *args) -> int:
+        """Прочертите между кругами линию."""
+        mistakes = 0
+        zipped_answers = zip(answer, TestService.CORRECT_ANSWER_23)
+        for user_answ, expected_answ in zipped_answers:
+            if user_answ != expected_answ:
+                mistakes += 1
+        if not mistakes:  # без ошибок
+            return 2
+        if mistakes in (1, 2):  # 1-2 ошибки
+            return 1
         return 0
 
     def question_24(answer: str, *args) -> int:
+        """На рисунке четыре треугольника. Удалите 2 линии[...]"""
+        if answer in TestService.CORRECT_ANSWER_24:
+            return 2
         return 0
 
     def question_25(answer: str, *args) -> int:
+        """Вы всё сделали?"""
+        treated_answer = answer.lower().strip()
+        if treated_answer in TestService.CORRECT_ANSWER_25:
+            return 2
         return 0
 
 
