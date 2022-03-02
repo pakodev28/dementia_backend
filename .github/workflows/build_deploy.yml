@@ -53,6 +53,7 @@ jobs:
             echo SECRET_KEY=${{ secrets.SECRET_KEY }} >> .env
             echo ALLOWED_HOSTS=${{ secrets.ALLOWED_HOSTS }} >> .env
             echo CURRENTLY_HOST=${{ secrets.CURRENTLY_HOST }} >> .env
+            echo CURRENTLY_PORT=${{ secrets.CURRENTLY_PORT }} >> .env
             cd ./infrastructure/
             sudo docker pull ${{ secrets.DOCKER_USERNAME }}/demencia_backend:latest
             sudo docker-compose stop
