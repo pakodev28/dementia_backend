@@ -17,7 +17,7 @@ class BaseTypeImageField(BaseType):
     image = graphene.String(description="Изображение", required=True)
 
     def resolve_image(self, info):
-        return f"{settings.CURRENTLY_HOST}{self.image.url}"
+        return f"{settings.CURRENTLY_HOST:settings.CURRENTLY_PORT}{self.image.url}"
 
 
 class NewsArticleType(BaseTypeImageField, DjangoObjectType):
