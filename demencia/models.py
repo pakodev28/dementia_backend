@@ -35,6 +35,7 @@ class NewsArticle(DateMixin, PublishMixin):
     )
 
     class Meta(DateMixin.Meta):
+        ordering = ["-created_at"]
         verbose_name = "Новость"
         verbose_name_plural = "Новости"
 
