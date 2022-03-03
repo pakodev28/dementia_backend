@@ -63,6 +63,7 @@ jobs:
             echo EMAIL_PORT=${{ secrets.EMAIL_PORT }} >> .env
             echo EMAIL_USE_TLS=${{ secrets.EMAIL_USE_TLS }} >> .env
             cd ./infrastructure/
+            sudo docker image prune -f
             sudo docker pull ${{ secrets.DOCKER_USERNAME }}/demencia_backend:latest
             sudo docker-compose stop
             sudo docker-compose rm backend -f
