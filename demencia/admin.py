@@ -1,8 +1,11 @@
+from html import unescape
+import re
 from adminsortable2.admin import SortableAdminMixin
 from solo.admin import SingletonModelAdmin
 
 from django.contrib import admin
 from django.utils.safestring import mark_safe
+from django import forms
 
 from demencia.models import LeftMenuElement, MainMenuElement, MapPoint, NewsArticle, Partner, Settings, Slider
 
@@ -98,7 +101,23 @@ def image_preview(obj):
     return mark_safe(f'<img src="{obj.image.url}" style="max-height: 100px;">')
 
 
+class NewsArticleForm(forms.ModelForm):
+    class Meta:
+        model = NewsArticle
+        fields = "__all__"
+
+    def clean(self):
+        """Очищает текст новости от html-тегов и проверяет, что в тексте не только пробелы"""
+        clean = re.compile("<.*?>")
+        text = self.cleaned_data.get("text")
+        cleaned_text = re.sub(clean, "", unescape(text))
+        if cleaned_text.isspace():
+            raise forms.ValidationError("Текст новости не может состоять только из пробелов!")
+        return self.cleaned_data
+
+
 class NewsArticleAdmin(admin.ModelAdmin):
+    form = NewsArticleForm
     actions = [toggle_active, toggle_inactive]
     list_display = (
         "title",
