@@ -5,6 +5,7 @@ from solo.admin import SingletonModelAdmin
 from django.contrib import admin
 from django.utils.safestring import mark_safe
 from django import forms
+from django.utils.html import strip_tags
 
 from demencia.models import LeftMenuElement, MainMenuElement, MapPoint, NewsArticle, Partner, Settings, Slider
 
@@ -110,8 +111,6 @@ class NewsArticleForm(forms.ModelForm):
         Если проходит валидацию, возвращает исходный текст."""
         text = self.cleaned_data.get("text")
         if text is not None:
-            from django.utils.html import strip_tags
-
             cleaned_text = strip_tags(unescape(text))
             if cleaned_text.isspace():
                 raise forms.ValidationError("Текст новости не может состоять только из пробелов!")
