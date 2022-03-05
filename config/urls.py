@@ -7,9 +7,11 @@ from django.urls import include, path
 from django.conf.urls import url
 from django.views.decorators.csrf import csrf_exempt
 
+from config.settings import CURRENTLY_HOST
 
 admin.site.site_header = "Администрирование Деменция.net"
 admin.site.site_title = "Администрирование Деменция.net"
+admin.site.site_url = CURRENTLY_HOST
 
 urlpatterns = [
     path("admin/", admin.site.urls),

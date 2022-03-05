@@ -12,6 +12,7 @@ SECRET_KEY = env.str("SECRET_KEY")
 DEBUG = env.bool("DEBUG", False)
 ALLOWED_HOSTS = env.str("ALLOWED_HOSTS", default="").split(" ")
 CURRENTLY_HOST = env.str("CURRENTLY_HOST")
+CURRENTLY_PORT = env.str("CURRENTLY_PORT")
 
 # Application definition
 INSTALLED_APPS = [

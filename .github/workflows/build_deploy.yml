@@ -53,7 +53,17 @@ jobs:
             echo SECRET_KEY=${{ secrets.SECRET_KEY }} >> .env
             echo ALLOWED_HOSTS=${{ secrets.ALLOWED_HOSTS }} >> .env
             echo CURRENTLY_HOST=${{ secrets.CURRENTLY_HOST }} >> .env
+            echo CURRENTLY_PORT=${{ secrets.CURRENTLY_PORT }} >> .env
+            echo EMAIL_BACKEND=${{ secrets.EMAIL_BACKEND }} >> .env
+            echo EMAIL_HOST=${{ secrets.EMAIL_HOST }} >> .env
+            echo EMAIL_HOST_PASSWORD=${{ secrets.EMAIL_HOST_PASSWORD }} >> .env
+            echo EMAIL_HOST_USER=${{ secrets.EMAIL_HOST_USER }} >> .env
+            echo DEFAULT_FROM_EMAIL=${{ secrets.DEFAULT_FROM_EMAIL }} >> .env
+            echo EMAIL_NAME=${{ secrets.EMAIL_NAME }} >> .env
+            echo EMAIL_PORT=${{ secrets.EMAIL_PORT }} >> .env
+            echo EMAIL_USE_TLS=${{ secrets.EMAIL_USE_TLS }} >> .env
             cd ./infrastructure/
+            sudo docker image prune -f
             sudo docker pull ${{ secrets.DOCKER_USERNAME }}/demencia_backend:latest
             sudo docker-compose stop
             sudo docker-compose rm backend -f
