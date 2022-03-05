@@ -107,7 +107,8 @@ class NewsArticleForm(forms.ModelForm):
         fields = "__all__"
 
     def clean(self):
-        """Очищает текст новости от html-тегов и проверяет, что в тексте не только пробелы"""
+        """Очищает текст новости от html-тегов для проверки, что в тексте не только пробелы.
+        Если проходит валидацию, возвращает исходный текст."""
         clean = re.compile("<.*?>")
         text = self.cleaned_data.get("text")
         if text is not None:
