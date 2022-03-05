@@ -1,5 +1,4 @@
 from html import unescape
-import re
 from adminsortable2.admin import SortableAdminMixin
 from solo.admin import SingletonModelAdmin
 
@@ -109,10 +108,11 @@ class NewsArticleForm(forms.ModelForm):
     def clean(self):
         """Очищает текст новости от html-тегов для проверки, что в тексте не только пробелы.
         Если проходит валидацию, возвращает исходный текст."""
-        clean = re.compile("<.*?>")
         text = self.cleaned_data.get("text")
         if text is not None:
-            cleaned_text = re.sub(clean, "", unescape(text))
+            from django.utils.html import strip_tags
+
+            cleaned_text = strip_tags(unescape(text))
             if cleaned_text.isspace():
                 raise forms.ValidationError("Текст новости не может состоять только из пробелов!")
         return self.cleaned_data
