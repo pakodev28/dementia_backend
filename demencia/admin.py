@@ -1,11 +1,11 @@
 from html import unescape
-import re
 from adminsortable2.admin import SortableAdminMixin
 from solo.admin import SingletonModelAdmin
 
 from django.contrib import admin
 from django.utils.safestring import mark_safe
 from django import forms
+from django.utils.html import strip_tags
 
 from demencia.models import LeftMenuElement, MainMenuElement, MapPoint, NewsArticle, Partner, Settings, Slider
 
@@ -107,12 +107,13 @@ class NewsArticleForm(forms.ModelForm):
         fields = "__all__"
 
     def clean(self):
-        """Очищает текст новости от html-тегов и проверяет, что в тексте не только пробелы"""
-        clean = re.compile("<.*?>")
+        """Очищает текст новости от html-тегов для проверки, что в тексте не только пробелы.
+        Если проходит валидацию, возвращает исходный текст."""
         text = self.cleaned_data.get("text")
-        cleaned_text = re.sub(clean, "", unescape(text))
-        if cleaned_text.isspace():
-            raise forms.ValidationError("Текст новости не может состоять только из пробелов!")
+        if text is not None:
+            cleaned_text = strip_tags(unescape(text))
+            if cleaned_text.isspace():
+                raise forms.ValidationError("Текст новости не может состоять только из пробелов!")
         return self.cleaned_data
 
 
