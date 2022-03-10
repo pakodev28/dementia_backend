@@ -6,6 +6,7 @@ from django.contrib import admin
 from django.utils.safestring import mark_safe
 from django import forms
 from django.utils.html import strip_tags
+from django.conf import settings
 
 from demencia.models import LeftMenuElement, MainMenuElement, MapPoint, NewsArticle, Partner, Settings, Slider
 
@@ -106,15 +107,24 @@ class NewsArticleForm(forms.ModelForm):
         model = NewsArticle
         fields = "__all__"
 
-    def clean(self):
+    def clean_text(self):
         """Очищает текст новости от html-тегов для проверки, что в тексте не только пробелы.
         Если проходит валидацию, возвращает исходный текст."""
         text = self.cleaned_data.get("text")
         if text is not None:
             cleaned_text = strip_tags(unescape(text))
             if cleaned_text.isspace():
-                raise forms.ValidationError("Текст новости не может состоять только из пробелов!")
-        return self.cleaned_data
+                raise forms.ValidationError("Текст новости не может состоять только из пробелов.")
+        return text
+
+    def clean_image(self):
+        """Проверяет размер загружаемого изображения, что он не превышает 2MB"""
+        image = self.cleaned_data.get("image")
+        image_size = image.size
+
+        if image_size > settings.MAX_SIZE:
+            raise forms.ValidationError("Максимальный размер загружаемой картинки не должен превышать 2MB.")
+        return image
 
 
 class NewsArticleAdmin(admin.ModelAdmin):
