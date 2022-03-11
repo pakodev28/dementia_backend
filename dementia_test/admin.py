@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from dementia_test.models import DementiaTestCase, Answer
+from dementia_test.models import Answer, DementiaTestCase
 
 
 class AnswersInline(admin.TabularInline):
