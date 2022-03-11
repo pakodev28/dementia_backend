@@ -59,11 +59,13 @@ class Region(models.Model):
 class MapPoint(DateMixin, PublishMixin, OrderingMixin):
     city = models.CharField(max_length=250, verbose_name="Город")
     address = models.CharField(max_length=250, verbose_name="Адрес в городе", help_text="Улица, дом, офис")
-    phone_no = PhoneNumberField(verbose_name="Номер телефона", help_text="Номер телефона с указанием кода")
-    region = models.ForeignKey(
-        Region, verbose_name="Регион", on_delete=models.PROTECT, related_name="centers", null=True
+    phone_no = PhoneNumberField(
+        verbose_name="Номер телефона",
+        help_text="Номер телефона с указанием кода региона (пример: +7 (495) 933 00 20)"
     )
-    # TODO: Убрать null=True в будущих миграциях
+    region = models.ForeignKey(
+        Region, verbose_name="Регион", on_delete=models.PROTECT, related_name="centers"
+    )
 
     class Meta(OrderingMixin.Meta):
         verbose_name = "Точка на карте"
