@@ -1,7 +1,8 @@
 import graphene
 
-import demencia.schema
 import dementia_test.schema
+
+import demencia.schema
 
 
 class Query(demencia.schema.Query, graphene.ObjectType):

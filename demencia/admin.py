@@ -1,12 +1,13 @@
 from html import unescape
+
 from adminsortable2.admin import SortableAdminMixin
 from solo.admin import SingletonModelAdmin
 
-from django.contrib import admin
-from django.utils.safestring import mark_safe
 from django import forms
-from django.utils.html import strip_tags
 from django.conf import settings
+from django.contrib import admin
+from django.utils.html import strip_tags
+from django.utils.safestring import mark_safe
 
 from demencia.models import LeftMenuElement, MainMenuElement, MapPoint, NewsArticle, Partner, Settings, Slider
 

@@ -4,6 +4,7 @@ from graphene_django.types import DjangoObjectType, ObjectType
 from django.conf import settings
 
 from dementia_test.models import DementiaTestCase
+
 from .models import LeftMenuElement, MainMenuElement, MapPoint, NewsArticle, Partner, Region, Settings, Slider
 
 

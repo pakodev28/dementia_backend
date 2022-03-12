@@ -1,6 +1,6 @@
 from django.core.validators import MaxValueValidator, MinValueValidator
-from django.utils import timezone
 from django.db import models
+from django.utils import timezone
 
 from core.mixins import DateMixin
 

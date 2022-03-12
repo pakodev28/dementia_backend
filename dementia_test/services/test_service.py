@@ -8,8 +8,8 @@ from django.shortcuts import get_list_or_404, get_object_or_404
 from django.template.loader import render_to_string
 
 from dementia_test.models import Answer, DementiaTestCase
-from dementia_test.services.image_neural_handler.onnx_inference import get_image_score
 from dementia_test.services.countries_list.ru_set import COUNTRIES_NAMES
+from dementia_test.services.image_neural_handler.onnx_inference import get_image_score
 
 
 logging.basicConfig(
