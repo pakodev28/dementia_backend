@@ -208,15 +208,19 @@ class MapPointForm(forms.ModelForm):
     def clean_city(self):
         """Проверяет отсутвие в поле город специальных символов и цифр"""
         city = self.cleaned_data.get("city")
-        if re.search(r"[0-9@_!#$%^&*()<>?/\\|}{~:\[\]\.,]", city):
-            raise forms.ValidationError("Название города не может сожержать цифры и специальные символы")
+        if re.search(r"[A-Za-z0-9@_!#$%^&*()<>?/\\|}{~:\[\]\.,]", city):
+            raise forms.ValidationError(
+                "Название города не может содержать цифры, специальные символы и символы других языков"
+            )
         return city
 
     def clean_address(self):
         """Проверяет отсутсвие в адресе специальных символов"""
         address = self.cleaned_data.get("address")
-        if re.search(r"[@_!#$%^&*()<>?/\\|}{~:\[\]]", address):
-            raise forms.ValidationError("Адрес не может содержать специальные символы")
+        if re.search(r"[A-Za-z@_!#$%^&*()<>?/\\|}{~:\[\]]", address):
+            raise forms.ValidationError(
+                "Адрес не может содержать специальные символы и символы других языков "
+            )
         return address
 
 
