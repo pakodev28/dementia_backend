@@ -1,0 +1,41 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:14
+    restart: always
+    volumes:
+      - db_data:/var/lib/postgresql/data/
+    ports:
+      - "5432:5432"
+    env_file:
+      - ../.env
+      
+  nginx:
+    image: nginx:1.21
+    restart: always
+    depends_on:
+      - backend
+    ports:
+      - "8000:80"
+    volumes:
+      - ./nginx/conf.d:/etc/nginx/conf.d
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - static-volume:/code/static
+      - media-volume:/code/media  
+      
+  backend:
+    image: k0stya2007/demencia-backend
+    restart: always
+    depends_on:
+      - db
+    env_file:
+      - ../.env
+    volumes:
+      - static-volume:/code/static
+      - media-volume:/code/media
+      
+volumes:
+  db_data:
+  static-volume:
+  media-volume:
