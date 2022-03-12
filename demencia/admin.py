@@ -1,3 +1,4 @@
+import re
 from html import unescape
 
 from adminsortable2.admin import SortableAdminMixin
@@ -198,7 +199,32 @@ class NewsArticleAdmin(admin.ModelAdmin):
         return mark_safe(f'<div style="overflow: auto; width:400px; height:100px;">{obj.text}</div>')
 
 
+class MapPointForm(forms.ModelForm):
+    class Meta:
+        model = MapPoint
+        fields = "__all__"
+
+    def clean_city(self):
+        """Проверяет отсутвие в поле город специальных символов и цифр"""
+        city = self.cleaned_data.get("city")
+        if re.search(r"[A-Za-z0-9@_!#$%^&*()<>?/\\|}{~:\[\]\.,]", city):
+            raise forms.ValidationError(
+                "Название города не может содержать цифры, специальные символы и символы других языков"
+            )
+        return city
+
+    def clean_address(self):
+        """Проверяет отсутсвие в адресе специальных символов"""
+        address = self.cleaned_data.get("address")
+        if re.search(r"[A-Za-z@_!#$%^&*()<>?/\\|}{~:\[\]]", address):
+            raise forms.ValidationError(
+                "Адрес не может содержать специальные символы и символы других языков "
+            )
+        return address
+
+
 class MapPointAdmin(SortableAdminMixin, admin.ModelAdmin):
+    form = MapPointForm
     actions = [toggle_active, toggle_inactive]
     list_display = ("city", "region", "is_active", "address", "phone_no")
     list_filter = ("city", "is_active")

@@ -166,9 +166,9 @@ class Migration(migrations.Migration):
                 ('updated_at', models.DateTimeField(auto_now=True, help_text='Заполняется автоматически', verbose_name='Дата обновления')),
                 ('is_active', models.BooleanField(default=True, help_text='Включить/отключить показ на сайте', verbose_name='Активность')),
                 ('position', models.PositiveIntegerField(default=0, help_text='Можно поменять перетаскиванием на странице списка объектов', verbose_name='Позиция в списке')),
-                ('city', models.CharField(max_length=250, verbose_name='Город')),
-                ('address', models.CharField(help_text='Улица, дом, офис', max_length=250, verbose_name='Адрес в городе')),
-                ('phone_no', phonenumber_field.modelfields.PhoneNumberField(help_text='Номер телефона с указанием кода региона (пример: +7 495 933 00 20)', max_length=128, region=None, verbose_name='Номер телефона')),
+                ('city', models.CharField(max_length=35, verbose_name='Город')),
+                ('address', models.CharField(help_text='Улица, дом, офис', max_length=80, verbose_name='Адрес в городе')),
+                ('phone_no', phonenumber_field.modelfields.PhoneNumberField(help_text='Номер телефона с указанием кода региона (пример: +7 495 933 00 20 или 8 495 933 00 20)', max_length=20, region=None, verbose_name='Номер телефона')),
                 ('region', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, related_name='centers', to='demencia.region', verbose_name='Регион')),
             ],
             options={
