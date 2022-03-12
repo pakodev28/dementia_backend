@@ -1,6 +1,5 @@
 import re
 from html import unescape
-from phonenumber_field.formfields import PhoneNumberField
 
 from adminsortable2.admin import SortableAdminMixin
 from solo.admin import SingletonModelAdmin
