@@ -61,7 +61,7 @@ class MapPoint(DateMixin, PublishMixin, OrderingMixin):
     address = models.CharField(max_length=250, verbose_name="Адрес в городе", help_text="Улица, дом, офис")
     phone_no = PhoneNumberField(
         verbose_name="Номер телефона",
-        help_text="Номер телефона с указанием кода региона (пример: +7 (495) 933 00 20)"
+        help_text="Номер телефона с указанием кода региона (пример: +7 495 933 00 20)"
     )
     region = models.ForeignKey(
         Region, verbose_name="Регион", on_delete=models.PROTECT, related_name="centers"
@@ -105,7 +105,7 @@ class Slider(DateMixin, PublishMixin, OrderingMixin):
 
 
 class MainMenuElement(DateMixin, PublishMixin, OrderingMixin):
-    name = models.CharField(max_length=250, verbose_name="Название элемента")
+    name = models.CharField(max_length=250, verbose_name="Название элемента", unique=True)
     url = URLOrRelativeURLField(max_length=250, verbose_name="Ссылка")
 
     class Meta(OrderingMixin.Meta):
@@ -117,7 +117,7 @@ class MainMenuElement(DateMixin, PublishMixin, OrderingMixin):
 
 
 class LeftMenuElement(DateMixin, PublishMixin, OrderingMixin):
-    name = models.CharField(max_length=250, verbose_name="Название элемента")
+    name = models.CharField(max_length=250, verbose_name="Название элемента", unique=True)
     url = URLOrRelativeURLField(max_length=250, verbose_name="Ссылка")
 
     class Meta(OrderingMixin.Meta):
