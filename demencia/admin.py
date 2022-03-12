@@ -21,9 +21,47 @@ def toggle_inactive(modeladmin, request, queryset):
     queryset.update(is_active=False)
 
 
+def validate_htmlfield(text):
+    """Очищает текст в htmlfield от html-тегов для проверки, что в тексте не только пробелы.
+    Если проходит валидацию, возвращает исходный текст."""
+    if text is not None:
+        cleaned_text = strip_tags(unescape(text))
+        if cleaned_text.isspace():
+            raise forms.ValidationError("Текст не может состоять только из пробелов.")
+    return text
+
+
+class SettingsForm(forms.ModelForm):
+    class Meta:
+        model = Settings
+        fields = "__all__"
+
+    def clean_about_section_term(self):
+        """Очищает <определение термина> от html-тегов для проверки, что в тексте не только пробелы.
+        Если проходит валидацию, возвращает исходный текст."""
+        about_section_term = self.cleaned_data.get("about_section_term")
+        validate_htmlfield(about_section_term)
+        return about_section_term
+
+    def clean_about_section_info(self):
+        """Очищает <информация о статистике> от html-тегов для проверки, что в тексте не только пробелы.
+        Если проходит валидацию, возвращает исходный текст."""
+        about_section_info = self.cleaned_data.get("about_section_info")
+        validate_htmlfield(about_section_info)
+        return about_section_info
+
+    def clean_fund_section_info(self):
+        """Очищает <описание> от html-тегов для проверки, что в тексте не только пробелы.
+        Если проходит валидацию, возвращает исходный текст."""
+        fund_section_info = self.cleaned_data.get("fund_section_info")
+        validate_htmlfield(fund_section_info)
+        return validate_htmlfield
+
+
 @admin.register(Settings)
 class SettingsAdmin(SingletonModelAdmin):
 
+    form = SettingsForm
     fieldsets = (
         (
             "Общая информация",
@@ -108,13 +146,10 @@ class NewsArticleForm(forms.ModelForm):
         fields = "__all__"
 
     def clean_text(self):
-        """Очищает текст новости от html-тегов для проверки, что в тексте не только пробелы.
+        """Очищает <текст новости> от html-тегов для проверки, что в тексте не только пробелы.
         Если проходит валидацию, возвращает исходный текст."""
         text = self.cleaned_data.get("text")
-        if text is not None:
-            cleaned_text = strip_tags(unescape(text))
-            if cleaned_text.isspace():
-                raise forms.ValidationError("Текст новости не может состоять только из пробелов.")
+        validate_htmlfield(text)
         return text
 
     def clean_image(self):
@@ -182,7 +217,21 @@ class PartnerAdmin(SortableAdminMixin, admin.ModelAdmin):
     readonly_fields = ("created_at", "updated_at", image_preview)
 
 
+class SliderForm(forms.ModelForm):
+    class Meta:
+        model = Slider
+        fields = "__all__"
+
+    def clean_title(self):
+        """Очищает <заголовок> от html-тегов для проверки, что в тексте не только пробелы.
+        Если проходит валидацию, возвращает исходный текст."""
+        title = self.cleaned_data.get("title")
+        validate_htmlfield(title)
+        return title
+
+
 class SliderAdmin(SortableAdminMixin, admin.ModelAdmin):
+    form = SliderForm
     actions = [toggle_active, toggle_inactive]
     list_display = ("title", "is_active", image_preview, "url", "url_label", "created_at", "updated_at")
     list_filter = ("title", "is_active")
