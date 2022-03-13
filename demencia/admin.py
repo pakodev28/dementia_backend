@@ -178,7 +178,7 @@ class NewsArticleAdmin(admin.ModelAdmin):
         "created_at",
         "updated_at",
     )
-    list_filter = ("title", "is_active")
+    list_filter = ("is_active",)
     search_fields = ("title", "text")
 
     fields = (
@@ -237,7 +237,7 @@ class MapPointAdmin(SortableAdminMixin, admin.ModelAdmin):
 class PartnerAdmin(SortableAdminMixin, admin.ModelAdmin):
     actions = [toggle_active, toggle_inactive]
     list_display = ("name", "is_active", image_preview, "url", "created_at", "updated_at")
-    list_filter = ("name", "is_active")
+    list_filter = ("is_active",)
     search_fields = ("name",)
 
     fields = ("name", "url", "is_active", "image", image_preview, ("created_at", "updated_at"))
@@ -261,7 +261,7 @@ class SliderAdmin(SortableAdminMixin, admin.ModelAdmin):
     form = SliderForm
     actions = [toggle_active, toggle_inactive]
     list_display = ("title", "is_active", image_preview, "url", "url_label", "created_at", "updated_at")
-    list_filter = ("title", "is_active")
+    list_filter = ("is_active",)
     search_fields = ("title",)
 
     fields = ("title", "url_label", "url", "is_active", "image", image_preview, ("created_at", "updated_at"))
@@ -271,14 +271,14 @@ class SliderAdmin(SortableAdminMixin, admin.ModelAdmin):
 class MainMenuElementAdmin(SortableAdminMixin, admin.ModelAdmin):
     actions = [toggle_active, toggle_inactive]
     list_display = ("name", "is_active", "url")
-    list_filter = ("name", "is_active")
+    list_filter = ("is_active",)
     search_fields = ("name",)
 
 
 class LeftMenuElementAdmin(SortableAdminMixin, admin.ModelAdmin):
     actions = [toggle_active, toggle_inactive]
     list_display = ("name", "is_active", "url")
-    list_filter = ("name", "is_active")
+    list_filter = ("is_active",)
     search_fields = ("name",)
 
 
