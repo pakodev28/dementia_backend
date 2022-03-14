@@ -57,7 +57,7 @@ class SettingsForm(forms.ModelForm):
         Если проходит валидацию, возвращает исходный текст."""
         fund_section_info = self.cleaned_data.get("fund_section_info")
         validate_htmlfield(fund_section_info)
-        return validate_htmlfield
+        return fund_section_info
 
 
 @admin.register(Settings)
