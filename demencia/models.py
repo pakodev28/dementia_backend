@@ -61,13 +61,11 @@ class MapPoint(DateMixin, PublishMixin, OrderingMixin):
     address = models.CharField(max_length=80, verbose_name="Адрес в городе", help_text="Улица, дом, офис")
     phone_no = PhoneNumberField(
         max_length=20,
-        region='RU',
+        region="RU",
         verbose_name="Номер телефона",
-        help_text="Номер телефона с указанием кода региона (пример: +7 495 933 00 20 или 8 495 933 00 20)"
+        help_text="Номер телефона с указанием кода региона (пример: +7 495 933 00 20 или 8 495 933 00 20)",
     )
-    region = models.ForeignKey(
-        Region, verbose_name="Регион", on_delete=models.PROTECT, related_name="centers"
-    )
+    region = models.ForeignKey(Region, verbose_name="Регион", on_delete=models.PROTECT, related_name="centers")
 
     class Meta(OrderingMixin.Meta):
         verbose_name = "Точка на карте"
