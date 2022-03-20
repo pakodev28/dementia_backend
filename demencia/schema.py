@@ -159,7 +159,7 @@ class Query(ObjectType):
         return NewsArticle.objects.get(pk=id)
 
     def resolve_regions(self, info, **kwargs):
-        return Region.objects.filter(centers__isnull=False, centers__is_active=True)
+        return Region.objects.filter(centers__isnull=False, centers__is_active=True).distinct()
 
     def resolve_centers(self, info, city, **kwargs):
         return MapPoint.objects.filter(
