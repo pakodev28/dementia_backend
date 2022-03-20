@@ -217,9 +217,7 @@ class MapPointForm(forms.ModelForm):
         """Проверяет отсутсвие в адресе специальных символов"""
         address = self.cleaned_data.get("address")
         if re.search(r"[A-Za-z@_!#$%^&*()<>?/\\|}{~:\[\]]", address):
-            raise forms.ValidationError(
-                "Адрес не может содержать специальные символы и символы других языков "
-            )
+            raise forms.ValidationError("Адрес не может содержать специальные символы и символы других языков ")
         return address
 
 

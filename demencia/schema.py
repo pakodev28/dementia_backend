@@ -43,6 +43,10 @@ class MapPointType(DjangoObjectType):
         fields = ("city", "address", "phone_no")
         description = "Объекты класса MapPoint"
 
+    @classmethod
+    def get_queryset(cls, queryset, info):
+        return queryset.active()
+
 
 class RegionType(DjangoObjectType):
     id = graphene.ID(description="ID объекта", required=True)
