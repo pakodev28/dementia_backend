@@ -228,7 +228,10 @@ class MapPointAdmin(SortableAdminMixin, admin.ModelAdmin):
     list_filter = ("city", "is_active")
     search_fields = ("city", "address", "phone_no", "phone_no_secondary")
 
-    fields = ("is_active", "city", "region", "address", ("phone_no", "phone_no_secondary"), ("created_at", "updated_at"))
+    fields = (
+        "is_active", "city", "region", "address",
+        ("phone_no", "phone_no_secondary"), ("created_at", "updated_at")
+    )
     readonly_fields = ("created_at", "updated_at")
 
 
