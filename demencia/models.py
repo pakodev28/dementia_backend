@@ -65,6 +65,13 @@ class MapPoint(DateMixin, PublishMixin, OrderingMixin):
         verbose_name="Номер телефона",
         help_text="Номер телефона с указанием кода региона (пример: +7 495 933 00 20 или 8 495 933 00 20)",
     )
+    phone_no_secondary = PhoneNumberField(
+        blank=True,
+        max_length=20,
+        region="RU",
+        verbose_name="Номер телефона (доп.)",
+        help_text="Номер телефона с указанием кода региона (пример: +7 495 933 00 20 или 8 495 933 00 20)",
+    )
     region = models.ForeignKey(Region, verbose_name="Регион", on_delete=models.PROTECT, related_name="centers")
 
     class Meta(OrderingMixin.Meta):
