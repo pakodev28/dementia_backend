@@ -26,13 +26,10 @@ class Answer(DateMixin):
     question = models.PositiveSmallIntegerField(
         "Номер вопроса", validators=[MinValueValidator(1), MaxValueValidator(25)]
     )
-    image = models.ImageField(upload_to="answer/", verbose_name="Изображение", null=True)
+    image = models.ImageField(upload_to="answer/", verbose_name="Изображение", blank=True)
 
     class Meta:
         unique_together = ("test_case", "question")
         ordering = ["-created_at"]
         verbose_name = "Ответ на вопрос"
         verbose_name_plural = "Ответы на вопросы"
-
-    def __str__(self):
-        return f"Вопрос №{self.question}: {self.answer_value}"
