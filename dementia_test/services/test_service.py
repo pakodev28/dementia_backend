@@ -150,10 +150,13 @@ def send_email(test_id: int, result: int) -> None:
         result_name = "БАЛЛ"
     elif result in (2, 3, 4, 22):
         result_name = "БАЛЛА"
-
     answer_instance = get_object_or_404(Answer, test_case=test_id, question=TestService.EMAIL_FROM_ANSWER)
     user_email = answer_instance.answer_value
-    html_message = render_to_string("email.html", {"result": result, "result_name": result_name})
+    images_path = f"{settings.CURRENTLY_HOST}:{settings.CURRENTLY_PORT}/static/"
+    html_message = render_to_string(
+        "email.html",
+        {"result": result, "result_name": result_name, "images_path": images_path}
+    )
     try:
         send_mail(settings.EMAIL_NAME, None, None, [user_email], fail_silently=False, html_message=html_message)
     except Exception as error:
@@ -162,7 +165,7 @@ def send_email(test_id: int, result: int) -> None:
 
 def save_test_score(test_id: int, result: int) -> None:
     test_case = get_object_or_404(DementiaTestCase, id=test_id)
-    Answer.objects.create(
+    Answer.objects.update_or_create(
         answer_value=result,
         test_case=test_case,
         question=26,

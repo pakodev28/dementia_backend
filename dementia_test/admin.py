@@ -22,7 +22,7 @@ class DementiaTestCaseAdmin(admin.ModelAdmin):
 
     @admin.display(description="Ответы")
     def answers(self, obj):
-        return " | ".join([answer.__str__() for answer in obj.answers.all()])
+        return " | ".join([f"Вопрос №{answer.question}: {answer.answer_value}" for answer in obj.answers.all()])
 
 
 @admin.register(Answer)
