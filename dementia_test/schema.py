@@ -16,11 +16,11 @@ class DementiaTestCaseType(DjangoObjectType):
 
 
 class AnswerType(DjangoObjectType):
-    id = graphene.ID(description="ID ответа", required=True)
+    id = graphene.ID(description="ID ответа")
     answer_value = graphene.String(description="Значение ответа")
-    question = graphene.Int(description="Номер вопроса", required=True)
+    question = graphene.Int(description="Номер вопроса")
     image = graphene.String(description="Изображение")
-    test_case = graphene.Field(DementiaTestCaseType, description="Экземпляр теста", required=True)
+    test_case = graphene.Field(DementiaTestCaseType, description="Экземпляр теста")
 
     class Meta:
         model = Answer
@@ -33,14 +33,13 @@ class DementiaTestCaseInput(graphene.InputObjectType):
 
 class AnswerInput(graphene.InputObjectType):
     image = Upload(description="Изображение")
-    answer_value = graphene.String(description="Значение ответа", required=True)
+    answer_value = graphene.String(description="Значение ответа")
     test_case = graphene.InputField(DementiaTestCaseInput, description="Экземпляр теста", required=True)
     question = graphene.Int(description="Номер вопроса", required=True)
 
 
 class CreateAnswer(graphene.Mutation):
     answer = graphene.Field(AnswerType)
-    ok = graphene.Boolean()
 
     class Arguments:
         input = AnswerInput(required=True)
@@ -56,8 +55,7 @@ class CreateAnswer(graphene.Mutation):
             answer_value=answer_value, test_case=test_case, question=question, image=image
         )
         instance.save()
-        ok = True
-        return CreateAnswer(answer=instance, ok=ok)
+        return CreateAnswer(answer=instance)
 
 
 class Mutation(graphene.ObjectType):
