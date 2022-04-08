@@ -17,7 +17,7 @@ class DementiaTestCaseType(DjangoObjectType):
 
 class AnswerType(DjangoObjectType):
     id = graphene.ID(description="ID ответа", required=True)
-    answer_value = graphene.String(description="Значение ответа", required=True)
+    answer_value = graphene.String(description="Значение ответа")
     question = graphene.Int(description="Номер вопроса", required=True)
     image = graphene.String(description="Изображение")
     test_case = graphene.Field(DementiaTestCaseType, description="Экземпляр теста", required=True)
