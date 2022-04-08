@@ -40,6 +40,7 @@ class AnswerInput(graphene.InputObjectType):
 
 class CreateAnswer(graphene.Mutation):
     answer = graphene.Field(AnswerType)
+    ok = graphene.Boolean()
 
     class Arguments:
         input = AnswerInput(required=True)
@@ -55,7 +56,8 @@ class CreateAnswer(graphene.Mutation):
             answer_value=answer_value, test_case=test_case, question=question, image=image
         )
         instance.save()
-        return CreateAnswer(answer=instance)
+        ok = True
+        return CreateAnswer(answer=instance, ok=ok)
 
 
 class Mutation(graphene.ObjectType):
