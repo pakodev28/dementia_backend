@@ -6,6 +6,10 @@ from django.core.exceptions import ValidationError
 
 from .models import Answer, DementiaTestCase
 
+import datetime
+
+now = datetime.datetime.now()
+
 
 class DementiaTestCaseType(DjangoObjectType):
     id = graphene.ID(description="ID теста")
@@ -49,7 +53,8 @@ class CreateAnswer(graphene.Mutation):
         answer_value = input.answer_value
         test_case = DementiaTestCase.objects.get(id=input.test_case.id)
         question = input.question
-        image = input.image
+        image_list = input.image.split('.')
+        image = f"{''.join(image_list[0:-1])}_{now.strftime('%d-%m-%Y_%H-%M-%S')}.{image_list[-1]}"
         if question < 1 or question > 25:
             raise ValidationError("Номер вопроса не может быть меньше 1 и больше 25.")
         instance = Answer.objects.create(
