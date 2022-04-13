@@ -34,7 +34,7 @@ def get_image_score(neural_net_name, image_from_test):
     image_size = 256
 
     ort_session = onnxruntime.InferenceSession(NEURAL_NET_NAMES[neural_net_name])
-    image = np.frombuffer(image_from_test, dtype=np.uint8)
+    image = np.fromfile(image_from_test, dtype=np.uint8)
     image = cv2.imdecode(image, cv2.IMREAD_COLOR)
 
     # ниже вызывается модель
