@@ -90,11 +90,11 @@ class TestService:
 
     def question_20(answer: str, *args) -> int:
         """Скопируйте рисунок."""
-        return get_image_score("figure", f"{MEDIA_ROOT}/{args[0]}")
+        return get_image_score("figure", args[0])
 
     def question_21(answer: str, *args) -> int:
         """Нарисуйте циферблат и разместите на нем цифры."""
-        return get_image_score("clock", f"{MEDIA_ROOT}/{args[0]}")
+        return get_image_score("clock", args[0])
 
     def question_22(answer: str, *args) -> int:
         """Напишите названия 12 разных стран."""
