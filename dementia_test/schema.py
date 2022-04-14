@@ -64,8 +64,8 @@ class CreateAnswer(graphene.Mutation):
                 answer_value=answer_value, test_case=test_case, question=question, image=image
             )
         else:
-            instance = Answer.objects.update(
-                id=id_answer, answer_value=answer_value, test_case=test_case, question=question, image=image
+            instance = Answer.objects.filter(id=id_answer).update(
+                answer_value=answer_value, test_case=test_case, question=question, image=image
             )
         instance.save()
         ok = True
