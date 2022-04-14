@@ -19,12 +19,12 @@ class DementiaTestCase(DateMixin):
 
 class Answer(DateMixin):
     updated_at = None
+    question = models.PositiveSmallIntegerField(
+        "Номер вопроса", validators=[MinValueValidator(1), MaxValueValidator(25)]
+    )
     answer_value = models.CharField("Значение ответа", max_length=255, null=True)
     test_case = models.ForeignKey(
         DementiaTestCase, on_delete=models.CASCADE, related_name="answers", verbose_name="Прохождение теста"
-    )
-    question = models.PositiveSmallIntegerField(
-        "Номер вопроса", validators=[MinValueValidator(1), MaxValueValidator(25)]
     )
     image = models.ImageField(upload_to="answer/", verbose_name="Изображение", null=True)
 
@@ -33,3 +33,8 @@ class Answer(DateMixin):
         ordering = ["-created_at"]
         verbose_name = "Ответ на вопрос"
         verbose_name_plural = "Ответы на вопросы"
+
+    def __str__(self):
+        """Returns an empty string to look nice in admin panel."""
+
+        return ""

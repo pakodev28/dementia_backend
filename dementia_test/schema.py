@@ -1,3 +1,5 @@
+import datetime
+
 import graphene
 from graphene_django import DjangoObjectType
 from graphene_file_upload.scalars import Upload
@@ -6,7 +8,6 @@ from django.core.exceptions import ValidationError
 
 from .models import Answer, DementiaTestCase
 
-import datetime
 
 now = datetime.datetime.now()
 
