@@ -56,7 +56,7 @@ class CreateAnswer(graphene.Mutation):
         image = input.image
         if question < 1 or question > 25:
             raise ValidationError("Номер вопроса не может быть меньше 1 и больше 25.")
-        instance = Answer.object.update_or_create(
+        instance = Answer.objects.update_or_create(
             answer_value=answer_value, test_case=test_case, question=question, image=image
         )
         instance.save()
