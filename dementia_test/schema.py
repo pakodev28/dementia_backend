@@ -53,12 +53,7 @@ class CreateAnswer(graphene.Mutation):
         answer_value = input.answer_value
         test_case = DementiaTestCase.objects.get(id=input.test_case.id)
         question = input.question
-        image_name = str(input.image)
-        if image_name:
-            image_list = image_name.split('.')
-            image = f"{''.join(image_list[0:-1])}_{now.strftime('%d-%m-%Y_%H-%M-%S')}.{image_list[-1]}"
-        else:
-            image = ""
+        image = input.image
         if question < 1 or question > 25:
             raise ValidationError("Номер вопроса не может быть меньше 1 и больше 25.")
         instance = Answer.objects.create(
