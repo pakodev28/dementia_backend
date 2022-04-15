@@ -50,25 +50,20 @@ class CreateAnswer(graphene.Mutation):
         input = AnswerInput(required=True)
 
     def mutate(self, info, input=None):
-        answer_value = input.answer_value
+        answer_value = input.answer_value or Answer._meta.get_field('answer_value').get_default()
         test_case = DementiaTestCase.objects.get(id=input.test_case.id)
         question = input.question
-        image = input.image
+        image = input.image or Answer._meta.get_field('image').get_default()
+
         if question < 1 or question > 25:
             raise ValidationError("Номер вопроса не может быть меньше 1 и больше 25.")
-        try:
-            obj = Answer.objects.get(test_case=test_case, question=question)
-            id_answer = obj.id
-        except Exception:
-            instance = Answer.objects.create(
-                answer_value=answer_value, test_case=test_case, question=question, image=image
-            )
-            instance.save()
-        else:
-            Answer.objects.filter(id=id_answer).update(
-                answer_value=answer_value, test_case=test_case, question=question, image=image
-            )
-            instance = Answer.objects.filter(id=id_answer)
+
+        instance, _ = Answer.objects.update_or_create(
+            test_case=test_case,
+            question=question,
+            defaults={'answer_value': answer_value, "image": image}
+        )
+
         ok = True
         return CreateAnswer(answer=instance, ok=ok)
 
