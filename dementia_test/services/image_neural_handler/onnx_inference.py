@@ -1,5 +1,3 @@
-import os
-
 import cv2
 import numpy as np
 import onnxruntime
@@ -8,7 +6,6 @@ from albumentations import Compose, Normalize, Resize
 from albumentations.pytorch import ToTensorV2
 from django.db.models.fields.files import ImageFieldFile
 
-from config import settings
 
 NEURAL_NET_NAMES = {"clock": "./dementia_test/services/image_neural_handler/clock.onnx",
                     "figure": "./dementia_test/services/image_neural_handler/figure.onnx"}
