@@ -140,6 +140,7 @@ def get_result(answer_data: "list[Answer]") -> int:
             score = f(answer.answer_value, answer.image)
         except Exception:
             score = 0
+        print(f"{score} {answer.answer_value} {answer.image}")
         result += score
     return result
 
@@ -158,7 +159,14 @@ def send_email(test_id: int, result: int) -> None:
         {"result": result, "result_name": result_name, "images_path": images_path}
     )
     try:
-        send_mail(settings.EMAIL_NAME, None, None, [user_email], fail_silently=False, html_message=html_message)
+        send_mail(
+            settings.EMAIL_NAME,
+            None,
+            settings.DEFAULT_FROM_EMAIL,
+            [user_email],
+            fail_silently=False,
+            html_message=html_message
+        )
     except Exception as error:
         logger.exception(f"Ошибка в отправке емейла: {error}")
 
@@ -166,9 +174,9 @@ def send_email(test_id: int, result: int) -> None:
 def save_test_score(test_id: int, result: int) -> None:
     test_case = get_object_or_404(DementiaTestCase, id=test_id)
     Answer.objects.update_or_create(
-        answer_value=result,
         test_case=test_case,
         question=26,
+        defaults={'answer_value': result}
     )
 
 
