@@ -64,6 +64,9 @@ class CreateAnswer(graphene.Mutation):
         if question in [20, 21] and answer_value:
             raise ValidationError(f"Вопрос {question} должен содержать только изображение и не может включать ответ")
 
+        if question in [20, 21] and not(image):
+            raise ValidationError(f"Вопрос {question} должен содержать изображение")
+
         instance, _ = Answer.objects.update_or_create(
             test_case=test_case,
             question=question,
