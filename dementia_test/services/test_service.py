@@ -146,7 +146,6 @@ def get_result(answer_data: "list[Answer]") -> int:
 
 
 def send_email(test_id: int, result: int) -> None:
-    print(Settings.objects.get().enable_send_email)
     if Settings.objects.get().enable_send_email:
         result_name = "БАЛЛОВ"
         if result in (1, 21):
