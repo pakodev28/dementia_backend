@@ -140,7 +140,6 @@ def get_result(answer_data: "list[Answer]") -> int:
             score = f(answer.answer_value, answer.image)
         except Exception:
             score = 0
-        print(f"{score} {answer.answer_value} {answer.image}")
         result += score
     return result
 
