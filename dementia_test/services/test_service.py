@@ -7,6 +7,7 @@ from django.core.mail import send_mail
 from django.shortcuts import get_list_or_404, get_object_or_404
 from django.template.loader import render_to_string
 
+from demencia.models import Settings
 from dementia_test.models import Answer, DementiaTestCase
 from dementia_test.services.countries_list.ru_set import COUNTRIES_NAMES
 from dementia_test.services.image_neural_handler.onnx_inference import get_image_score
@@ -145,29 +146,31 @@ def get_result(answer_data: "list[Answer]") -> int:
 
 
 def send_email(test_id: int, result: int) -> None:
-    result_name = "БАЛЛОВ"
-    if result in (1, 21):
-        result_name = "БАЛЛ"
-    elif result in (2, 3, 4, 22):
-        result_name = "БАЛЛА"
-    answer_instance = get_object_or_404(Answer, test_case=test_id, question=TestService.EMAIL_FROM_ANSWER)
-    user_email = answer_instance.answer_value
-    images_path = f"{settings.CURRENTLY_HOST}:{settings.CURRENTLY_PORT}/static/"
-    html_message = render_to_string(
-        "email.html",
-        {"result": result, "result_name": result_name, "images_path": images_path}
-    )
-    try:
-        send_mail(
-            settings.EMAIL_NAME,
-            None,
-            settings.DEFAULT_FROM_EMAIL,
-            [user_email],
-            fail_silently=False,
-            html_message=html_message
+    print(Settings.objects.get().enable_send_email)
+    if Settings.objects.get().enable_send_email:
+        result_name = "БАЛЛОВ"
+        if result in (1, 21):
+            result_name = "БАЛЛ"
+        elif result in (2, 3, 4, 22):
+            result_name = "БАЛЛА"
+        answer_instance = get_object_or_404(Answer, test_case=test_id, question=TestService.EMAIL_FROM_ANSWER)
+        user_email = answer_instance.answer_value
+        images_path = f"{settings.CURRENTLY_HOST}:{settings.CURRENTLY_PORT}/static/"
+        html_message = render_to_string(
+            "email.html",
+            {"result": result, "result_name": result_name, "images_path": images_path}
         )
-    except Exception as error:
-        logger.exception(f"Ошибка в отправке емейла: {error}")
+        try:
+            send_mail(
+                settings.EMAIL_NAME,
+                None,
+                settings.DEFAULT_FROM_EMAIL,
+                [user_email],
+                fail_silently=False,
+                html_message=html_message
+            )
+        except Exception as error:
+            logger.exception(f"Ошибка в отправке емейла: {error}")
 
 
 def save_test_score(test_id: int, result: int) -> None:

@@ -133,6 +133,14 @@ class SettingsAdmin(SingletonModelAdmin):
                 )
             },
         ),
+        (
+            "Отправлять письма",
+            {
+                "fields": (
+                    "enable_send_email",
+                )
+            }
+        )
     )
 
 
