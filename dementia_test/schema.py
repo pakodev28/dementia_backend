@@ -51,21 +51,29 @@ class CreateAnswer(graphene.Mutation):
         input = AnswerInput(required=True)
 
     def mutate(self, info, input=None):
-        answer_value = input.answer_value
+        answer_value = input.answer_value or Answer._meta.get_field('answer_value').get_default()
         test_case = DementiaTestCase.objects.get(id=input.test_case.id)
         question = input.question
-        image_name = str(input.image)
-        if image_name:
-            image_list = image_name.split('.')
-            image = f"{''.join(image_list[0:-1])}_{now.strftime('%d-%m-%Y_%H-%M-%S')}.{image_list[-1]}"
-        else:
-            image = ""
+        image = input.image or Answer._meta.get_field('image').get_default()
+
         if question < 1 or question > 25:
             raise ValidationError("Номер вопроса не может быть меньше 1 и больше 25.")
-        instance = Answer.objects.create(
-            answer_value=answer_value, test_case=test_case, question=question, image=image
+
+        if not(question in [20, 21]) and image:
+            raise ValidationError(f"Вопрос {question} должен содержать только ответ и не может включать изображение")
+
+        if question in [20, 21] and answer_value:
+            raise ValidationError(f"Вопрос {question} должен содержать только изображение и не может включать ответ")
+
+        if question in [20, 21] and not(image):
+            raise ValidationError(f"Вопрос {question} должен содержать изображение")
+
+        instance, _ = Answer.objects.update_or_create(
+            test_case=test_case,
+            question=question,
+            defaults={'answer_value': answer_value, "image": image}
         )
-        instance.save()
+
         ok = True
         return CreateAnswer(answer=instance, ok=ok)
 
