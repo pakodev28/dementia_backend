@@ -4,9 +4,11 @@ import onnxruntime
 import torch.onnx
 from albumentations import Compose, Normalize, Resize
 from albumentations.pytorch import ToTensorV2
+from django.db.models.fields.files import ImageFieldFile
 
 
-NEURAL_NET_NAMES = {"clock": "clock.onnx", "figure": "figure.onnx"}
+NEURAL_NET_NAMES = {"clock": "./dementia_test/services/image_neural_handler/clock.onnx",
+                    "figure": "./dementia_test/services/image_neural_handler/figure.onnx"}
 
 
 def get_val_augmentations(image_size):
@@ -26,7 +28,7 @@ def to_numpy(tensor):
     return tensor.detach().cpu().numpy() if tensor.requires_grad else tensor.cpu().numpy()
 
 
-def get_image_score(neural_net_name, image_from_test):
+def get_image_score(neural_net_name, image_from_test: ImageFieldFile):
     # Этот параметр обозначает сколько картинок за раз запихиваем в модель
     """neural_net_name = clock или figure(для получения файла нейронки из словаря NEURAL_NET_NAMES)
     image_from_test - кртинка из теста на деменцию, загружаемая для оценки"""
@@ -34,7 +36,7 @@ def get_image_score(neural_net_name, image_from_test):
     image_size = 256
 
     ort_session = onnxruntime.InferenceSession(NEURAL_NET_NAMES[neural_net_name])
-    image = np.fromfile(image_from_test, dtype=np.uint8)
+    image = np.fromfile(image_from_test.file, dtype=np.uint8)
     image = cv2.imdecode(image, cv2.IMREAD_COLOR)
 
     # ниже вызывается модель

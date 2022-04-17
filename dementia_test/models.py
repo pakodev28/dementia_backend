@@ -19,6 +19,7 @@ class DementiaTestCase(DateMixin):
 
 class Answer(DateMixin):
     updated_at = None
+
     question = models.PositiveSmallIntegerField(
         "Номер вопроса", validators=[MinValueValidator(1), MaxValueValidator(25)]
     )
