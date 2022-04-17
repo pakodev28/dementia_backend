@@ -155,9 +155,10 @@ def send_email(test_id: int, result: int) -> None:
         answer_instance = get_object_or_404(Answer, test_case=test_id, question=TestService.EMAIL_FROM_ANSWER)
         user_email = answer_instance.answer_value
         images_path = f"{settings.CURRENTLY_HOST}:{settings.CURRENTLY_PORT}/static/"
+        site_path = f"{settings.CURRENTLY_HOST}"
         html_message = render_to_string(
             "email.html",
-            {"result": result, "result_name": result_name, "images_path": images_path}
+            {"result": result, "result_name": result_name, "images_path": images_path, "site_path": site_path}
         )
         try:
             send_mail(
