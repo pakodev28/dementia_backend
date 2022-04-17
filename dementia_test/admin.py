@@ -28,16 +28,16 @@ class DementiaTestCaseAdmin(admin.ModelAdmin):
     def download_csv(self, request, queryset):
         """Downloads TestCase(s) queryset as a .csv file."""
 
-        FILENAME = "testcase_data.csv"
-        ANSWERS_QTY = 25  # кол-во вопросов в тесте
+        filename = "testcase_data.csv"
+        answers_qty = 25  # кол-во вопросов в тесте
 
         response = HttpResponse(
             content_type="text/csv",
-            headers={"Content-Disposition": f"attachment; filename={FILENAME}"},
+            headers={"Content-Disposition": f"attachment; filename={filename}"},
         )
         writer = csv.writer(response)
         csv_header = ["Test case"]
-        csv_header.extend([f"Answer #{id+1}" for id in range(ANSWERS_QTY)])
+        csv_header.extend([f"Answer #{id+1}" for id in range(answers_qty)])
         writer.writerow(csv_header)
 
         for testcase in queryset:
