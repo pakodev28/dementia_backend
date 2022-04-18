@@ -1,4 +1,7 @@
+import csv
+
 from django.contrib import admin
+from django.http import HttpResponse
 
 from dementia_test.models import Answer, DementiaTestCase
 
@@ -9,6 +12,7 @@ class AnswersInline(admin.TabularInline):
 
 @admin.register(DementiaTestCase)
 class DementiaTestCaseAdmin(admin.ModelAdmin):
+    actions = ["download_csv"]
     list_display = ("id", "created_at", "answers")
     readonly_fields = (
         "id",
@@ -20,6 +24,29 @@ class DementiaTestCaseAdmin(admin.ModelAdmin):
         AnswersInline,
     ]
 
+    @admin.action(description="Скачать в CSV")
+    def download_csv(self, request, queryset):
+        """Downloads TestCase(s) queryset as a .csv file."""
+
+        filename = "testcase_data.csv"
+        answers_qty = 25  # кол-во вопросов в тесте
+
+        response = HttpResponse(
+            content_type="text/csv",
+            headers={"Content-Disposition": f"attachment; filename={filename}"},
+        )
+        writer = csv.writer(response)
+        csv_header = ["Test case", "Date"]
+        csv_header.extend([f"Answer #{id+1}" for id in range(answers_qty)])
+        writer.writerow(csv_header)
+
+        for testcase in queryset:
+            answers = testcase.answers.all().order_by("question")
+            test_results = [str(testcase.id), testcase.created_at.strftime("%d.%m.%y %H:%M")]
+            test_results.extend([ans.answer_value for ans in answers])
+            writer.writerow(test_results)
+        return response
+
     @admin.display(description="Ответы")
     def answers(self, obj):
         return " | ".join([f"Вопрос №{answer.question}: {answer.answer_value}" for answer in obj.answers.all()])
@@ -29,5 +56,4 @@ class DementiaTestCaseAdmin(admin.ModelAdmin):
 class AnswerAdmin(admin.ModelAdmin):
     list_display = ("id", "created_at", "answer_value", "test_case", "question")
     list_filter = ("created_at", "test_case")
-
     search_fields = ("answer_value", "question")
