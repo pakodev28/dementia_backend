@@ -36,13 +36,13 @@ class DementiaTestCaseAdmin(admin.ModelAdmin):
             headers={"Content-Disposition": f"attachment; filename={filename}"},
         )
         writer = csv.writer(response)
-        csv_header = ["Test case"]
+        csv_header = ["Test case", "Date"]
         csv_header.extend([f"Answer #{id+1}" for id in range(answers_qty)])
         writer.writerow(csv_header)
 
         for testcase in queryset:
             answers = testcase.answers.all().order_by("question")
-            test_results = [str(testcase.id)]
+            test_results = [str(testcase.id), testcase.created_at.strftime("%d.%m.%y %H:%M")]
             test_results.extend([ans.answer_value for ans in answers])
             writer.writerow(test_results)
         return response
