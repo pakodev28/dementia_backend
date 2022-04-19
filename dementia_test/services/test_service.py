@@ -145,7 +145,7 @@ def get_result(answer_data: "list[Answer]") -> int:
             score = 0
         question_id = Answer.objects.get(test_case=answer.test_case, question=answer.question)
         ResultAnswer.objects.update_or_create(
-            question_id=question_id,
+            question_id=question_id.id,
             defaults={'answer_value': score}
         )
         result += score
