@@ -1,9 +1,10 @@
 import csv
 
 from django.contrib import admin
+from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpResponse
 
-from dementia_test.models import Answer, DementiaTestCase
+from dementia_test.models import Answer, DementiaTestCase, ResultAnswer
 
 
 class AnswersInline(admin.TabularInline):
@@ -47,9 +48,19 @@ class DementiaTestCaseAdmin(admin.ModelAdmin):
             writer.writerow(test_results)
         return response
 
-    @admin.display(description="Ответы")
+    @admin.display(description="Вопрос:ответ:баллы")
     def answers(self, obj):
-        return " | ".join([f"Вопрос №{answer.question}: {answer.answer_value}" for answer in obj.answers.all()])
+        result = []
+        for answer in obj.answers.all():
+            try:
+                result_value = ResultAnswer.objects.get(question_id=answer.id).answer_value
+            except ObjectDoesNotExist:
+                result_value = "-"
+            if answer.question == 26:
+                result.append(f"Итого: {result_value} бал.")
+            else:
+                result.append(f"№{answer.question}: {answer.answer_value}: {result_value}")
+        return " | ".join(result)
 
 
 @admin.register(Answer)

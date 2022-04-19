@@ -8,8 +8,7 @@ from django.shortcuts import get_list_or_404, get_object_or_404
 from django.template.loader import render_to_string
 
 from demencia.models import Settings
-
-from dementia_test.models import Answer, DementiaTestCase
+from dementia_test.models import Answer, DementiaTestCase, ResultAnswer
 from dementia_test.services.countries_list.ru_set import COUNTRIES_NAMES
 from dementia_test.services.image_neural_handler.onnx_inference import get_image_score
 
@@ -144,6 +143,11 @@ def get_result(answer_data: "list[Answer]") -> int:
             score = f(answer.answer_value, answer.image)
         except Exception:
             score = 0
+        question_id = Answer.objects.get(test_case=answer.test_case, question=answer.question)
+        ResultAnswer.objects.update_or_create(
+            question_id=question_id,
+            defaults={'answer_value': score}
+        )
         result += score
     return result
 
@@ -178,9 +182,14 @@ def send_email(test_id: int, result: int) -> None:
 
 def save_test_score(test_id: int, result: int) -> None:
     test_case = get_object_or_404(DementiaTestCase, id=test_id)
-    Answer.objects.update_or_create(
+    question, _ = Answer.objects.update_or_create(
         test_case=test_case,
         question=26,
+        defaults={'answer_value': result}
+    )
+
+    ResultAnswer.objects.update_or_create(
+        question_id=question.id,
         defaults={'answer_value': result}
     )
 
