@@ -19,14 +19,15 @@ class DementiaTestCase(DateMixin):
 
 class Answer(DateMixin):
     updated_at = None
-    answer_value = models.CharField("Значение ответа", max_length=255, blank=True, default="")
-    test_case = models.ForeignKey(
-        DementiaTestCase, on_delete=models.CASCADE, related_name="answers", verbose_name="Прохождение теста"
-    )
+
     question = models.PositiveSmallIntegerField(
         "Номер вопроса", validators=[MinValueValidator(1), MaxValueValidator(25)]
     )
-    image = models.ImageField(upload_to="answer/", verbose_name="Изображение", blank=True, default="")
+    answer_value = models.CharField("Значение ответа", max_length=255, null=True)
+    test_case = models.ForeignKey(
+        DementiaTestCase, on_delete=models.CASCADE, related_name="answers", verbose_name="Прохождение теста"
+    )
+    image = models.ImageField(upload_to="answer/", verbose_name="Изображение", null=True)
 
     class Meta:
         unique_together = ("test_case", "question")
