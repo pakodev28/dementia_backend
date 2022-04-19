@@ -33,3 +33,14 @@ class Answer(DateMixin):
         ordering = ["-created_at"]
         verbose_name = "Ответ на вопрос"
         verbose_name_plural = "Ответы на вопросы"
+
+
+class ResultAnswer(models.Model):
+    question_id = models.ForeignKey(
+        Answer, on_delete=models.CASCADE, related_name="answer_id", verbose_name="id теста"
+    )
+    answer_value = models.IntegerField("Количество баллов", blank=True, default="")
+
+    class Meta:
+        verbose_name = "Количество баллов за вопрос"
+        verbose_name_plural = "Количество баллов за вопросы"
