@@ -30,7 +30,7 @@ class TestService:
     CORRECT_ANSWER_17 = ("6", "шесть")
     CORRECT_ANSWER_18 = ("1 рубль 95 копеек", "1,95", "1.95")
     CORRECT_ANSWER_23 = "1А2Б3В4Г5Д6Е"
-    CORRECT_ANSWER_24 = ("3,4,5,6,7,8", "1,2,3,4,5,6")
+    CORRECT_ANSWER_24 = ("3,4,5,6,7,8,9", "1,2,3,4,5,6,7")
     CORRECT_ANSWER_25 = ("я закончила", "я закончил")
     EMAIL_FROM_ANSWER = 4
 
