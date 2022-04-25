@@ -66,5 +66,6 @@ class DementiaTestCaseAdmin(admin.ModelAdmin):
 @admin.register(Answer)
 class AnswerAdmin(admin.ModelAdmin):
     list_display = ("id", "created_at", "answer_value", "test_case", "question")
-    list_filter = ("created_at", "test_case")
-    search_fields = ("answer_value", "question")
+    list_filter = ("created_at",)
+    date_hierarchy = 'created_at'
+    search_fields = ("answer_value", "question", "id")
