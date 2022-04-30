@@ -18,12 +18,14 @@ class DementiaTestCaseAdmin(admin.ModelAdmin):
     readonly_fields = (
         "id",
         "created_at",
+        "answers",
     )
     list_filter = ("created_at",)
     search_fields = ("answers__answer_value", "answers__question")
     inlines = [
         AnswersInline,
     ]
+    date_hierarchy = 'created_at'
 
     @admin.action(description="Скачать в CSV")
     def download_csv(self, request, queryset):
@@ -63,9 +65,8 @@ class DementiaTestCaseAdmin(admin.ModelAdmin):
         return " | ".join(result)
 
 
-@admin.register(Answer)
-class AnswerAdmin(admin.ModelAdmin):
-    list_display = ("id", "created_at", "answer_value", "test_case", "question")
-    list_filter = ("created_at",)
-    date_hierarchy = 'created_at'
-    search_fields = ("answer_value", "id")
+# @admin.register(Answer)
+# class AnswerAdmin(admin.ModelAdmin):
+#     list_display = ("id", "created_at", "answer_value", "test_case", "question")
+#     list_filter = ("created_at",)
+#     search_fields = ("answer_value", "id")
