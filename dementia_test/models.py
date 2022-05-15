@@ -17,6 +17,14 @@ class DementiaTestCase(DateMixin):
         return f"Тест №{self.pk}, {timezone.localtime(self.created_at).strftime('%d.%m.%Y %H:%M')}"
 
 
+class DemeniaTestCaseAlt(DementiaTestCase):
+
+    class Meta:
+        proxy = True
+        verbose_name = "Прохождение теста (альт.)"
+        verbose_name_plural = "Прохождения тестов (альт.)"
+
+
 class Answer(DateMixin):
     updated_at = None
 
@@ -31,7 +39,7 @@ class Answer(DateMixin):
 
     class Meta:
         unique_together = ("test_case", "question")
-        ordering = ["-created_at"]
+        ordering = ["question"]
         verbose_name = "Ответ на вопрос"
         verbose_name_plural = "Ответы на вопросы"
 
@@ -40,7 +48,7 @@ class ResultAnswer(models.Model):
     question_id = models.ForeignKey(
         Answer, on_delete=models.CASCADE, related_name="answer_id", verbose_name="id теста"
     )
-    answer_value = models.IntegerField("Количество баллов", blank=True, default="")
+    score = models.IntegerField("Количество баллов", blank=True, default="")
 
     class Meta:
         verbose_name = "Количество баллов за вопрос"
