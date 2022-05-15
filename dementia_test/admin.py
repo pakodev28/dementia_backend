@@ -231,7 +231,7 @@ class DementiaTestCaseAltAdmin(DementiaTestCaseAdmin):
         answer = obj.answers.get(question=20)
         try:
             score = ResultAnswer.objects.get(question_id=answer.id).answer_value
-            return f"Изображение {score}"
+            return f"Изображение ({score})"
         except ObjectDoesNotExist:
             return "-"
 
@@ -240,7 +240,7 @@ class DementiaTestCaseAltAdmin(DementiaTestCaseAdmin):
         answer = obj.answers.get(question=21)
         try:
             score = ResultAnswer.objects.get(question_id=answer.id).answer_value
-            return f"Изображение {score}"
+            return f"Изображение ({score})"
         except ObjectDoesNotExist:
             return "-"
 
