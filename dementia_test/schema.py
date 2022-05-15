@@ -12,6 +12,7 @@ from .models import Answer, DementiaTestCase
 now = datetime.datetime.now()
 ALLOWED_FILES_TYPE = ["jpg", "jpeg", "img", "png"]
 
+
 class DementiaTestCaseType(DjangoObjectType):
     id = graphene.ID(description="ID теста")
 

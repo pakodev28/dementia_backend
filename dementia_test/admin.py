@@ -15,7 +15,7 @@ def question_number(obj):
         result = "Итого: "
     else:
         result = obj.question
-    return result
+    return result  # noqa
 
 
 @admin.display(description="Значение ответа")
@@ -25,7 +25,7 @@ def question_value(obj):
         result = ""
     else:
         result = obj.answer_value
-    return result
+    return result  # noqa
 
 
 @admin.display(description="Баллы")
@@ -37,7 +37,7 @@ def result_value(obj):
         result = "-"
     if obj.question == 26:
         result = f"{result}"
-    return result
+    return result  # noqa
 
 
 @admin.display(description="Изображение")
