@@ -129,7 +129,7 @@ class DementiaTestCaseAdmin(admin.ModelAdmin):
             else:
                 result_list.append(f"№{answer.question}: {answer.answer_value}: {result}")
         return " | ".join(result_list)
-      
+
 
 @admin.register(DemeniaTestCaseAlt)
 class DementiaTestCaseAltAdmin(DementiaTestCaseAdmin):
@@ -264,7 +264,6 @@ class DementiaTestCaseAltAdmin(DementiaTestCaseAdmin):
     def total_score(self, obj):
         return self.get_answer(obj, 26)
 
-      
 # @admin.register(Answer)
 # class AnswerAdmin(admin.ModelAdmin):
 #     list_display = ("id", "created_at", "answer_value", "test_case", "question")
