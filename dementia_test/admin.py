@@ -3,25 +3,91 @@ import csv
 from django.contrib import admin
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpResponse
+from django.utils.safestring import mark_safe
 
 from dementia_test.models import Answer, DementiaTestCase, ResultAnswer
+
+
+@admin.display(description="Номер вопроса")
+def question_number(obj):
+    """Метод для отображения номера вопроса"""
+    if obj.question == 26:
+        result = "Итого: "
+    else:
+        result = obj.question
+    return result
+
+
+@admin.display(description="Значение ответа")
+def question_value(obj):
+    """Метод для отображения значения ответа"""
+    if obj.question == 26:
+        result = ""
+    else:
+        result = obj.answer_value
+    return result
+
+
+@admin.display(description="Баллы")
+def result_value(obj):
+    """Метод для отображения результата вопроса в баллах"""
+    try:
+        result = ResultAnswer.objects.get(question_id=obj.id).answer_value
+    except ObjectDoesNotExist:
+        result = "-"
+    if obj.question == 26:
+        result = f"{result}"
+    return result
+
+
+@admin.display(description="Изображение")
+def image_preview(obj):
+    """Метод для отображения превью изображений"""
+    return mark_safe(f'<img src="{obj.image.url}" style="max-height: 100px;">')
 
 
 class AnswersInline(admin.TabularInline):
     model = Answer
 
+    def has_add_permission(self, request, obj):
+        return False
+
+    def has_change_permission(self, request, obj):
+        return False
+
+    def has_delete_permission(self, request, obj):
+        return False
+
+    fields = (
+        question_number,
+        question_value,
+        result_value,
+        image_preview,
+    )
+    readonly_fields = (
+        question_number,
+        question_value,
+        result_value,
+        image_preview,
+    )
+    ordering = ("question",)
+
 
 @admin.register(DementiaTestCase)
 class DementiaTestCaseAdmin(admin.ModelAdmin):
+    class Media:
+        css = {
+            'all': ('css/custom_admin.css',)
+        }
+    list_per_page = 20
     actions = ["download_csv"]
     list_display = ("id", "created_at", "answers")
     readonly_fields = (
         "id",
         "created_at",
-        "answers",
     )
     list_filter = ("created_at",)
-    search_fields = ("answers__answer_value", "answers__question")
+    search_fields = ("id", "answers__answer_value")
     inlines = [
         AnswersInline,
     ]
@@ -52,17 +118,17 @@ class DementiaTestCaseAdmin(admin.ModelAdmin):
 
     @admin.display(description="Вопрос:ответ:баллы")
     def answers(self, obj):
-        result = []
-        for answer in obj.answers.all():
+        result_list = []
+        for answer in obj.answers.order_by('-question').all():
             try:
-                result_value = ResultAnswer.objects.get(question_id=answer.id).answer_value
+                result = ResultAnswer.objects.get(question_id=answer.id).answer_value
             except ObjectDoesNotExist:
-                result_value = "-"
+                result = "-"
             if answer.question == 26:
-                result.append(f"Итого: {result_value} бал.")
+                result_list.append(f"Итого: {result} бал.")
             else:
-                result.append(f"№{answer.question}: {answer.answer_value}: {result_value}")
-        return " | ".join(result)
+                result_list.append(f"№{answer.question}: {answer.answer_value}: {result}")
+        return " | ".join(result_list)
 
 
 # @admin.register(Answer)
