@@ -48,7 +48,7 @@ class ResultAnswer(models.Model):
     question_id = models.ForeignKey(
         Answer, on_delete=models.CASCADE, related_name="answer_id", verbose_name="id теста"
     )
-    score = models.IntegerField("Количество баллов", blank=True, default="")
+    answer_value = models.IntegerField("Количество баллов", blank=True, default="")
 
     class Meta:
         verbose_name = "Количество баллов за вопрос"
