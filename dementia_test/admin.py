@@ -145,7 +145,7 @@ class DementiaTestCaseAltAdmin(DementiaTestCaseAdmin):
     def get_answer(testcase, num):
         answer = testcase.answers.get(question=num)
         try:
-            score = ResultAnswer.objects.get(question_id=answer.id).score
+            score = ResultAnswer.objects.get(question_id=answer.id).answer_value
         except ObjectDoesNotExist:
             score = "-"
         return f"{answer.answer_value} ({score})"
@@ -228,11 +228,21 @@ class DementiaTestCaseAltAdmin(DementiaTestCaseAdmin):
 
     @admin.display(description="Ответ №20 (оценка)")
     def answer_20(self, obj):
-        return self.get_answer(obj, 20)
+        answer = obj.answers.get(question=20)
+        try:
+            score = ResultAnswer.objects.get(question_id=answer.id).answer_value
+            return f"Изображение {score}"
+        except ObjectDoesNotExist:
+            return "-"
 
     @admin.display(description="Ответ №21 (оценка)")
     def answer_21(self, obj):
-        return self.get_answer(obj, 21)
+        answer = obj.answers.get(question=21)
+        try:
+            score = ResultAnswer.objects.get(question_id=answer.id).answer_value
+            return f"Изображение {score}"
+        except ObjectDoesNotExist:
+            return "-"
 
     @admin.display(description="Ответ №22 (оценка)")
     def answer_22(self, obj):
