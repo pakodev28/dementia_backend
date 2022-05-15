@@ -10,6 +10,7 @@ from .models import Answer, DementiaTestCase
 
 
 now = datetime.datetime.now()
+ALLOWED_FILES_TYPE = ["jpg", "jpeg", "img", "png"]
 
 
 class DementiaTestCaseType(DjangoObjectType):
@@ -54,8 +55,8 @@ class CreateAnswer(graphene.Mutation):
         answer_value = input.answer_value or Answer._meta.get_field('answer_value').get_default()
         test_case = DementiaTestCase.objects.get(id=input.test_case.id)
         question = input.question
-        image = input.image or Answer._meta.get_field('image').get_default()
 
+        image = input.image or Answer._meta.get_field('image').get_default()
         if question < 1 or question > 25:
             raise ValidationError("Номер вопроса не может быть меньше 1 и больше 25.")
 
@@ -67,6 +68,13 @@ class CreateAnswer(graphene.Mutation):
 
         if question in [20, 21] and not(image):
             raise ValidationError(f"Вопрос {question} должен содержать изображение")
+
+        file_name = str(image)
+        if question in [20, 21]:
+            if ("." not in file_name) or (str(image).split(".")[-1] not in ALLOWED_FILES_TYPE):
+                raise ValidationError(
+                    f"Для загрузки разрешены только следующие типы файлов: {', '.join(ALLOWED_FILES_TYPE)}"
+                )
 
         instance, _ = Answer.objects.update_or_create(
             test_case=test_case,
