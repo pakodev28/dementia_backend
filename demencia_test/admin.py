@@ -5,7 +5,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpResponse
 from django.utils.safestring import mark_safe
 
-from dementia_test.models import Answer, DemeniaTestCaseAlt, DementiaTestCase, ResultAnswer
+from demencia_test.models import Answer, DemeniaTestCaseAlt, DementiaTestCase, ResultAnswer
 
 
 @admin.display(description="Номер вопроса")

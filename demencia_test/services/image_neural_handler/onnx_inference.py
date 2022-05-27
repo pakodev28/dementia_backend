@@ -7,8 +7,8 @@ from albumentations.pytorch import ToTensorV2
 from django.db.models.fields.files import ImageFieldFile
 
 
-NEURAL_NET_NAMES = {"clock": "./dementia_test/services/image_neural_handler/clock.onnx",
-                    "figure": "./dementia_test/services/image_neural_handler/figure.onnx"}
+NEURAL_NET_NAMES = {"clock": "./demencia_test/services/image_neural_handler/clock.onnx",
+                    "figure": "./demencia_test/services/image_neural_handler/figure.onnx"}
 
 
 def get_val_augmentations(image_size):
