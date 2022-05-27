@@ -1,6 +1,6 @@
 import graphene
 
-import dementia_test.schema
+import demencia_test.schema
 
 import demencia.schema
 
@@ -9,7 +9,7 @@ class Query(demencia.schema.Query, graphene.ObjectType):
     pass
 
 
-class Mutation(dementia_test.schema.Mutation, graphene.ObjectType):
+class Mutation(demencia_test.schema.Mutation, graphene.ObjectType):
     pass
 
 

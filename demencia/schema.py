@@ -3,8 +3,8 @@ from graphene_django.types import DjangoObjectType, ObjectType
 
 from django.conf import settings
 
-from dementia_test.models import Answer, DementiaTestCase
-from dementia_test.services.test_service import send_answer
+from demencia_test.models import Answer, DementiaTestCase
+from demencia_test.services.test_service import send_answer
 
 from .models import LeftMenuElement, MainMenuElement, MapPoint, NewsArticle, Partner, Region, Settings, Slider
 
