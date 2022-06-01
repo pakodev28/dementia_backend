@@ -71,7 +71,7 @@ class CreateAnswer(graphene.Mutation):
 
         file_name = str(image)
         if question in [20, 21]:
-            if ("." not in file_name) or (str(image).split(".")[-1] not in ALLOWED_FILES_TYPE):
+            if ("." not in file_name) or (str(image).split(".")[-1].lower() not in ALLOWED_FILES_TYPE):
                 raise ValidationError(
                     f"Для загрузки разрешены только следующие типы файлов: {', '.join(ALLOWED_FILES_TYPE)}"
                 )
