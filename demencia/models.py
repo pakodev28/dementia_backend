@@ -185,9 +185,7 @@ class Settings(SingletonModel):
     fund_section_url = models.URLField(
         verbose_name="Ссылка на сайт фонда", max_length=255, default="https://pamyatpokoleniy.ru/"
     )
-    enable_send_email = models.BooleanField(
-        verbose_name="Разрешить отправку писем", default=False
-    )
+    enable_send_email = models.BooleanField(verbose_name="Разрешить отправку писем", default=False)
 
     class Meta:
         verbose_name = "Настройки главной страницы"

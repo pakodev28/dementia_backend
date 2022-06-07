@@ -131,9 +131,7 @@ class Query(ObjectType):
         NewsArticleType, id=graphene.ID(required=True), description="Объект класса NewsArticle(Новости) по id"
     )
     new_test = graphene.ID(description="Создаёт новый объект класса DementiaTestCase")
-    test_result = graphene.String(
-        id=graphene.ID(required=True), description="Итоговый результат по id теста"
-    )
+    test_result = graphene.String(id=graphene.ID(required=True), description="Итоговый результат по id теста")
     regions = graphene.List(
         graphene.NonNull(RegionType),
         description="Объекты класса Region с геокодами и связанные с ними объкты класса MapPoint",

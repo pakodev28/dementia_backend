@@ -133,14 +133,7 @@ class SettingsAdmin(SingletonModelAdmin):
                 )
             },
         ),
-        (
-            "Отправлять письма",
-            {
-                "fields": (
-                    "enable_send_email",
-                )
-            }
-        )
+        ("Отправлять письма", {"fields": ("enable_send_email",)}),
     )
 
 
@@ -237,8 +230,12 @@ class MapPointAdmin(SortableAdminMixin, admin.ModelAdmin):
     search_fields = ("city", "address", "phone_no", "phone_no_secondary")
 
     fields = (
-        "is_active", "city", "region", "address",
-        ("phone_no", "phone_no_secondary"), ("created_at", "updated_at")
+        "is_active",
+        "city",
+        "region",
+        "address",
+        ("phone_no", "phone_no_secondary"),
+        ("created_at", "updated_at"),
     )
     readonly_fields = ("created_at", "updated_at")
 

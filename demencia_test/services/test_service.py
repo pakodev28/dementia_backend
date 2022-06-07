@@ -100,8 +100,16 @@ class TestService:
 
     def question_22(answer: str, *args) -> int:
         """Напишите названия 12 разных стран."""
+        result = set()
         countries = {item.lower().strip() for item in answer.split(",")}
-        result = len(countries.intersection(COUNTRIES_NAMES))
+        for country in countries:
+            tmp = COUNTRIES_NAMES.get(country, "False")
+            if tmp != "False":
+                if tmp == "":
+                    result.add(country)
+                else:
+                    result.add(tmp)
+        result = len(result)
         if result == 12:
             return 2
         if result in (10, 11):
@@ -144,10 +152,7 @@ def get_result(answer_data: "list[Answer]") -> int:
         except Exception:
             score = 0
         question_id = Answer.objects.get(test_case=answer.test_case, question=answer.question)
-        ResultAnswer.objects.update_or_create(
-            question_id=question_id,
-            defaults={'answer_value': score}
-        )
+        ResultAnswer.objects.update_or_create(question_id=question_id, defaults={"answer_value": score})
         result += score
     return result
 
@@ -165,7 +170,7 @@ def send_email(test_id: int, result: int) -> None:
         site_path = f"{settings.CURRENTLY_HOST}"
         html_message = render_to_string(
             "email.html",
-            {"result": result, "result_name": result_name, "images_path": images_path, "site_path": site_path}
+            {"result": result, "result_name": result_name, "images_path": images_path, "site_path": site_path},
         )
         try:
             send_mail(
@@ -174,7 +179,7 @@ def send_email(test_id: int, result: int) -> None:
                 settings.DEFAULT_FROM_EMAIL,
                 [user_email],
                 fail_silently=False,
-                html_message=html_message
+                html_message=html_message,
             )
         except Exception as error:
             logger.exception(f"Ошибка в отправке емейла: {error}")
@@ -182,16 +187,9 @@ def send_email(test_id: int, result: int) -> None:
 
 def save_test_score(test_id: int, result: int) -> None:
     test_case = get_object_or_404(DementiaTestCase, id=test_id)
-    question, _ = Answer.objects.update_or_create(
-        test_case=test_case,
-        question=26,
-        defaults={'answer_value': result}
-    )
+    question, _ = Answer.objects.update_or_create(test_case=test_case, question=26, defaults={"answer_value": result})
 
-    ResultAnswer.objects.update_or_create(
-        question_id=question,
-        defaults={'answer_value': result}
-    )
+    ResultAnswer.objects.update_or_create(question_id=question, defaults={"answer_value": result})
 
 
 def send_answer(test_id: int) -> None:
