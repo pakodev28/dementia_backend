@@ -113,7 +113,7 @@ class CreateAnswer(graphene.Mutation):
                 "я",
             }
             tmp = set(answer_value.lower())
-            if tmp.intersection(escape) or tmp.intersection(alphabet):
+            if tmp.intersection(escape) or not(tmp.intersection(alphabet)):
                 raise ValidationError("Недопустимые символы в строке")
 
         if question == 18:
