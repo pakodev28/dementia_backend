@@ -76,9 +76,8 @@ class AnswersInline(admin.TabularInline):
 @admin.register(DementiaTestCase)
 class DementiaTestCaseAdmin(admin.ModelAdmin):
     class Media:
-        css = {
-            'all': ('css/custom_admin.css',)
-        }
+        css = {"all": ("css/custom_admin.css",)}
+
     list_per_page = 20
     actions = ["download_csv"]
     list_display = ("id", "created_at", "answers")
@@ -91,7 +90,7 @@ class DementiaTestCaseAdmin(admin.ModelAdmin):
     inlines = [
         AnswersInline,
     ]
-    date_hierarchy = 'created_at'
+    date_hierarchy = "created_at"
 
     @admin.action(description="Скачать в CSV")
     def download_csv(self, request, queryset):
@@ -119,7 +118,7 @@ class DementiaTestCaseAdmin(admin.ModelAdmin):
     @admin.display(description="Вопрос:ответ:баллы")
     def answers(self, obj):
         result_list = []
-        for answer in obj.answers.order_by('-question').all():
+        for answer in obj.answers.order_by("-question").all():
             try:
                 result = ResultAnswer.objects.get(question_id=answer.id).answer_value
             except ObjectDoesNotExist:
@@ -134,12 +133,35 @@ class DementiaTestCaseAdmin(admin.ModelAdmin):
 @admin.register(DemeniaTestCaseAlt)
 class DementiaTestCaseAltAdmin(DementiaTestCaseAdmin):
     list_display = (
-        "id", "created_at",
-        "answer_1", "answer_2", "answer_3", "answer_4", "answer_5",
-        "answer_6", "answer_7", "answer_8", "answer_9", "answer_10",
-        "answer_11", "answer_12", "answer_13", "answer_14", "answer_15",
-        "answer_16", "answer_17", "answer_18", "answer_19", "answer_20",
-        "answer_21", "answer_22", "answer_23", "answer_24", "answer_25", "total_score")
+        "id",
+        "created_at",
+        "answer_1",
+        "answer_2",
+        "answer_3",
+        "answer_4",
+        "answer_5",
+        "answer_6",
+        "answer_7",
+        "answer_8",
+        "answer_9",
+        "answer_10",
+        "answer_11",
+        "answer_12",
+        "answer_13",
+        "answer_14",
+        "answer_15",
+        "answer_16",
+        "answer_17",
+        "answer_18",
+        "answer_19",
+        "answer_20",
+        "answer_21",
+        "answer_22",
+        "answer_23",
+        "answer_24",
+        "answer_25",
+        "total_score",
+    )
 
     @staticmethod
     def get_answer(testcase, num):
@@ -263,6 +285,7 @@ class DementiaTestCaseAltAdmin(DementiaTestCaseAdmin):
     @admin.display(description="Итоговая оценка")
     def total_score(self, obj):
         return self.get_answer(obj, 26)
+
 
 # @admin.register(Answer)
 # class AnswerAdmin(admin.ModelAdmin):

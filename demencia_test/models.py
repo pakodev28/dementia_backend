@@ -18,7 +18,6 @@ class DementiaTestCase(DateMixin):
 
 
 class DemeniaTestCaseAlt(DementiaTestCase):
-
     class Meta:
         proxy = True
         verbose_name = "Прохождение теста (альт.)"
