@@ -1,6 +1,7 @@
 import datetime
 
 import graphene
+from django.core.validators import validate_email
 from graphene_django import DjangoObjectType
 from graphene_file_upload.scalars import Upload
 
@@ -51,10 +52,75 @@ class CreateAnswer(graphene.Mutation):
     class Arguments:
         input = AnswerInput(required=True)
 
-    def mutate(self, info, input=None):
+    def mutate(self, info, input=None):  # noqa
         answer_value = input.answer_value or Answer._meta.get_field("answer_value").get_default()
         test_case = DementiaTestCase.objects.get(id=input.test_case.id)
         question = input.question
+
+        if question in [1, 8, 17, 22, 25]:
+            escape = {"'", '"', "`", "{", "}", "[", "]", "<", ">", "/", "\\", "!", "="}
+            tmp = set(answer_value)
+            if tmp.intersection(escape):
+                raise ValidationError("Недопустимые символы в строке")
+
+        if question == 2 or question == 14:
+            try:
+                datetime.datetime.strptime(answer_value, "%d-%m-%Y")
+            except ValueError:
+                raise ValueError("Некорректный формат даты, пример даты: 20-12-2022")
+
+        if question == 4:
+            try:
+                validate_email(answer_value)
+            except ValidationError:
+                raise ValueError("Некорректный формат email")
+
+        if question == 15 or question == 16:
+            escape = {"'", '"', "`", "{", "}", "[", "]", "<", ">", "/", "\\", "!", "=", "_", ".", ","}
+            alphabet = {
+                "а",
+                "б",
+                "в",
+                "г",
+                "д",
+                "е",
+                "ё",
+                "ж",
+                "з",
+                "и",
+                "й",
+                "к",
+                "л",
+                "м",
+                "н",
+                "о",
+                "п",
+                "р",
+                "с",
+                "т",
+                "у",
+                "ф",
+                "х",
+                "ц",
+                "ч",
+                "ш",
+                "щ",
+                "ъ",
+                "ы",
+                "ь",
+                "э",
+                "ю",
+                "я",
+            }
+            tmp = set(answer_value.lower())
+            if tmp.intersection(escape) or tmp.intersection(alphabet):
+                raise ValidationError("Недопустимые символы в строке")
+
+        if question == 18:
+            try:
+                _ = float(answer_value)
+            except Exception:
+                raise ValidationError("Недопустимое значение")
 
         image = input.image or Answer._meta.get_field("image").get_default()
         if question < 1 or question > 25:
