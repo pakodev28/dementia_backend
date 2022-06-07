@@ -118,6 +118,7 @@ class CreateAnswer(graphene.Mutation):
 
         if question == 18:
             try:
+                answer_value.replace(",", ".")
                 _ = float(answer_value)
             except Exception:
                 raise ValidationError("Недопустимое значение")
