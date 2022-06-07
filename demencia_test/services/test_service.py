@@ -101,8 +101,8 @@ class TestService:
     def question_22(answer: str, *args) -> int:
         """Напишите названия 12 разных стран."""
         result = set()
-        answer.replace(' ', '')
-        answer.replace('-', '')
+        answer = answer.replace(' ', '')
+        answer = answer.replace('-', '')
         countries = {item.lower() for item in answer.split(",")}
         for country in countries:
             tmp = COUNTRIES_NAMES.get(country, "False")
