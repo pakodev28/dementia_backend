@@ -80,7 +80,10 @@ class CreateAnswer(graphene.Mutation):
             except ValidationError:
                 raise ValueError("Некорректный формат email")
 
-        tmp = set(answer_value.lower())
+        if answer_value:
+            tmp = set(answer_value.lower())
+        else:
+            tmp = set()
         if question == 15 or question == 16:
             alphabet = {
                 "а",
@@ -128,7 +131,7 @@ class CreateAnswer(graphene.Mutation):
 
         if question == 16:
             escape = {"'", '"', "`", "{", "}", "[", "]", "<", ">", "/", "\\", "!", "=", "_", "."}
-            if tmp.intersection(escape) or tmp.count(",") > 1:
+            if tmp.intersection(escape) or answer_value.count(",") > 1:
                 raise ValidationError("Недопустимые символы в строке")
 
         if question == 18:
