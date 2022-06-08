@@ -57,11 +57,16 @@ class CreateAnswer(graphene.Mutation):
         test_case = DementiaTestCase.objects.get(id=input.test_case.id)
         question = input.question
 
+        if question == 1:
+            if not answer_value:
+                raise ValidationError("Поле не может быть пустым")
+
         if question in [1, 8, 17, 22, 25]:
             escape = {"'", '"', "`", "{", "}", "[", "]", "<", ">", "/", "\\", "!", "="}
-            tmp = set(answer_value)
-            if tmp.intersection(escape):
-                raise ValidationError("Недопустимые символы в строке")
+            if answer_value:
+                tmp = set(answer_value)
+                if tmp.intersection(escape):
+                    raise ValidationError("Недопустимые символы в строке")
 
         if question == 2 or question == 14:
             try:
@@ -76,7 +81,6 @@ class CreateAnswer(graphene.Mutation):
                 raise ValueError("Некорректный формат email")
 
         if question == 15 or question == 16:
-            escape = {"'", '"', "`", "{", "}", "[", "]", "<", ">", "/", "\\", "!", "=", "_", ".", ","}
             alphabet = {
                 "а",
                 "б",
@@ -113,7 +117,18 @@ class CreateAnswer(graphene.Mutation):
                 "я",
             }
             tmp = set(answer_value.lower())
-            if tmp.intersection(escape) or not(tmp.intersection(alphabet)):
+            for i in tmp:
+                if i.isalpha() and i not in alphabet:
+                    raise ValidationError("Недопустимые символы в строке")
+
+        if question == 15:
+            escape = {"'", '"', "`", "{", "}", "[", "]", "<", ">", "/", "\\", "!", "=", "_", ".", ","}
+            if answer_value.intersection(escape):
+                raise ValidationError("Недопустимые символы в строке")
+
+        if question == 16:
+            escape = {"'", '"', "`", "{", "}", "[", "]", "<", ">", "/", "\\", "!", "=", "_", "."}
+            if answer_value.intersection(escape) or answer_value.count(",") > 1:
                 raise ValidationError("Недопустимые символы в строке")
 
         if question == 18:
