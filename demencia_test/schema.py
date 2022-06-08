@@ -131,7 +131,7 @@ class CreateAnswer(graphene.Mutation):
 
         if question == 16:
             escape = {"'", '"', "`", "{", "}", "[", "]", "<", ">", "/", "\\", "!", "=", "_", "."}
-            if tmp.intersection(escape) or answer_value.count(",") > 1:
+            if answer_value and (tmp.intersection(escape) or answer_value.count(",") > 1):
                 raise ValidationError("Недопустимые символы в строке")
 
         if question == 18:
