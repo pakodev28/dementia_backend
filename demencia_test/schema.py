@@ -124,12 +124,12 @@ class CreateAnswer(graphene.Mutation):
                 if i.isalpha() and i not in alphabet:
                     raise ValidationError("Недопустимые символы в строке")
 
-        if question == 15:
+        if question == 16:
             escape = {"'", '"', "`", "{", "}", "[", "]", "<", ">", "/", "\\", "!", "=", "_", ".", ","}
             if tmp.intersection(escape):
                 raise ValidationError("Недопустимые символы в строке")
 
-        if question == 16:
+        if question == 15:
             escape = {"'", '"', "`", "{", "}", "[", "]", "<", ">", "/", "\\", "!", "=", "_", "."}
             if answer_value and (tmp.intersection(escape) or answer_value.count(",") > 1):
                 raise ValidationError("Недопустимые символы в строке")
