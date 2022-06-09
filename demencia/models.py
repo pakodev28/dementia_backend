@@ -175,7 +175,7 @@ class Settings(SingletonModel):
     map_section_subtitle = models.CharField(
         verbose_name="Подзаголовок секции", max_length=255, default="Карта центров профилактики"
     )
-    map_section_info = models.TextField("Предупреждение", null=True)
+    map_section_info = models.TextField("Предупреждение", null=True, blank=True)
 
     fund_section = models.CharField("Название секции", max_length=255, default="О фонде")
     fund_section_info = HTMLField("Описание")
