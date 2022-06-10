@@ -84,7 +84,7 @@ class CreateAnswer(graphene.Mutation):
             tmp = set(answer_value.lower())
         else:
             tmp = set()
-        if question == 15 or question == 16:
+        if question == 16:
             alphabet = {
                 "а",
                 "б",
