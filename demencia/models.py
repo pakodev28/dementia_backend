@@ -60,6 +60,7 @@ class MapPoint(DateMixin, PublishMixin, OrderingMixin):
     city = models.CharField(max_length=35, verbose_name="Город")
     address = models.CharField(max_length=80, verbose_name="Адрес в городе", help_text="Улица, дом, офис")
     phone_no = PhoneNumberField(
+        blank=True,
         max_length=20,
         region="RU",
         verbose_name="Номер телефона",
