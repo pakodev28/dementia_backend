@@ -1,0 +1,382 @@
+[
+    {
+      "model":"demencia.newsarticle",
+      "pk":1,
+      "fields":{
+        "created_at":"2022-01-05T02:34:50.040Z",
+        "updated_at":"2022-01-05T02:36:26.767Z",
+        "is_active":true,
+        "image":"fixtures/test.png",
+        "title":"Невероятное открытие",
+        "sub_title":"Просто невероятно",
+        "text":"Невероятное открытие совершили британские ученые",
+        "url":"https://www.example.com/1/",
+        "url_label":"ПОДРОБНЕЕ"
+      }
+    },
+    {
+      "model":"demencia.newsarticle",
+      "pk":2,
+      "fields":{
+        "created_at":"2022-01-05T02:36:04.510Z",
+        "updated_at":"2022-01-05T02:36:04.510Z",
+        "is_active":false,
+        "image":"fixtures/test.png",
+        "title":"Новое лекарство",
+        "sub_title":"Лекарство",
+        "text":"Новое лекарство изобрели британские ученые :)",
+        "url":"https://www.example.com/2/",
+        "url_label":"ПОДРОБНЕЕ"
+      }
+    },
+    {
+      "model":"demencia.newsarticle",
+      "pk":3,
+      "fields":{
+        "created_at":"2022-01-05T02:37:58.711Z",
+        "updated_at":"2022-01-05T02:37:58.711Z",
+        "is_active":true,
+        "image":"fixtures/test.png",
+        "title":"Тест IQ",
+        "sub_title":"IQ",
+        "text":"Британские ученые усовершенствовали тест на IQ :)",
+        "url":"https://www.example.com/3/",
+        "url_label":"ПОДРОБНЕЕ"
+      }
+    },
+    {
+      "model":"demencia.newsarticle",
+      "pk":4,
+      "fields":{
+        "created_at":"2022-01-05T02:39:39.381Z",
+        "updated_at":"2022-01-05T02:40:15.583Z",
+        "is_active":true,
+        "image":"fixtures/test.png",
+        "title":"Новость ради новости",
+        "sub_title":"Из-за новости",
+        "text":"После многих лет разработки, британские ученые таки создали новость ради новости!",
+        "url":"https://www.example.com/4/",
+        "url_label":"ПОДРОБНЕЕ"
+      }
+    },
+    {
+      "model":"demencia.newsarticle",
+      "pk":5,
+      "fields":{
+        "created_at":"2022-01-05T02:41:30.177Z",
+        "updated_at":"2022-01-05T02:41:30.177Z",
+        "is_active":false,
+        "image":"fixtures/test.png",
+        "title":"Британские ученые",
+        "sub_title":"Не такие как руские",
+        "text":"Британские ученые - спасибо, что вы есть!",
+        "url":"https://www.example.com/5/",
+        "url_label":"ПОДРОБНЕЕ"
+      }
+    },
+    {
+      "model":"demencia.mappoint",
+      "pk":1,
+      "fields":{
+        "created_at":"2022-01-05T02:56:21.842Z",
+        "updated_at":"2022-01-05T03:17:54.320Z",
+        "is_active":true,
+        "position": 1,
+        "city":"Москва",
+        "address":"улица Тверская, дом 13",
+        "phone_no":"+71239876543",
+        "region": 56
+      }
+    },
+    {
+      "model":"demencia.mappoint",
+      "pk":2,
+      "fields":{
+        "created_at":"2022-01-05T02:58:18.123Z",
+        "updated_at":"2022-01-05T02:58:18.123Z",
+        "is_active":false,
+        "position": 2,
+        "city":"Санкт-Петербург",
+        "address":"улица Рубинштейна, дом 2",
+        "phone_no":"+71239876111",
+        "region": 57
+      }
+    },
+    {
+      "model":"demencia.mappoint",
+      "pk":3,
+      "fields":{
+        "created_at":"2022-01-05T02:59:34.626Z",
+        "updated_at":"2022-01-05T02:59:34.626Z",
+        "is_active":true,
+        "position": 3,
+        "city":"Орел",
+        "address":"улица Садовая, дом 1",
+        "phone_no":"+77771234455",
+        "region": 26
+      }
+    },
+    {
+      "model":"demencia.mappoint",
+      "pk":4,
+      "fields":{
+        "created_at":"2022-01-05T03:15:48.735Z",
+        "updated_at":"2022-01-05T03:15:48.735Z",
+        "is_active":true,
+        "position": 4,
+        "city":"Владивосток",
+        "address":"улица Советская, дом 22",
+        "phone_no":"+77779992323",
+        "region": 53
+      }
+    },
+    {
+      "model":"demencia.mappoint",
+      "pk":5,
+      "fields":{
+        "created_at":"2022-01-05T03:17:33.846Z",
+        "updated_at":"2022-01-05T03:17:33.847Z",
+        "is_active":false,
+        "position": 5,
+        "city":"Калининград",
+        "address":"улица Арсенальная, дом 123",
+        "phone_no":"+71239191111",
+        "region": 10
+      }
+    },
+    {
+      "model":"demencia.partner",
+      "pk":1,
+      "fields":{
+        "created_at":"2022-01-05T02:43:20.689Z",
+        "updated_at":"2022-01-05T02:43:20.689Z",
+        "is_active":true,
+        "image":"fixtures/test.png",
+        "name":"Я.Практикум",
+        "url":"https://practicum.yandex.ru/"
+      }
+    },
+    {
+      "model":"demencia.partner",
+      "pk":2,
+      "fields":{
+        "created_at":"2022-01-05T02:47:25.309Z",
+        "updated_at":"2022-01-05T02:47:25.309Z",
+        "is_active":true,
+        "image":"fixtures/test.png",
+        "name":"Бэкенд-факультет",
+        "url":"https://practicum.yandex.ru/backend-developer/"
+      }
+    },
+    {
+      "model":"demencia.partner",
+      "pk":3,
+      "fields":{
+        "created_at":"2022-01-05T02:48:28.927Z",
+        "updated_at":"2022-01-05T02:48:28.927Z",
+        "is_active":true,
+        "image":"fixtures/test.png",
+        "name":"Незначительный партнер 1",
+        "url":"https://www.partner.com/1/"
+      }
+    },
+    {
+      "model":"demencia.partner",
+      "pk":4,
+      "fields":{
+        "created_at":"2022-01-05T02:49:08.268Z",
+        "updated_at":"2022-01-05T02:49:08.268Z",
+        "is_active":false,
+        "image":"fixtures/test.png",
+        "name":"Незначительный партнер 2",
+        "url":"https://www.partner.com/2/"
+      }
+    },
+    {
+      "model":"demencia.partner",
+      "pk":5,
+      "fields":{
+        "created_at":"2022-01-05T02:49:45.028Z",
+        "updated_at":"2022-01-05T02:49:45.028Z",
+        "is_active":false,
+        "image":"fixtures/test.png",
+        "name":"Незначительный партнер 3",
+        "url":"https://www.partner.com/3/"
+      }
+    },
+    {
+      "model":"demencia.slider",
+      "pk":1,
+      "fields":{
+        "created_at":"2022-01-05T02:51:28.647Z",
+        "updated_at":"2022-01-05T02:51:28.647Z",
+        "is_active":true,
+        "title":"Слайд 1",
+        "image":"fixtures/test.png",
+        "url":"https://www.slide.com/1/",
+        "url_label":"ПОДРОБНЕЕ"
+      }
+    },
+    {
+      "model":"demencia.slider",
+      "pk":2,
+      "fields":{
+        "created_at":"2022-01-05T02:52:11.087Z",
+        "updated_at":"2022-01-05T02:52:11.087Z",
+        "is_active":false,
+        "title":"Слайд 2",
+        "image":"fixtures/test.png",
+        "url":"https://www.slide.com/2/",
+        "url_label":"ПОДРОБНЕЕ"
+      }
+    },
+    {
+      "model":"demencia.slider",
+      "pk":3,
+      "fields":{
+        "created_at":"2022-01-05T02:52:49.082Z",
+        "updated_at":"2022-01-05T02:52:49.082Z",
+        "is_active":true,
+        "title":"Слайд 3",
+        "image":"fixtures/test.png",
+        "url":"https://www.slide.com/3/",
+        "url_label":"ПОДРОБНЕЕ"
+      }
+    },
+    {
+      "model":"demencia.slider",
+      "pk":4,
+      "fields":{
+        "created_at":"2022-01-05T02:53:58.704Z",
+        "updated_at":"2022-01-05T02:53:58.705Z",
+        "is_active":true,
+        "title":"Слайд 4",
+        "image":"fixtures/test.png",
+        "url":"https://www.slide.com/4/",
+        "url_label":"ПОДРОБНЕЕ"
+      }
+    },
+    {
+      "model":"demencia.slider",
+      "pk":5,
+      "fields":{
+        "created_at":"2022-01-05T02:54:35.063Z",
+        "updated_at":"2022-01-05T02:54:35.063Z",
+        "is_active":false,
+        "title":"Слайд 5",
+        "image":"fixtures/test.png",
+        "url":"https://www.slide.com/5/",
+        "url_label":"ПОДРОБНЕЕ"
+      }
+    },
+    {
+      "model":"demencia.mainmenuelement",
+      "pk":1,
+      "fields":{
+        "created_at":"2022-01-05T03:20:23.257Z",
+        "updated_at":"2022-01-05T03:22:11.405Z",
+        "is_active":true,
+        "name":"О деменции",
+        "url":"https://www.mainmenu.com/1/"
+      }
+    },
+    {
+      "model":"demencia.mainmenuelement",
+      "pk":2,
+      "fields":{
+        "created_at":"2022-01-05T03:21:11.060Z",
+        "updated_at":"2022-01-05T03:21:11.060Z",
+        "is_active":true,
+        "name":"Контакты",
+        "url":"https://www.mainmenu.com/2/"
+      }
+    },
+    {
+      "model":"demencia.mainmenuelement",
+      "pk":3,
+      "fields":{
+        "created_at":"2022-01-05T03:21:39.663Z",
+        "updated_at":"2022-01-05T03:21:39.663Z",
+        "is_active":true,
+        "name":"Новости",
+        "url":"https://www.mainmenu.com/3/"
+      }
+    },
+    {
+      "model":"demencia.mainmenuelement",
+      "pk":4,
+      "fields":{
+        "created_at":"2022-01-05T03:22:40.063Z",
+        "updated_at":"2022-01-05T03:22:40.066Z",
+        "is_active":false,
+        "name":"Партнеры",
+        "url":"https://www.mainmenu.com/4/"
+      }
+    },
+    {
+      "model":"demencia.mainmenuelement",
+      "pk":5,
+      "fields":{
+        "created_at":"2022-01-05T03:23:14.233Z",
+        "updated_at":"2022-01-05T03:23:14.233Z",
+        "is_active":false,
+        "name":"О фонде",
+        "url":"https://www.mainmenu.com/5/"
+      }
+    },
+    {
+      "model":"demencia.leftmenuelement",
+      "pk":1,
+      "fields":{
+        "created_at":"2022-01-05T03:23:51.637Z",
+        "updated_at":"2022-01-05T03:23:51.637Z",
+        "is_active":true,
+        "name":"Тест на деменцию",
+        "url":"https://www.leftmenu.com/1/"
+      }
+    },
+    {
+      "model":"demencia.leftmenuelement",
+      "pk":2,
+      "fields":{
+        "created_at":"2022-01-05T03:24:45.207Z",
+        "updated_at":"2022-01-05T03:24:45.207Z",
+        "is_active":true,
+        "name":"Полезные советы",
+        "url":"https://www.leftmenu.com/2/"
+      }
+    },
+    {
+      "model":"demencia.leftmenuelement",
+      "pk":3,
+      "fields":{
+        "created_at":"2022-01-05T03:25:29.888Z",
+        "updated_at":"2022-01-05T03:25:29.888Z",
+        "is_active":true,
+        "name":"Фотографии сообщества",
+        "url":"https://www.leftmenu.com/3/"
+      }
+    },
+    {
+      "model":"demencia.leftmenuelement",
+      "pk":4,
+      "fields":{
+        "created_at":"2022-01-05T03:26:06.184Z",
+        "updated_at":"2022-01-05T03:26:06.184Z",
+        "is_active":false,
+        "name":"Памятка",
+        "url":"https://www.leftmenu.com/4/"
+      }
+    },
+    {
+      "model":"demencia.leftmenuelement",
+      "pk":5,
+      "fields":{
+        "created_at":"2022-01-05T03:26:41.112Z",
+        "updated_at":"2022-01-05T03:26:41.112Z",
+        "is_active":false,
+        "name":"Контакты",
+        "url":"https://www.leftmenu.com/5/"
+      }
+    }
+  ]
