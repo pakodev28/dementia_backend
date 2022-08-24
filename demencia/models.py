@@ -74,6 +74,8 @@ class MapPoint(DateMixin, PublishMixin, OrderingMixin):
         help_text="Номер телефона с указанием кода региона (пример: +7 495 933 00 20 или 8 495 933 00 20)",
     )
     region = models.ForeignKey(Region, verbose_name="Регион", on_delete=models.PROTECT, related_name="centers")
+    description = models.CharField(max_length=100, verbose_name="Описание", default="")
+    opening_hours = models.CharField(max_length=100, verbose_name="Время работы", default="")
 
     class Meta(OrderingMixin.Meta):
         verbose_name = "Точка на карте"

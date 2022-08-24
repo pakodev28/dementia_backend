@@ -39,10 +39,12 @@ class MapPointType(DjangoObjectType):
     address = graphene.String(description="Адрес в городе", required=True)
     phone_no = graphene.String(description="Номер телефона", required=True)
     phone_no_secondary = graphene.String(description="Номер телефона (дополнительный)")
+    description = graphene.String(description="Описание", required=True)
+    opening_hours = graphene.String(description="Время открытия", required=True)
 
     class Meta:
         model = MapPoint
-        fields = ("city", "address", "phone_no", "phone_no_secondary")
+        fields = ("city", "address", "phone_no", "phone_no_secondary", "description", "opening_hours")
         description = "Объекты класса MapPoint"
 
     @classmethod
