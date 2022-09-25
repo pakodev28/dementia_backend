@@ -4,7 +4,10 @@ from graphene_django.types import DjangoObjectType, ObjectType
 from django.conf import settings
 
 from demencia_test.models import Answer, DementiaTestCase
+from demencia_relatives_test.models import DementiaTestCase as DementiaRelativesTestCase
+from demencia_relatives_test.models import Answer as AnswerRelatives
 from demencia_test.services.test_service import send_answer
+from demencia_relatives_test.services.test_service import send_answer as send_relatives_answer
 
 from .models import LeftMenuElement, MainMenuElement, MapPoint, NewsArticle, Partner, Region, Settings, Slider
 
@@ -132,8 +135,15 @@ class Query(ObjectType):
     news_article = graphene.Field(
         NewsArticleType, id=graphene.ID(required=True), description="Объект класса NewsArticle(Новости) по id"
     )
-    new_test = graphene.ID(description="Создаёт новый объект класса DementiaTestCase")
-    test_result = graphene.String(id=graphene.ID(required=True), description="Итоговый результат по id теста")
+    new_test = graphene.ID(
+        forClosePerson=graphene.Boolean(),
+        description="Создаёт новый объект класса DementiaTestCase"
+    )
+    test_result = graphene.String(
+        id=graphene.ID(required=True),
+        forClosePerson=graphene.Boolean(),
+        description="Итоговый результат по id теста"
+    )
     regions = graphene.List(
         graphene.NonNull(RegionType),
         description="Объекты класса Region с геокодами и связанные с ними объкты класса MapPoint",
@@ -187,12 +197,19 @@ class Query(ObjectType):
     def resolve_settings(self, info, **kwargs):
         return Settings.objects.get()
 
-    def resolve_new_test(self, info, **kwargs):
-        return DementiaTestCase.objects.create().id
+    def resolve_new_test(self, info, forClosePerson):
+        if forClosePerson:
+            return DementiaRelativesTestCase.objects.create().id
+        else:
+            return DementiaTestCase.objects.create().id
 
-    def resolve_test_result(self, info, id):
-        send_answer(id)
-        return Answer.objects.get(test_case=id, question=26).answer_value
+    def resolve_test_result(self, info, id, forClosePerson):
+        if forClosePerson:
+            send_relatives_answer(id)
+            return AnswerRelatives.objects.get(test_case=id, question=27).answer_value
+        else:
+            send_answer(id)
+            return Answer.objects.get(test_case=id, question=26).answer_value
 
 
 schema = graphene.Schema(query=Query)
