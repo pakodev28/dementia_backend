@@ -47,7 +47,6 @@ class AnswerInput(graphene.InputObjectType):
 
 
 class CreateAnswer(graphene.Mutation):
-    answer = graphene.Field(AnswerType)
     ok = graphene.Boolean()
 
     class Arguments:
@@ -60,7 +59,7 @@ class CreateAnswer(graphene.Mutation):
         else:
             instance, ok = test_for_person(input)
 
-        return CreateAnswer(answer=instance, ok=ok)
+        return CreateAnswer(ok=ok)
 
 
 def test_for_person(input):
