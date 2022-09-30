@@ -40,7 +40,6 @@ class DementiaTestCaseInput(graphene.InputObjectType):
 
 
 class AnswerInput(graphene.InputObjectType):
-    forClosePerson = graphene.Boolean(description="Флаг теста для родственников")
     image = Upload(description="Изображение")
     answer_value = graphene.String(description="Значение ответа")
     test_case = graphene.InputField(DementiaTestCaseInput, description="Экземпляр теста", required=True)
@@ -53,9 +52,10 @@ class CreateAnswer(graphene.Mutation):
 
     class Arguments:
         input = AnswerInput(required=True)
+        forClosePerson = graphene.Boolean(description="Флаг теста для родственников")
 
-    def mutate(self, info, input=None):  # noqa
-        if input.forClosePerson:
+    def mutate(self, info, input=None, forClosePerson=False):  # noqa
+        if forClosePerson:
             instance, ok = test_for_close_person(input)
         else:
             instance, ok = test_for_person(input)
