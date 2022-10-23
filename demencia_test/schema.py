@@ -51,7 +51,7 @@ class CreateAnswer(graphene.Mutation):
 
     class Arguments:
         input = AnswerInput(required=True)
-        forClosePerson = graphene.Boolean(description="Флаг теста для родственников")
+        forClosePerson = graphene.Boolean(description="Флаг теста для родственников")  # noqa: N815
 
     def mutate(self, info, input=None, forClosePerson=False):  # noqa
         if forClosePerson:
@@ -62,7 +62,7 @@ class CreateAnswer(graphene.Mutation):
         return CreateAnswer(ok=ok)
 
 
-def test_for_person(input):
+def test_for_person(input):  # noqa: C901
     answer_value = input.answer_value or Answer._meta.get_field("answer_value").get_default()
     test_case = DementiaTestCase.objects.get(id=input.test_case.id)
     question = input.question

@@ -1,4 +1,4 @@
-import datetime
+# flake: noqa
 import logging
 from logging.handlers import RotatingFileHandler
 
@@ -121,8 +121,7 @@ class TestService:
         return result
 
     def question_22(answer: str, *args) -> int:
-        """
-        Может ли Ваш близкий потеряться на знакомой территории 
+        """Может ли Ваш близкий потеряться на знакомой территории
         (например, рядом с собственным домом)?
         """
         result = RESULTS[22].get(answer, 0)

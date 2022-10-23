@@ -26,7 +26,6 @@ def test_for_close_person(input):
         except ValidationError:
             raise ValueError("Некорректный формат email")
 
-
     instance, _ = Answer.objects.update_or_create(
         test_case=test_case, question=question, defaults={"answer_value": answer_value}
     )

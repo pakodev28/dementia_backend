@@ -136,13 +136,10 @@ class Query(ObjectType):
         NewsArticleType, id=graphene.ID(required=True), description="Объект класса NewsArticle(Новости) по id"
     )
     new_test = graphene.ID(
-        forClosePerson=graphene.Boolean(),
-        description="Создаёт новый объект класса DementiaTestCase"
+        forClosePerson=graphene.Boolean(), description="Создаёт новый объект класса DementiaTestCase"
     )
     test_result = graphene.String(
-        id=graphene.ID(required=True),
-        forClosePerson=graphene.Boolean(),
-        description="Итоговый результат по id теста"
+        id=graphene.ID(required=True), forClosePerson=graphene.Boolean(), description="Итоговый результат по id теста"
     )
     regions = graphene.List(
         graphene.NonNull(RegionType),
@@ -197,13 +194,13 @@ class Query(ObjectType):
     def resolve_settings(self, info, **kwargs):
         return Settings.objects.get()
 
-    def resolve_new_test(self, info, forClosePerson):
+    def resolve_new_test(self, info, forClosePerson):  # noqa: N803
         if forClosePerson:
             return DementiaRelativesTestCase.objects.create().id
         else:
             return DementiaTestCase.objects.create().id
 
-    def resolve_test_result(self, info, id, forClosePerson):
+    def resolve_test_result(self, info, id, forClosePerson):  # noqa: N803
         if forClosePerson:
             send_relatives_answer(id)
             return AnswerRelatives.objects.get(test_case=id, question=27).answer_value
