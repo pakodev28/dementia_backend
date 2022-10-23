@@ -1,4 +1,4 @@
-import datetime
+# flake: noqa
 import logging
 from logging.handlers import RotatingFileHandler
 
@@ -10,7 +10,7 @@ from django.template.loader import render_to_string
 from demencia.models import Settings
 from demencia_relatives_test.models import Answer, DementiaTestCase, ResultAnswer
 
-from config.settings import MEDIA_ROOT  # noqa: F401
+from .answers import RESULTS
 
 
 logging.basicConfig(
@@ -23,12 +23,131 @@ logger.addHandler(handler)
 
 
 class TestService:
-    CORRECT_ANSWER_15 = ("значение 1", "значение 2")
     EMAIL_FROM_ANSWER = 5
 
     def question_6(answer: str, *args) -> int:
-        """Текст теста"""
-        result = 2
+        """У близкого Вам человека есть проблемы с памятью?"""
+        result = RESULTS[6].get(answer, 0)
+        return result
+
+    def question_7(answer: str, *args) -> int:
+        """Если это так, стала память хуже, чем несколько лет назад?"""
+        result = RESULTS[7].get(answer, 0)
+        return result
+
+    def question_8(answer: str, *args) -> int:
+        """
+        Ваш близкий повторяет один и тот же вопрос или высказывает одну
+        и ту же мысль несколько раз в течение дня?
+        """
+        result = RESULTS[8].get(answer, 0)
+        return result
+
+    def question_9(answer: str, *args) -> int:
+        """Забывает ли он о назначенных встречах или событиях?"""
+        result = RESULTS[9].get(answer, 0)
+        return result
+
+    def question_10(answer: str, *args) -> int:
+        """Кладет ли он вещи в непривычные места чаще 1 раза в месяц?"""
+        result = RESULTS[10].get(answer, 0)
+        return result
+
+    def question_11(answer: str, *args) -> int:
+        """
+        Подозревает ли близких в том, что они прячут или крадут его вещи,
+        когда не может найти их?
+        """
+        result = RESULTS[11].get(answer, 0)
+        return result
+
+    def question_12(answer: str, *args) -> int:
+        """
+        Часто ли он испытывает трудности
+        при попытке вспомнить текущий день недели, месяц, год?
+        """
+        result = RESULTS[12].get(answer, 0)
+        return result
+
+    def question_13(answer: str, *args) -> int:
+        """Он испытывает проблему с ориентацией в незнакомом месте?"""
+        result = RESULTS[13].get(answer, 0)
+        return result
+
+    def question_14(answer: str, *args) -> int:
+        """Усиливается ли рассеянность за пределами дома, в поездках?"""
+        result = RESULTS[14].get(answer, 0)
+        return result
+
+    def question_15(answer: str, *args) -> int:
+        """Возникают ли проблемы при подсчете сдачи в магазине?"""
+        result = RESULTS[15].get(answer, 0)
+        return result
+
+    def question_16(answer: str, *args) -> int:
+        """Есть ли трудности с оплатой счетов, финансовых операций?"""
+        result = RESULTS[16].get(answer, 0)
+        return result
+
+    def question_17(answer: str, *args) -> int:
+        """
+        Забывает ли он принимать лекарства?
+        Были случаи, когда он не мог вспомнить, принимал ли он уже лекарство?
+        """
+        result = RESULTS[17].get(answer, 0)
+        return result
+
+    def question_18(answer: str, *args) -> int:
+        """Есть ли проблемы с управлением автомобилем?"""
+        result = RESULTS[18].get(answer, 0)
+        return result
+
+    def question_19(answer: str, *args) -> int:
+        """
+        Возникают ли трудности при пользовании бытовыми приборами,
+        телефоном, телевизионным пультом?
+        """
+        result = RESULTS[19].get(answer, 0)
+        return result
+
+    def question_20(answer: str, *args) -> int:
+        """Испытывает ли он затруднения, выполняя работу по дому?"""
+        result = RESULTS[20].get(answer, 0)
+        return result
+
+    def question_21(answer: str, *args) -> int:
+        """Потерял ли он интерес к привычным увлечениям?"""
+        result = RESULTS[21].get(answer, 0)
+        return result
+
+    def question_22(answer: str, *args) -> int:
+        """Может ли Ваш близкий потеряться на знакомой территории
+        (например, рядом с собственным домом)?
+        """
+        result = RESULTS[22].get(answer, 0)
+        return result
+
+    def question_23(answer: str, *args) -> int:
+        """Утрачивает ли чувство правильного направления движения?"""
+        result = RESULTS[23].get(answer, 0)
+        return result
+
+    def question_24(answer: str, *args) -> int:
+        """
+        Случается, ли, что Ваш близкий не только забывает имена,
+        но и не может вспомнить нужное слово?
+        """
+        result = RESULTS[24].get(answer, 0)
+        return result
+
+    def question_25(answer: str, *args) -> int:
+        """Путает ли Ваш близкий имена родственников или друзей?"""
+        result = RESULTS[25].get(answer, 0)
+        return result
+
+    def question_26(answer: str, *args) -> int:
+        """Есть ли у него проблемы с узнаванием знакомых людей?"""
+        result = RESULTS[26].get(answer, 0)
         return result
 
 
