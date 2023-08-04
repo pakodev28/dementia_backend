@@ -225,7 +225,20 @@ class MapPointForm(forms.ModelForm):
 class MapPointAdmin(SortableAdminMixin, admin.ModelAdmin):
     form = MapPointForm
     actions = [toggle_active, toggle_inactive]
+<<<<<<< HEAD
     list_display = ("city", "region", "is_active", "address", "phone_no", "phone_no_secondary")
+=======
+    list_display = (
+        "city",
+        "region",
+        "is_active",
+        "address",
+        "phone_no",
+        "phone_no_secondary",
+        "description",
+        "opening_hours",
+    )
+>>>>>>> dev
     list_filter = ("city", "is_active")
     search_fields = ("city", "address", "phone_no", "phone_no_secondary")
 
@@ -235,6 +248,11 @@ class MapPointAdmin(SortableAdminMixin, admin.ModelAdmin):
         "region",
         "address",
         ("phone_no", "phone_no_secondary"),
+<<<<<<< HEAD
+=======
+        "description",
+        "opening_hours",
+>>>>>>> dev
         ("created_at", "updated_at"),
     )
     readonly_fields = ("created_at", "updated_at")

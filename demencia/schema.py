@@ -4,7 +4,14 @@ from graphene_django.types import DjangoObjectType, ObjectType
 from django.conf import settings
 
 from demencia_test.models import Answer, DementiaTestCase
+<<<<<<< HEAD
 from demencia_test.services.test_service import send_answer
+=======
+from demencia_relatives_test.models import DementiaTestCase as DementiaRelativesTestCase
+from demencia_relatives_test.models import Answer as AnswerRelatives
+from demencia_test.services.test_service import send_answer
+from demencia_relatives_test.services.test_service import send_answer as send_relatives_answer
+>>>>>>> dev
 
 from .models import LeftMenuElement, MainMenuElement, MapPoint, NewsArticle, Partner, Region, Settings, Slider
 
@@ -39,10 +46,19 @@ class MapPointType(DjangoObjectType):
     address = graphene.String(description="Адрес в городе", required=True)
     phone_no = graphene.String(description="Номер телефона", required=True)
     phone_no_secondary = graphene.String(description="Номер телефона (дополнительный)")
+<<<<<<< HEAD
 
     class Meta:
         model = MapPoint
         fields = ("city", "address", "phone_no", "phone_no_secondary")
+=======
+    description = graphene.String(description="Описание", required=True)
+    opening_hours = graphene.String(description="Время открытия", required=True)
+
+    class Meta:
+        model = MapPoint
+        fields = ("city", "address", "phone_no", "phone_no_secondary", "description", "opening_hours")
+>>>>>>> dev
         description = "Объекты класса MapPoint"
 
     @classmethod
@@ -130,8 +146,17 @@ class Query(ObjectType):
     news_article = graphene.Field(
         NewsArticleType, id=graphene.ID(required=True), description="Объект класса NewsArticle(Новости) по id"
     )
+<<<<<<< HEAD
     new_test = graphene.ID(description="Создаёт новый объект класса DementiaTestCase")
     test_result = graphene.String(id=graphene.ID(required=True), description="Итоговый результат по id теста")
+=======
+    new_test = graphene.ID(
+        forClosePerson=graphene.Boolean(), description="Создаёт новый объект класса DementiaTestCase"
+    )
+    test_result = graphene.String(
+        id=graphene.ID(required=True), forClosePerson=graphene.Boolean(), description="Итоговый результат по id теста"
+    )
+>>>>>>> dev
     regions = graphene.List(
         graphene.NonNull(RegionType),
         description="Объекты класса Region с геокодами и связанные с ними объкты класса MapPoint",
@@ -185,12 +210,28 @@ class Query(ObjectType):
     def resolve_settings(self, info, **kwargs):
         return Settings.objects.get()
 
+<<<<<<< HEAD
     def resolve_new_test(self, info, **kwargs):
         return DementiaTestCase.objects.create().id
 
     def resolve_test_result(self, info, id):
         send_answer(id)
         return Answer.objects.get(test_case=id, question=26).answer_value
+=======
+    def resolve_new_test(self, info, forClosePerson):  # noqa: N803
+        if forClosePerson:
+            return DementiaRelativesTestCase.objects.create().id
+        else:
+            return DementiaTestCase.objects.create().id
+
+    def resolve_test_result(self, info, id, forClosePerson):  # noqa: N803
+        if forClosePerson:
+            send_relatives_answer(id)
+            return AnswerRelatives.objects.get(test_case=id, question=27).answer_value
+        else:
+            send_answer(id)
+            return Answer.objects.get(test_case=id, question=26).answer_value
+>>>>>>> dev
 
 
 schema = graphene.Schema(query=Query)

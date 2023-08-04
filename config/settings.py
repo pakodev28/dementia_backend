@@ -31,6 +31,7 @@ INSTALLED_APPS = [
     "demencia",
     "demencia_test",
     "graphene_django",
+    "demencia_relatives_test",
 ]
 
 MIDDLEWARE = [
